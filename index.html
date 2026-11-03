@@ -1187,7 +1187,8 @@ async function login(username, password) {
   if (!u || u.passHash !== await sha(password)) return { error: 'اسم المستخدم أو كلمة المرور غير صحيحة' };
   if (!u.active) return { error: 'هذا الحساب موقوف. يرجى التواصل مع المدير' };
   // كلمة المرور المؤقتة أو التجريبية تُستبدل عند أول دخول بكلمة يختارها صاحب الحساب
-  if (password === DEMO_PASSWORD && (cloudMode || !DB.settings.demo)) u.mustChangePw = true;
+  // مع البيانات التجريبية يبقى التنقل بين الأدوار بكلمة المرور التجريبية دون إلزام بتغييرها
+  if (password === DEMO_PASSWORD) { if (DB.settings.demo) delete u.mustChangePw; else u.mustChangePw = true; }
   ME = u;
   startSession();
   audit('login', 'session', u.id, 'تسجيل الدخول');
@@ -4970,9 +4971,9 @@ const langButton = () => `<button class="lang-btn" id="lang" aria-label="${LANG 
 const bindLang = () => { const b = $('#lang'); if (b) b.onclick = () => setLang(LANG === 'ar' ? 'en' : 'ar'); };
 
 function renderLogin(msg) {
-  // على الرابط المنشور يدخل كل شخص باسمه وكلمة مروره فقط
-  const demo = DB.settings.demo && !cloudMode;
-  const demoUsers = DB.users.filter(u => u.active && ['owner', 'manager', 'rep', 'assistant'].includes(u.role));
+  // أزرار التنقل بين الأدوار تبقى ما دامت البيانات تجريبية، وتختفي عند بدء البيانات الفعلية
+  const demo = DB.settings.demo;
+  const demoUsers = DB.users.filter(u => u.active && !/^tst\./.test(u.username));
   const shown = [...new Map(demoUsers.map(u => [u.role, u])).values()];
   $('#app').innerHTML = `<main class="login-page"><div class="login-card">
     <div class="login-top"><span class="spacer"></span>${langButton()}</div>
