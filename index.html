@@ -797,7 +797,7 @@ const EN = {
   'اختر المحصول من القائمة': 'Pick a crop from the list', 'أو اكتب اسم المحصول ثم اضغط Enter': 'or type a crop, then press Enter', 'المحاصيل وأشجار الفاكهة': 'Crops & fruit trees', 'كل محصول يُسجَّل وحده. يمكن حذف المحصول غير المستخدم الذي لا توجد له مواعيد زراعة أو حصاد': 'Each crop is recorded on its own. An unused crop with no planting or harvest dates can be removed',
   'اسم المحصول': 'Crop name', 'يرجى إضافة محصول واحد في كل مرة': 'Please add one crop at a time', 'المحصول موجود بالفعل: {c}': 'This crop already exists: {c}', 'حذف محصول: {c}': 'Removed crop: {c}',
   // الأجهزة والأسعار
-  'السعر الحالي': 'Current price', 'السعر': 'Price', 'السوق': 'Market', 'الكل': 'All', 'لا توجد أجهزة متاحة': 'No devices available', 'أسعار داخل مصر (بالجنيه)': 'Prices inside Egypt (EGP)', 'أسعار خارج مصر (بالدولار)': 'Prices outside Egypt (USD)',
+  'جهاز {size} X{n} (حتى {ppm} PPM)': '{size} unit X{n} (up to {ppm} PPM)', 'حتى {ppm} PPM': 'up to {ppm} PPM', 'أجهزة أخرى': 'Other devices', 'السعر الحالي': 'Current price', 'السعر': 'Price', 'السوق': 'Market', 'الكل': 'All', 'لا توجد أجهزة متاحة': 'No devices available', 'أسعار داخل مصر (بالجنيه)': 'Prices inside Egypt (EGP)', 'أسعار خارج مصر (بالدولار)': 'Prices outside Egypt (USD)',
   'أسعار داخل مصر بالجنيه، وأسعار خارج مصر بالدولار. يُحفظ السعر فور تعديله، ويظهر في نموذج العميل والطلبات. الأسعار المسجلة في الطلبات السابقة لا تتغير.': 'Egypt prices are in EGP and export prices in USD. A price is saved as soon as you change it and appears in the customer and order forms. Prices on existing orders do not change.',
   'إظهار الموقوف': 'Show inactive', 'إضافة جهاز أو مقاس': 'Add a device or size', 'اختر نوعًا موجودًا لإضافة مقاس جديد له، أو اكتب نوعًا جديدًا': 'Pick an existing type to add a new size, or type a new type', 'هذا الجهاز بهذا المقاس موجود بالفعل، ويمكن تعديل سعره من الجدول': 'This device and size already exist. You can edit its price in the table', 'تمت إضافة الجهاز': 'Device added',
   // التحاليل
@@ -1440,7 +1440,18 @@ const productPrice = (p, cur) => {
   return Math.round(own === 'USD' ? p.price * rate : p.price / rate);
 };
 const productsFor = (domainId, market) => activeProducts(domainId).filter(p => !market || productMarket(p) === market);
-const productLabel = p => `${tv(p.type)} - ${tv(p.size)}`;
+// اسم الجهاز كما في قائمة الأسعار: المقاس ثم الموديل وحد الملوحة، مثل "جهاز 3 بوصة X1 (حتى 2000 PPM)"
+const MODEL_RX = /X(\d)\s*-\s*(\d+)\s*PPM/i;
+const inchOf = s => parseFloat(String(s).replace(/[^\d.]/g, '')) || 999;
+function deviceName(type, size) {
+  if (!type) return '';
+  const m = String(type).match(MODEL_RX);
+  if (m) return t('جهاز {size} X{n} (حتى {ppm} PPM)', { size: tv(size), n: m[1], ppm: m[2] });
+  return [tv(type), size && size !== 'قطعة واحدة' ? tv(size) : ''].filter(Boolean).join(' - ');
+}
+const productLabel = p => deviceName(p.type, p.size);
+// الترتيب: المقاس من الأصغر للأكبر، ثم الموديل X1 إلى X4، والأجهزة الأخرى في النهاية
+const productSort = (a, b) => (MODEL_RX.test(b.type) - MODEL_RX.test(a.type)) || inchOf(a.size) - inchOf(b.size) || a.type.localeCompare(b.type);
 
 // ------- المحاصيل: كل محصول قيمة مستقلة -------
 // مفتاح المقارنة يتجاهل الهمزات والتاء المربوطة والألف المقصورة و"ال" في أول الكلمة
@@ -1834,7 +1845,7 @@ const customersToRows = (list, keys) => {
 };
 const ordersToRows = list => [
   ['رقم الطلب', 'التاريخ', 'العميل', 'رجل البيع', 'الجهاز', 'الكمية', 'الإجمالي', 'العملة', 'طريقة الدفع', 'المقدم', 'المحصّل', 'المتبقي', 'الحالة'].map(x => t(x)),
-  ...list.map(o => [o.no, fmtDate(o.date), custById(o.customerId)?.name || '', orderRepsName(o), o.items.map(i => `${tv(i.type)} ${tv(i.size)}`).join(' + '), o.items.reduce((s, i) => s + i.qty, 0), o.total, curLabel(o), t(PAY_TYPES[o.payType]), +o.deposit || 0, orderCollected(o), o.total - orderCollected(o), t(ORDER_STATUS[o.status])]),
+  ...list.map(o => [o.no, fmtDate(o.date), custById(o.customerId)?.name || '', orderRepsName(o), o.items.map(i => deviceName(i.type, i.size)).join(' + '), o.items.reduce((s, i) => s + i.qty, 0), o.total, curLabel(o), t(PAY_TYPES[o.payType]), +o.deposit || 0, orderCollected(o), o.total - orderCollected(o), t(ORDER_STATUS[o.status])]),
 ];
 function grantRows(g) {
   const owner = userById(g.userId);
@@ -1860,7 +1871,7 @@ function dailySheet(userId, date) {
   const custs = liveCustomers().filter(c => followedBy(c, userId));
   const due = custs.filter(c => c.followupDate === date), late = custs.filter(c => c.followupDate && c.followupDate < today());
   const h = ['الحالة', 'كود العميل', 'الاسم', 'رقم الهاتف 1', 'رقم الهاتف 2', 'المحافظة / الدولة', 'المحصول', 'الجهاز المطلوب', 'التقييم', 'المرحلة', 'تاريخ المتابعة', 'آخر متابعة'].map(x => t(x));
-  const row = (c, st) => [st, c.code, c.name, c.phone1, c.phone2, custLocation(c), c.crops.map(tv).join('، '), `${tv(c.deviceType)} ${tv(c.deviceSize)}`.trim(), tv(c.rating), label(stageById(c.stageId)), fmtDate(c.followupDate), followupsOf(c.id)[0]?.text || ''];
+  const row = (c, st) => [st, c.code, c.name, c.phone1, c.phone2, custLocation(c), c.crops.map(tv).join('، '), deviceName(c.deviceType, c.deviceSize), tv(c.rating), label(stageById(c.stageId)), fmtDate(c.followupDate), followupsOf(c.id)[0]?.text || ''];
   const inst = DB.orders.filter(o => creditedTo(o, userId) && o.status !== 'cancelled').flatMap(o => o.installments.filter(i => !i.paid && i.due <= date).map(i => [o.no, custById(o.customerId)?.name, custById(o.customerId)?.phone1, fmtDate(i.due), i.amount, curLabel(o)]));
   const after = [
     ...DB.afterSales.filter(a => a.status === 'pending' && a.due <= date && a.userId === userId).map(a => [tv(a.name), custById(a.customerId)?.name, custById(a.customerId)?.phone1, fmtDate(a.due)]),
@@ -2658,14 +2669,14 @@ function viewCustomers(root, market) {
     if (!rows.length) { el.innerHTML = `<div class="card empty">${t('لا يوجد عملاء مطابقون.')} ${t(visibleCustomers().some(c => c.market === market) ? 'جرّب تغيير عوامل التصفية.' : 'ابدأ برفع ملف أو إضافة عميل جديد.')}</div>`; return; }
     const manyOwners = can('customers.view_all') || (ME.assists || []).length;
     el.innerHTML = `<div class="tbl-wrap"><table class="tbl"><thead>
-      <tr><th class="sticky-col" rowspan="2">${t('الاسم')}</th><th rowspan="2">${t('التصنيف')}</th><th rowspan="2">${t('رقم الهاتف 1')}</th><th rowspan="2">${t('رقم الهاتف 2')}</th><th rowspan="2">${t(market === 'egypt' ? 'العنوان' : 'الدولة / العنوان')}</th>${market === 'egypt' ? `<th rowspan="2">${t('الكود')}</th>` : ''}<th rowspan="2">${t('المساحة')}</th><th rowspan="2">${t('نوع الري')}</th><th rowspan="2">${t('نوع المحصول')}</th><th rowspan="2">${t('الملوحة')}</th><th rowspan="2">${t('مصدر المياه')}</th><th rowspan="2">${t('نوع الجهاز')}</th><th rowspan="2">${t('المقاس')}</th><th rowspan="2">${t('مصدر المعرفة')}</th><th rowspan="2">${t('التقييم')}</th><th rowspan="2">${t('المرحلة')}</th><th rowspan="2">${t('تاريخ الاتصال')}</th><th rowspan="2">${t('تاريخ المتابعة')}</th><th colspan="3" class="grp">${t('حالة الشراء')}</th>${fields.map(f => `<th rowspan="2">${esc(label(f))}</th>`).join('')}${manyOwners ? `<th rowspan="2">${t('رجل البيع')}</th>` : ''}</tr>
+      <tr><th class="sticky-col" rowspan="2">${t('الاسم')}</th><th rowspan="2">${t('التصنيف')}</th><th rowspan="2">${t('رقم الهاتف 1')}</th><th rowspan="2">${t('رقم الهاتف 2')}</th><th rowspan="2">${t(market === 'egypt' ? 'العنوان' : 'الدولة / العنوان')}</th>${market === 'egypt' ? `<th rowspan="2">${t('الكود')}</th>` : ''}<th rowspan="2">${t('المساحة')}</th><th rowspan="2">${t('نوع الري')}</th><th rowspan="2">${t('نوع المحصول')}</th><th rowspan="2">${t('الملوحة')}</th><th rowspan="2">${t('مصدر المياه')}</th><th rowspan="2">${t('الجهاز المطلوب')}</th><th rowspan="2">${t('مصدر المعرفة')}</th><th rowspan="2">${t('التقييم')}</th><th rowspan="2">${t('المرحلة')}</th><th rowspan="2">${t('تاريخ الاتصال')}</th><th rowspan="2">${t('تاريخ المتابعة')}</th><th colspan="3" class="grp">${t('حالة الشراء')}</th>${fields.map(f => `<th rowspan="2">${esc(label(f))}</th>`).join('')}${manyOwners ? `<th rowspan="2">${t('رجل البيع')}</th>` : ''}</tr>
       <tr><th class="grp">${t('الدفع')}</th><th class="grp">${t('قيمة المقدم')}</th><th class="grp">${t('تاريخ السداد')}</th></tr></thead><tbody>
       ${rows.map(c => {
         const seas = customerSeason(c, m).length > 0;
         return `<tr class="click ${seas ? 'season' : ''}" data-id="${c.id}">
         <td class="sticky-col">${esc(c.name)} ${c.rating === 'مميز' ? ratingPill(c.rating) : ''}${(c.files || []).length ? ` <span class="pill p-gray" title="${t('التحاليل')}">📎 ${c.files.length}</span>` : ''}</td><td>${c.category ? categoryPill(c.category) : ''}</td><td>${phoneLink(c.phone1)}</td><td>${phoneLink(c.phone2)}</td>
         <td class="wrap">${esc(custAddress(c))}</td>${market === 'egypt' ? `<td><span class="code-tag">${esc(c.subCode || c.govCode || '-')}</span></td>` : ''}
-        <td>${c.area === '' ? '' : `${esc(c.area)} ${t('فدان')}`}</td><td>${esc(tv(c.irrigation))}</td><td>${esc(c.crops.map(tv).join(LANG === 'en' ? ', ' : '، '))} ${seasonBadges(c, m)}</td><td class="num">${esc(c.salinity)}</td><td>${esc(tv(c.waterSource))}</td><td>${esc(tv(c.deviceType))}</td><td>${esc(tv(c.deviceSize))}</td><td>${esc(tv(c.source))}${c.viaDistributorId ? `<div class="muted">${esc(distName(c.viaDistributorId))}</div>` : ''}</td>
+        <td>${c.area === '' ? '' : `${esc(c.area)} ${t('فدان')}`}</td><td>${esc(tv(c.irrigation))}</td><td>${esc(c.crops.map(tv).join(LANG === 'en' ? ', ' : '، '))} ${seasonBadges(c, m)}</td><td class="num">${esc(c.salinity)}</td><td>${esc(tv(c.waterSource))}</td><td>${esc(deviceName(c.deviceType, c.deviceSize))}</td><td>${esc(tv(c.source))}${c.viaDistributorId ? `<div class="muted">${esc(distName(c.viaDistributorId))}</div>` : ''}</td>
         <td>${ratingPill(c.rating)}</td><td>${stagePill(c)}</td><td>${fmtDate(c.contactDate)}</td><td>${followPill(c.followupDate)}</td>
         <td>${payPill(c)}</td><td>${c.deposit ? money(c.deposit) : ''}</td><td>${fmtDate(c.payDate)}</td>${fields.map(f => `<td>${esc(c.custom?.[f.id] ?? '')}</td>`).join('')}${manyOwners ? `<td>${esc(userName(c.ownerId))}</td>` : ''}</tr>`;
       }).join('')}</tbody></table>
@@ -2786,30 +2797,30 @@ function readVia(root, source) {
 }
 const viaId = (via, source) => via.newName ? findOrCreateDistributor(via.newName, source) : via.id || '';
 // الأجهزة حسب سوق العميل: داخل مصر بالجنيه وخارجها بالدولار، مع السعر الحالي من قائمة الأسعار
-const deviceFields = d => {
-  const list = productsFor(d.domainId, d.market || 'egypt');
-  const types = [...new Set(list.map(p => p.type))];
+// قائمة واحدة بكل جهاز (المقاس + الموديل) مجمّعة حسب المقاس، بالسعر الحالي من قائمة الأسعار
+function deviceOptions(d) {
+  const list = productsFor(d.domainId, d.market || 'egypt').sort(productSort);
+  const cur = d.deviceType ? `${d.deviceType}||${d.deviceSize}` : '';
+  const groups = [];
+  list.forEach(p => {
+    const g = MODEL_RX.test(p.type) ? tv(p.size) : t('أجهزة أخرى');
+    let grp = groups.find(x => x[0] === g);
+    if (!grp) groups.push(grp = [g, []]);
+    grp[1].push(p);
+  });
+  let found = false;
+  const html = groups.map(([g, ps]) => `<optgroup label="${esc(g)}">${ps.map(p => {
+    const v = `${p.type}||${p.size}`;
+    if (v === cur) found = true;
+    return `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(productLabel(p))} · ${money(p.price)} ${curName(productCurrency(p))}</option>`;
+  }).join('')}</optgroup>`).join('');
   // الجهاز المسجل سابقًا يبقى ظاهرًا حتى لو أُوقف، فلا يُمسح عند حفظ التعديل
-  if (d.deviceType && !types.includes(d.deviceType)) types.push(d.deviceType);
-  return `<div class="grid2"><div class="field"><label>${t('نوع الجهاز المطلوب')}</label><select class="inp" id="deviceType">${optsT(types, d.deviceType, t('اختر'))}</select></div><div class="field"><label>${t('مقاس الجهاز المطلوب')}</label><select class="inp" id="deviceSize"></select><small class="muted" id="devPrice"></small></div></div>`;
-};
-function bindDevice(root, d) {
-  const typeSel = $('#deviceType', root), s = $('#deviceSize', root), price = $('#devPrice', root);
-  const list = () => productsFor(d.domainId, d.market || 'egypt').filter(p => p.type === typeSel.value);
-  const showPrice = () => {
-    const p = list().find(x => x.size === s.value);
-    price.textContent = p ? `${t('السعر الحالي')}: ${money(p.price)} ${curName(productCurrency(p))}` : '';
-  };
-  const fill = () => {
-    const sizes = list().map(p => p.size);
-    if (typeSel.value === d.deviceType && d.deviceSize && !sizes.includes(d.deviceSize)) sizes.push(d.deviceSize);
-    s.innerHTML = optsT(sizes, d.deviceSize, typeSel.value ? t('اختر') : '—');
-    showPrice();
-  };
-  typeSel.onchange = () => { d.deviceSize = ''; fill(); };
-  s.onchange = showPrice;
-  fill();
+  const old = cur && !found ? `<option value="${esc(cur)}" selected>${esc(deviceName(d.deviceType, d.deviceSize))}</option>` : '';
+  return `<option value="">${t('اختر')}</option>${old}${html}`;
 }
+const deviceFields = d => `<div class="field"><label>${t('الجهاز المطلوب')}</label><select class="inp" id="device">${deviceOptions(d)}</select></div>`;
+function bindDevice() {}
+const readDevice = root => { const [deviceType = '', deviceSize = ''] = ($('#device', root)?.value || '').split('||'); return { deviceType, deviceSize }; };
 // رفع تحليل المياه أو التربة: صورة أو PDF
 const fileKindSelect = (id, sel = 'water') => `<select class="inp" id="${id}">${optsT(Object.entries(FILE_KINDS), sel)}</select>`;
 const FILE_ACCEPT = 'image/*,application/pdf';
@@ -2872,7 +2883,7 @@ function openWizard(market = 'egypt') {
   const collect = () => {
     $$('[data-f]', box).forEach(el => { d[el.dataset.f] = el.value.trim ? el.value.trim() : el.value; });
     if ($('#xgov', box)) { d.govCode = $('#xgov', box).value; d.subCode = $('#xsub', box).value; }
-    if ($('#deviceType', box)) { d.deviceType = $('#deviceType', box).value; d.deviceSize = $('#deviceSize', box).value; }
+    if ($('#device', box)) Object.assign(d, readDevice(box));
     d.custom = readCustomFields(box, d.custom);
   };
   const validate = () => {
@@ -3098,8 +3109,8 @@ function openCustomer(id, tab = 'journey') {
         ${activeDomains().length > 1 ? kv(t('المجال'), esc(label(DB.domains.find(x => x.id === c.domainId)))) : ''}${kv(t('المرحلة'), stagePill(c))}
         ${kv(t('المساحة'), c.area === '' ? '' : `${esc(c.area)} ${t('فدان')}`)}${kv(t('نوع الري'), esc(tv(c.irrigation)))}
         ${kv(t('نوع المحصول'), esc(c.crops.map(tv).join(LANG === 'en' ? ', ' : '، ')))}${kv(t('درجة ملوحة المياه'), esc(c.salinity))}
-        ${kv(t('مصدر المياه'), esc(tv(c.waterSource)))}${kv(t('نوع الجهاز المطلوب'), esc(tv(c.deviceType)))}
-        ${kv(t('مقاس الجهاز المطلوب'), esc(tv(c.deviceSize)))}${kv(t('مصدر المعرفة'), esc(tv(c.source)))}
+        ${kv(t('مصدر المياه'), esc(tv(c.waterSource)))}${kv(t('الجهاز المطلوب'), esc(deviceName(c.deviceType, c.deviceSize)))}
+        ${kv(t('مصدر المعرفة'), esc(tv(c.source)))}
         ${kv(t('تقييم العميل'), ratingPill(c.rating))}${kv(t('تاريخ الاتصال'), fmtDate(c.contactDate))}
         ${kv(t('تاريخ المتابعة'), followPill(c.followupDate))}${kv(t('حالة الشراء'), payPill(c))}
         ${kv(t('قيمة المقدم'), c.deposit ? money(c.deposit) : '')}${kv(t('تاريخ السداد'), fmtDate(c.payDate))}
@@ -3182,7 +3193,7 @@ function openEditCustomer(id, onDone) {
     const via = readVia(m.el, patch.source);
     if (via.error) { toast(via.error, 'err'); return; }
     if (c.market === 'egypt') { patch.govCode = $('#egov', m.el).value; patch.subCode = $('#esub', m.el).value; }
-    patch.deviceType = $('#deviceType', m.el).value; patch.deviceSize = $('#deviceSize', m.el).value;
+    Object.assign(patch, readDevice(m.el));
     const shareTo = $('#asst', m.el) ? $$('#asst .chip.on', m.el).map(b => b.dataset.u) : null;
     if (!patch.name || !patch.phone1) { toast(t('الاسم ورقم الهاتف 1 مطلوبان'), 'err'); return; }
     const miss = missingRequired(m.el, c.domainId, patch.custom);
@@ -3486,7 +3497,7 @@ function viewCalendar(root) {
     bindCallRows(box);
     $$('[data-as]', box).forEach(b => b.onclick = () => openCustomer(after.find(a => a.id === b.dataset.as).customerId, 'after'));
     $('#dayX', box).onclick = () => {
-      const rows = [['الاسم', 'الهاتف', 'الموقع', 'المحصول', 'الجهاز', 'التقييم', 'آخر متابعة', 'رجل البيع'].map(x => t(x)), ...list.map(c => [c.name, showPhone(c.phone1), custLocation(c), c.crops.map(tv).join('، '), `${tv(c.deviceType)} ${tv(c.deviceSize)}`.trim(), tv(c.rating), followupsOf(c.id)[0]?.text || '', userName(c.ownerId)])];
+      const rows = [['الاسم', 'الهاتف', 'الموقع', 'المحصول', 'الجهاز', 'التقييم', 'آخر متابعة', 'رجل البيع'].map(x => t(x)), ...list.map(c => [c.name, showPhone(c.phone1), custLocation(c), c.crops.map(tv).join('، '), deviceName(c.deviceType, c.deviceSize), tv(c.rating), followupsOf(c.id)[0]?.text || '', userName(c.ownerId)])];
       downloadBlob(buildXlsx([{ name: t('متابعات'), rows }]), `${t('متابعات')} ${st.sel}.xlsx`);
       audit('export', 'customer', null, 'تنزيل ملف متابعات {d}: {n}', { d: fmtDate(st.sel), n: list.length });
     };
@@ -3593,7 +3604,7 @@ function viewOrders(root, sub) {
     filteredOrders = list;
     $('#ol', ob).innerHTML = list.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th>${can('orders.view_all') ? `<th>${t('رجل البيع')}</th>` : ''}<th>${t('الجهاز')}</th><th>${t('الكمية')}</th><th>${t('الإجمالي')}</th><th>${t('الدفع')}</th><th>${t('المحصّل')}</th><th>${t('المتبقي')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${list.slice(0, 150).map(o => {
       const coll = orderCollected(o);
-      return `<tr class="click" data-o="${o.id}"><td><b>${o.no}</b></td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name)}</td>${can('orders.view_all') ? `<td>${esc(orderRepsName(o))}</td>` : ''}<td>${esc(o.items.map(i => `${tv(i.type)} ${tv(i.size)}`).join(' + '))}</td><td>${o.items.reduce((s, i) => s + i.qty, 0)}</td><td>${money(o.total)} ${curLabel(o)}</td><td>${t(PAY_TYPES[o.payType])}</td><td>${money(coll)}</td><td>${o.status === 'cancelled' ? '—' : money(o.total - coll)}</td><td>${statusPill(o.status)}${o.status === 'postponed' && o.postponedTo ? ` <span class="muted">${fmtDate(o.postponedTo)}</span>` : ''}</td></tr>`;
+      return `<tr class="click" data-o="${o.id}"><td><b>${o.no}</b></td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name)}</td>${can('orders.view_all') ? `<td>${esc(orderRepsName(o))}</td>` : ''}<td>${esc(o.items.map(i => deviceName(i.type, i.size)).join(' + '))}</td><td>${o.items.reduce((s, i) => s + i.qty, 0)}</td><td>${money(o.total)} ${curLabel(o)}</td><td>${t(PAY_TYPES[o.payType])}</td><td>${money(coll)}</td><td>${o.status === 'cancelled' ? '—' : money(o.total - coll)}</td><td>${statusPill(o.status)}${o.status === 'postponed' && o.postponedTo ? ` <span class="muted">${fmtDate(o.postponedTo)}</span>` : ''}</td></tr>`;
     }).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا توجد طلبات مطابقة')}</div>`;
     $$('[data-o]', ob).forEach(tr => tr.onclick = () => openOrder(tr.dataset.o, () => viewOrders(root)));
   };
@@ -3633,9 +3644,18 @@ function markPaid(oid, iid) {
 function drawPrices(ob) {
   const multi = activeDomains().length > 1;
   const table = mk => {
-    const list = productsFor(null, mk);
+    const list = productsFor(null, mk).sort(productSort);
     const cur = curName(mk === 'intl' ? 'USD' : 'EGP');
-    return `<div class="section-bar">${t(mk === 'intl' ? 'أسعار خارج مصر (بالدولار)' : 'أسعار داخل مصر (بالجنيه)')}</div>${list.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr>${multi ? `<th>${t('المجال')}</th>` : ''}<th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('السعر')} (${cur})</th></tr></thead><tbody>${list.map(p => `<tr>${multi ? `<td>${esc(label(DB.domains.find(d => d.id === p.domainId)))}</td>` : ''}<td>${esc(tv(p.type))}</td><td>${esc(tv(p.size))}</td><td>${money(p.price)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا توجد أجهزة متاحة')}</div>`}`;
+    const head = `<div class="section-bar">${t(mk === 'intl' ? 'أسعار خارج مصر (بالدولار)' : 'أسعار داخل مصر (بالجنيه)')}</div>`;
+    if (!list.length) return `${head}<div class="card empty">${t('لا توجد أجهزة متاحة')}</div>`;
+    // الموديلات في جدول مثل قائمة الأسعار: المقاسات صفوف والموديلات أعمدة، والخانة الفارغة تعني غير متاح
+    const models = list.filter(p => MODEL_RX.test(p.type));
+    const types = [...new Set(models.map(p => p.type))].sort((a, b) => +a.match(MODEL_RX)[1] - +b.match(MODEL_RX)[1]);
+    const sizes = [...new Set(models.map(p => p.size))];
+    const grid = models.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('المقاس')}</th>${types.map(ty => { const m = ty.match(MODEL_RX); return `<th>X${m[1]}<div class="muted">${t('حتى {ppm} PPM', { ppm: m[2] })}</div></th>`; }).join('')}</tr></thead><tbody>${sizes.map(s => `<tr><td><b>${esc(tv(s))}</b></td>${types.map(ty => { const p = models.find(x => x.type === ty && x.size === s); return `<td>${p ? `${money(p.price)} ${cur}` : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div>` : '';
+    const others = list.filter(p => !MODEL_RX.test(p.type));
+    const rest = others.length ? `<div class="tbl-wrap mt"><table class="tbl"><thead><tr>${multi ? `<th>${t('المجال')}</th>` : ''}<th>${t('الجهاز')}</th><th>${t('السعر')} (${cur})</th></tr></thead><tbody>${others.map(p => `<tr>${multi ? `<td>${esc(label(DB.domains.find(d => d.id === p.domainId)))}</td>` : ''}<td>${esc(productLabel(p))}</td><td>${money(p.price)}</td></tr>`).join('')}</tbody></table></div>` : '';
+    return head + grid + rest;
   };
   ob.innerHTML = `<div class="filters">${can('catalog.manage') ? `<a class="btn" href="#/settings/catalog">${t('إدارة المنتجات والأسعار')}</a>` : ''}</div>${table('egypt')}${table('intl')}`;
 }
@@ -3652,7 +3672,7 @@ function openOrderForm(customerId) {
   }
   // قائمة الأجهزة مقسمة: داخل مصر بالجنيه، وخارج مصر بالدولار
   const productOpts = sel => `<option value="">${t('اختر')}</option>${Object.entries(PRODUCT_MARKETS).map(([mk, l]) => {
-    const list = productsFor(null, mk);
+    const list = productsFor(null, mk).sort(productSort);
     return list.length ? `<optgroup label="${esc(t(l))}">${list.map(p => `<option value="${p.id}" ${p.id === sel ? 'selected' : ''}>${esc(productLabel(p))} · ${money(p.price)} ${curName(productCurrency(p))}</option>`).join('')}</optgroup>` : '';
   }).join('')}`;
   const m = openModal({
@@ -3741,7 +3761,7 @@ function openOrder(id, onChange) {
   const m = openModal({
     title: t('طلب {no}', { no: o.no }), wide: true,
     body: `<div class="kv"><div><div class="k">${t('العميل')}</div><div class="val">${esc(c?.name)}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(c?.phone1)}</div></div><div><div class="k">${t('التاريخ')}</div><div class="val">${fmtDate(o.date)}</div></div><div><div class="k">${t('الحالة')}</div><div class="val">${statusPill(o.status)} ${o.statusReason ? `<span class="muted">${esc(tv(o.statusReason))}</span>` : ''} ${o.postponedTo ? `<span class="muted">${fmtDate(o.postponedTo)}</span>` : ''}</div></div><div><div class="k">${t('رجل البيع')}</div><div class="val">${esc(orderRepsName(o))}</div></div><div><div class="k">${t('الدفع')}</div><div class="val">${t(PAY_TYPES[o.payType])}${o.deposit ? ` · ${t('المقدم')} ${money(o.deposit)}` : ''}</div></div><div><div class="k">${t('الموزع')}</div><div class="val">${esc(DB.distributors.find(d => d.id === o.distributorId)?.name || '—')}</div></div></div>
-    <table class="tbl mt"><thead><tr><th>${t('الجهاز')}</th><th>${t('المقاس')}</th><th>${t('الكمية')}</th><th>${t('السعر')}</th><th>${t('الإجمالي')}</th></tr></thead><tbody>${o.items.map(i => `<tr><td>${esc(tv(i.type))}</td><td>${esc(tv(i.size))}</td><td>${i.qty}</td><td>${money(i.price)}</td><td>${money(i.qty * i.price)}</td></tr>`).join('')}${o.discount ? `<tr><td colspan="4">${t('الخصم')}</td><td>- ${money(o.discount)}</td></tr>` : ''}<tr><td colspan="4"><b>${t('الإجمالي')}</b></td><td><b>${money(o.total)} ${cur}</b></td></tr></tbody></table>
+    <table class="tbl mt"><thead><tr><th>${t('الجهاز')}</th><th>${t('المقاس')}</th><th>${t('الكمية')}</th><th>${t('السعر')}</th><th>${t('الإجمالي')}</th></tr></thead><tbody>${o.items.map(i => `<tr><td>${esc(deviceName(i.type, i.size))}</td><td>${esc(tv(i.size))}</td><td>${i.qty}</td><td>${money(i.price)}</td><td>${money(i.qty * i.price)}</td></tr>`).join('')}${o.discount ? `<tr><td colspan="4">${t('الخصم')}</td><td>- ${money(o.discount)}</td></tr>` : ''}<tr><td colspan="4"><b>${t('الإجمالي')}</b></td><td><b>${money(o.total)} ${cur}</b></td></tr></tbody></table>
     ${o.installments.length ? `<h4 class="mt">${t('جدول السداد')}</h4><table class="tbl mt"><thead><tr><th>${t('الاستحقاق')}</th><th>${t('المبلغ')}</th><th>${t('الحالة')}</th><th></th></tr></thead><tbody>${o.installments.map(i => `<tr><td>${fmtDate(i.due)}</td><td>${money(i.amount)} ${cur}</td><td>${i.paid ? `<span class="pill p-green">${t('مسدد')} ${fmtDate(i.paidAt)}</span>` : i.due < today() ? `<span class="pill p-red">⚠ ${t('متأخر')}</span>` : `<span class="pill p-gray">${t('مستحق')}</span>`}</td><td>${!i.paid && o.status !== 'cancelled' && collect ? `<button class="btn sm" data-pay="${i.id}">✓ ${t('تم السداد')}</button>` : ''}</td></tr>`).join('')}</tbody></table>` : ''}
     <div class="muted mt">${t('المحصّل {a} {c} من {b} {c}', { a: money(orderCollected(o)), b: money(o.total), c: cur })}</div>`,
     footer,
@@ -4016,7 +4036,7 @@ const buyerRow = c => {
   const o = lastOrderOf(c);
   const dist = o?.distributorId ? DB.distributors.find(d => d.id === o.distributorId) : null;
   const lastAfter = DB.followups.find(f => f.customerId === c.id && f.phase === 'after');
-  return { c, o, device: o ? o.items.map(i => `${tv(i.type)} ${tv(i.size)} ×${i.qty}`).join(' + ') : `${tv(c.deviceType)} ${tv(c.deviceSize)}`.trim(), date: purchaseDateOf(c), dist: dist?.name || '', last: lastAfter?.text || '', due: afterDueOf(c) };
+  return { c, o, device: o ? o.items.map(i => `${deviceName(i.type, i.size)} ×${i.qty}`).join(' + ') : deviceName(c.deviceType, c.deviceSize), date: purchaseDateOf(c), dist: dist?.name || '', last: lastAfter?.text || '', due: afterDueOf(c) };
 };
 function viewBuyers(root) {
   const st = buyersState;
@@ -4341,11 +4361,11 @@ function openDistributor(id, onDone) {
   const s = distributorStats(d);
   const custs = viaCustomers(d.id).filter(customerVisible);
   const own = d.customerId && custById(d.customerId);
-  const custTable = custs.length ? `<div class="section-bar mt">${t('العملاء التابعون ({n})', { n: custs.length })}</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('العميل')}</th><th>${t('الموقع')}</th><th>${t('المحصول')}</th><th>${t('الجهاز المطلوب')}</th><th>${t('المرحلة')}</th><th>${t('رجل البيع')}</th></tr></thead><tbody>${custs.map(c => `<tr class="click" data-c="${c.id}"><td>${esc(c.name)}</td><td>${esc(custLocation(c))}</td><td>${esc(c.crops.map(tv).join('، '))}</td><td>${esc(`${tv(c.deviceType)} ${tv(c.deviceSize)}`.trim())}</td><td>${stagePill(c)}</td><td>${esc(userName(c.ownerId))}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const custTable = custs.length ? `<div class="section-bar mt">${t('العملاء التابعون ({n})', { n: custs.length })}</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('العميل')}</th><th>${t('الموقع')}</th><th>${t('المحصول')}</th><th>${t('الجهاز المطلوب')}</th><th>${t('المرحلة')}</th><th>${t('رجل البيع')}</th></tr></thead><tbody>${custs.map(c => `<tr class="click" data-c="${c.id}"><td>${esc(c.name)}</td><td>${esc(custLocation(c))}</td><td>${esc(c.crops.map(tv).join('، '))}</td><td>${esc(deviceName(c.deviceType, c.deviceSize))}</td><td>${stagePill(c)}</td><td>${esc(userName(c.ownerId))}</td></tr>`).join('')}</tbody></table></div>` : '';
   const m = openModal({
     title: esc(d.name), wide: true,
     body: `${own && customerVisible(own) ? `<div class="filters"><button class="btn sm" id="ownC">${t('فتح ملفه كعميل')}</button></div>` : ''}<div class="kv"><div><div class="k">${t('التصنيف')}</div><div class="val">${distTypePill(d.type)}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(d.phone)}</div></div><div><div class="k">${t('الأجهزة المباعة')}</div><div class="val">${s.units}</div></div><div><div class="k">${t('قيمة المبيعات')}</div><div class="val">${money(s.value)} ${t('ج.م')}</div></div><div><div class="k">${t('ملاحظات')}</div><div class="val">${esc(d.notes)}</div></div></div>
-    ${s.orders.length ? `<table class="tbl mt"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th><th>${t('الجهاز')}</th><th>${t('الكمية')}</th></tr></thead><tbody>${s.orders.sort((a, b) => b.date.localeCompare(a.date)).map(o => `<tr><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name || '')}</td><td>${esc(o.items.map(i => `${tv(i.type)} ${tv(i.size)}`).join(' + '))}</td><td>${o.items.reduce((a, i) => a + i.qty, 0)}</td></tr>`).join('')}</tbody></table>` : `<div class="empty">${t('لا توجد مبيعات مرتبطة بهذا الموزع بعد')}</div>`}${custTable}`,
+    ${s.orders.length ? `<table class="tbl mt"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th><th>${t('الجهاز')}</th><th>${t('الكمية')}</th></tr></thead><tbody>${s.orders.sort((a, b) => b.date.localeCompare(a.date)).map(o => `<tr><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name || '')}</td><td>${esc(o.items.map(i => deviceName(i.type, i.size)).join(' + '))}</td><td>${o.items.reduce((a, i) => a + i.qty, 0)}</td></tr>`).join('')}</tbody></table>` : `<div class="empty">${t('لا توجد مبيعات مرتبطة بهذا الموزع بعد')}</div>`}${custTable}`,
     footer: can('distributors.manage') ? `<button class="btn primary" id="ed">${t('تعديل')}</button>` : '',
   });
   $$('[data-c]', m.el).forEach(tr => tr.onclick = () => { m.close(); openCustomer(tr.dataset.c); });
@@ -4565,7 +4585,7 @@ function computeAnalytics(st) {
     months.push({ label: monthName(d.getMonth()), value: sum(list), count: list.length, units: units(list), current: i === 0, tip: `${monthName(d.getMonth())} ${d.getFullYear()}\n${t('المبيعات')}: ${money(sum(list))} ${t('ج.م')}\n${t('الطلبات')}: ${list.length} · ${t('الأجهزة')}: ${units(list)}` });
   }
   const devices = {};
-  inRange.forEach(o => o.items.forEach(i => { const k = `${tv(i.type).replace(t('جهاز معالجة مغناطيسية - '), '')} ${tv(i.size)}`; devices[k] = (devices[k] || 0) + i.qty; }));
+  inRange.forEach(o => o.items.forEach(i => { const k = MODEL_RX.test(i.type) ? deviceName(i.type, i.size) : `${tv(i.type).replace(t('جهاز معالجة مغناطيسية - '), '')} ${tv(i.size)}`; devices[k] = (devices[k] || 0) + i.qty; }));
   const repRows = sellers().map(u => {
     // البيع لعميل مشترك يُحتسب كاملًا لكل من يتابعه
     const list = sale.filter(o => creditedTo(o, u.id) && o.date >= r.from && o.date <= r.to);
@@ -5132,11 +5152,10 @@ function drawCatalog(sb, redraw) {
   };
 }
 const catState = { market: 'all', off: false };
-const sizeNum = s => parseFloat(String(s).replace(/[^\d.]/g, '')) || 999;
 // ترتيب الأسعار: السوق ثم نوع الجهاز ثم المقاس من الأصغر للأكبر
 function shownProducts() {
   return DB.products.filter(p => (catState.market === 'all' || productMarket(p) === catState.market) && (catState.off || p.active !== false))
-    .sort((a, b) => productMarket(a).localeCompare(productMarket(b)) || a.type.localeCompare(b.type, 'ar') || sizeNum(a.size) - sizeNum(b.size));
+    .sort((a, b) => productMarket(a).localeCompare(productMarket(b)) || productSort(a, b));
 }
 
 function drawStages(sb, redraw) {
