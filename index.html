@@ -519,6 +519,25 @@ const HARVEST = [
   ['الموالح','الجزر','السلق','الكاكي','اللفت','الفراولة','البرسيم البلدي','البامية|الصعيد','السبانخ','شيح البابونج','القنبيط','القرع العسلي'],
 ];
 
+// تصنيف المحاصيل وأشجار الفاكهة. كل محصول قيمة مستقلة، ولا يُحفظ محصولان في خانة واحدة
+window.CROP_GROUPS = [
+  ['أشجار الفاكهة', ['المانجو', 'العنب', 'الموالح', 'البرتقال', 'اليوسفي', 'الليمون', 'الجريب فروت', 'الزيتون', 'نخيل البلح', 'الرمان', 'الجوافة', 'التين', 'التين الشوكي', 'الخوخ', 'المشمش', 'البرقوق', 'التفاح', 'الكمثري', 'اللوز', 'السفرجل', 'البشملة', 'الكاكي', 'القشطة', 'الأفوكادو', 'التوت', 'الموز', 'الفراولة', 'الكيوي', 'الباباظ', 'النبق', 'الجوز البلدي', 'الفستق']],
+  ['الخضر', ['الطماطم', 'البطاطس', 'البصل', 'الثوم', 'الخيار', 'الفلفل الرومي', 'الفلفل الحار', 'الباذنجان', 'القرع (الكوسة)', 'الفاصوليا', 'البازلاء', 'اللوبيا', 'البامية', 'الملوخية', 'السبانخ', 'الخس', 'الكرنب', 'القنبيط', 'البروكلي', 'الجزر', 'اللفت', 'البنجر', 'الفجل', 'السلق', 'الكرفس', 'البقدونس', 'الشبت', 'الكرات', 'الخرشوف', 'البطاطا', 'البطيخ', 'الكنتالوب', 'بطيخ اللب', 'القرع العسلي', 'اليقطين', 'الذرة السكرية', 'الفول الرومي', 'الشمر']],
+  ['المحاصيل الحقلية', ['القمح', 'الشعير', 'الذرة', 'الأرز', 'السورجم', 'القطن', 'قصب السكر', 'بنجر السكر', 'الفول البلدي', 'العدس', 'الحمص', 'الترمس', 'الحلبة', 'فول الصويا', 'الفول السوداني', 'السمسم', 'عباد الشمس', 'الكانولا', 'الكتان', 'البرسيم البلدي', 'البرسيم الحجازي', 'شعير العلف']],
+  ['النباتات الطبية والعطرية', ['النعناع', 'الريحان', 'العتر', 'شيح البابونج', 'الكمون', 'البردقوش', 'الكركديه', 'الينسون', 'الكزبرة', 'الكراوية', 'الزعتر', 'حصى البان']],
+  ['الزينة واللاندسكيب', ['لاندسكيب', 'النجيل', 'نباتات الزينة', 'أشجار الزينة', 'الصوب الزراعية']],
+  ['تصنيفات عامة', ['فاكهة', 'خضار', 'محاصيل حقلية']],
+];
+// أسماء يكتبها رجال البيع بصيغ مختلفة، وتُحوَّل إلى اسم المحصول المعتمد
+window.CROP_ALIASES = {
+  'نخيل': 'نخيل البلح', 'نخل': 'نخيل البلح', 'بلح': 'نخيل البلح', 'تمر': 'نخيل البلح', 'كوسة': 'القرع (الكوسة)', 'قرع': 'القرع (الكوسة)',
+  'بنجر سكر': 'بنجر السكر', 'برسيم': 'البرسيم البلدي', 'برسيم حجازي': 'البرسيم الحجازي', 'خضر': 'خضار', 'خضروات': 'خضار', 'خضراوات': 'خضار',
+  'فواكه': 'فاكهة', 'فاكهه': 'فاكهة', 'محاصيل': 'محاصيل حقلية', 'محاصيل حقليه': 'محاصيل حقلية', 'ذرة صفراء': 'الذرة', 'ذرة شامية': 'الذرة', 'ذرة رفيعة': 'السورجم',
+  'فول': 'الفول البلدي', 'فول بلدي': 'الفول البلدي', 'فلفل': 'الفلفل الرومي', 'بسلة': 'البازلاء', 'قرنبيط': 'القنبيط', 'كرنب': 'الكرنب', 'ليمون بنزهير': 'الليمون',
+  'لاند سكيب': 'لاندسكيب', 'لاندسكيب': 'لاندسكيب', 'زينة': 'نباتات الزينة', 'شمام': 'الكنتالوب', 'كانتالوب': 'الكنتالوب', 'بابونج': 'شيح البابونج', 'جيرانيوم': 'العتر',
+  'صوب': 'الصوب الزراعية', 'صوب زراعية': 'الصوب الزراعية', 'يوسف افندي': 'اليوسفي', 'يوسفي': 'اليوسفي', 'جريب فروت': 'الجريب فروت', 'بابايا': 'الباباظ', 'عنب بناتي': 'العنب',
+};
+
 // نحوّل الجدول لسجل واحد لكل محصول: { name, plant: {شهر: ملاحظة}, harvest: {...} }
 window.buildCropCalendar = function () {
   const map = {};
@@ -530,8 +549,18 @@ window.buildCropCalendar = function () {
   });
   PLANT.forEach((l, m) => { put(l, 'plant', m); put(PLANT_ALL, 'plant', m); });
   HARVEST.forEach((l, m) => { put(l, 'harvest', m); put(HARVEST_ALL, 'harvest', m); });
+  addCropGroups(map);
   return Object.values(map).sort((a, b) => a.name.localeCompare(b.name, 'ar'));
 };
+// يضيف كل محصول مصنَّف غير موجود في جدول المواعيد، ويحدد تصنيف كل محصول
+window.addCropGroups = function (map) {
+  window.CROP_GROUPS.forEach(([group, names]) => names.forEach(name => {
+    const c = map[name] || (map[name] = { name, plant: {}, harvest: {} });
+    if (!c.group) c.group = group;
+  }));
+  return map;
+};
+window.cropGroupOf = name => (window.CROP_GROUPS.find(([, names]) => names.includes(name)) || [''])[0];
 
 // بداية الموسم = أول شهر في فترة متصلة (مع مراعاة اللف من ديسمبر ليناير)
 window.isSeasonStart = function (months, m) {
@@ -650,6 +679,17 @@ const DV = {
   'المعالجة المغناطيسية للمياه': 'Magnetic Water Treatment',
   // المحاصيل
   'الأرز': 'Rice', 'الأفوكادو': 'Avocado', 'الباذنجان': 'Eggplant', 'البازلاء': 'Peas', 'البامية': 'Okra', 'البردقوش': 'Marjoram', 'البرسيم البلدي': 'Egyptian clover', 'البرسيم الحجازي': 'Alfalfa', 'البرقوق': 'Plum', 'البروكلي': 'Broccoli', 'البشملة': 'Loquat', 'البصل': 'Onion', 'البطاطا': 'Sweet potato', 'البطاطس': 'Potato', 'البطيخ': 'Watermelon', 'البقدونس': 'Parsley', 'التفاح': 'Apple', 'التوت': 'Mulberry', 'التين': 'Fig', 'التين الشوكي': 'Prickly pear', 'الثوم': 'Garlic', 'الجزر': 'Carrot', 'الجوافة': 'Guava', 'الخس': 'Lettuce', 'الخوخ': 'Peach', 'الخيار': 'Cucumber', 'الذرة': 'Corn', 'الذرة السكرية': 'Sweet corn', 'الرمان': 'Pomegranate', 'الريحان': 'Basil', 'الزيتون': 'Olive', 'السبانخ': 'Spinach', 'السفرجل': 'Quince', 'السلق': 'Chard', 'السمسم': 'Sesame', 'السورجم': 'Sorghum', 'الشبت': 'Dill', 'الشعير': 'Barley', 'الشمر': 'Fennel', 'الطماطم': 'Tomato', 'العتر': 'Geranium', 'العنب': 'Grapes', 'الفاصوليا': 'Beans', 'الفجل': 'Radish', 'الفراولة': 'Strawberry', 'الفلفل الرومي': 'Bell pepper', 'الفول الرومي': 'Faba bean', 'الفول السوداني': 'Peanut', 'القرع (الكوسة)': 'Zucchini', 'القرع العسلي': 'Butternut squash', 'القشطة': 'Custard apple', 'القطن': 'Cotton', 'القمح': 'Wheat', 'القنبيط': 'Cauliflower', 'الكاكي': 'Persimmon', 'الكتان': 'Flax', 'الكرفس': 'Celery', 'الكرنب': 'Cabbage', 'الكمثري': 'Pear', 'الكمون': 'Cumin', 'الكنتالوب': 'Cantaloupe', 'اللفت': 'Turnip', 'اللوبيا': 'Cowpea', 'اللوز': 'Almond', 'المانجو': 'Mango', 'المشمش': 'Apricot', 'الموالح': 'Citrus', 'النجيل': 'Turf grass', 'النعناع': 'Mint', 'اليقطين': 'Pumpkin', 'بطيخ اللب': 'Seed melon', 'بنجر السكر': 'Sugar beet', 'شعير العلف': 'Fodder barley', 'شيح البابونج': 'Chamomile', 'عباد الشمس': 'Sunflower', 'فول الصويا': 'Soybean', 'قصب السكر': 'Sugarcane', 'نخيل البلح': 'Date palm',
+  'البرتقال': 'Orange', 'اليوسفي': 'Mandarin', 'الليمون': 'Lemon', 'الجريب فروت': 'Grapefruit', 'الموز': 'Banana', 'الكيوي': 'Kiwi', 'الباباظ': 'Papaya', 'النبق': 'Jujube', 'الجوز البلدي': 'Walnut', 'الفستق': 'Pistachio',
+  'الفلفل الحار': 'Hot pepper', 'الملوخية': 'Jute mallow', 'البنجر': 'Beetroot', 'الكرات': 'Leek', 'الخرشوف': 'Artichoke',
+  'الفول البلدي': 'Field faba bean', 'العدس': 'Lentil', 'الحمص': 'Chickpea', 'الترمس': 'Lupin', 'الحلبة': 'Fenugreek', 'الكانولا': 'Canola',
+  'الكركديه': 'Hibiscus', 'الينسون': 'Anise', 'الكزبرة': 'Coriander', 'الكراوية': 'Caraway', 'الزعتر': 'Thyme', 'حصى البان': 'Rosemary',
+  'لاندسكيب': 'Landscape', 'نباتات الزينة': 'Ornamental plants', 'أشجار الزينة': 'Ornamental trees', 'الصوب الزراعية': 'Greenhouses', 'فاكهة': 'Fruit', 'خضار': 'Vegetables', 'محاصيل حقلية': 'Field crops',
+  'أشجار الفاكهة': 'Fruit trees', 'الخضر': 'Vegetables', 'المحاصيل الحقلية': 'Field crops', 'النباتات الطبية والعطرية': 'Medicinal & aromatic plants', 'الزينة واللاندسكيب': 'Ornamentals & landscape', 'تصنيفات عامة': 'General categories', 'أخرى': 'Other',
+  // الأجهزة وقائمة أسعار 2026
+  'موديل X1 - 2000 PPM': 'Model X1 - 2000 PPM', 'موديل X2 - 4000 PPM': 'Model X2 - 4000 PPM', 'موديل X3 - 6000 PPM': 'Model X3 - 6000 PPM', 'موديل X4 - 8000 PPM': 'Model X4 - 8000 PPM',
+  '5 بوصة': '5 inch', 'جهاز منزلي (30 سم)': 'Home unit (30 cm)', 'جهاز قياس الملوحة': 'Salinity meter', 'قطعة واحدة': 'Single unit',
+  // تصنيف العميل والتحاليل
+  'وكيل': 'Agent', 'موزع': 'Distributor', 'تحليل مياه': 'Water analysis', 'تحليل تربة': 'Soil analysis', 'مستند آخر': 'Other document',
   // ملاحظات المواعيد
   'منتصف يناير': 'Mid-January', 'صيفية مبكرة': 'Early summer', 'وجه قبلي': 'Upper Egypt', 'مشتل': 'Nursery', 'عروة الربيع': 'Spring crop', 'الدلتا': 'Delta', 'منتصف مارس': 'Mid-March', 'صيفية متأخرة': 'Late summer', 'وجه بحري وقبلي': 'Lower & Upper Egypt', 'وجه بحري': 'Lower Egypt', 'منتصف إبريل - وجه بحري': 'Mid-April - Lower Egypt', 'أرض مستديمة': 'Permanent field', 'منتصف إبريل': 'Mid-April', 'بطيخ الجورمة': 'Gourmet melon', 'لب الخشب': 'Wood pulp type', 'منتصف مايو': 'Mid-May', 'نيلية/خريفية': 'Nile / autumn', 'منتصف أغسطس': 'Mid-August', 'الأراضي الصحراوية': 'Desert lands', 'شتوية/الصعيد فقط': 'Winter / Upper Egypt only', 'عروة الخريف': 'Autumn crop', 'الكيرلي': 'Curly', 'منتصف نوفمبر': 'Mid-November', 'منتصف فبراير': 'Mid-February', 'الأسبوع الأخير': 'Last week', 'حتى 20 يونيو': 'Until June 20', '10 يونيو': 'June 10', 'منتصف يونيو': 'Mid-June', 'منتصف يوليو': 'Mid-July', 'حتى 20 يوليو': 'Until July 20', 'نصف أكتوبر': 'Mid-October', 'منتصف أكتوبر': 'Mid-October', 'الصعيد': 'Upper Egypt',
   // الموزعون والأدوار
@@ -749,6 +789,25 @@ const EN = {
   'تسجيل مستخدمين جدد': 'Register new users',
   'النظام موقوف مؤقتًا من الإدارة': 'The system is temporarily suspended by management', 'البيانات محفوظة كما هي. يرجى التواصل مع إدارة الشركة': 'Your data is kept safe. Please contact company management',
   'تعديل مستلمي البريد اليومي': 'Edited daily email recipients', 'تصدير {name}: {n}': 'Exported {name}: {n}', 'تحويل العميل {name} إلى {u}': 'Moved {name} to {u}', 'رفع ملف عملاء مشترين: {a} جديد، {b} موجود، {c} طلب': 'Buyers file upload: {a} new, {b} existing, {c} orders', 'متابعة ما بعد البيع': 'After-sales follow-up', 'عميل أُسند إليك': 'Customer assigned to you',
+  // تصنيف العميل والوكلاء والموزعون
+  'تصنيف العميل': 'Customer category', 'تصنيفات العملاء': 'Customer categories', 'تصنيفات الموزعين': 'Distributor categories', 'عن طريق الوكيل أو الموزع': 'Through agent or distributor', 'سيُضاف تلقائيًا إلى قائمة الموزعين': 'Will be added to the distributors list automatically',
+  'اسم الوكيل أو الموزع': 'Agent or distributor name', 'إضافة اسم جديد': 'Add a new name', 'اسم الوكيل أو الموزع الجديد': 'New agent or distributor name', 'يرجى كتابة اسم الوكيل أو الموزع': 'Please type the agent or distributor name', 'يرجى اختيار الوكيل أو الموزع': 'Please choose the agent or distributor',
+  'أُضيف {name} إلى قائمة الموزعين بتصنيف {type}': '{name} was added to the distributors list as {type}', 'مسجل في قائمة الموزعين': 'Listed in distributors', 'العملاء التابعون': 'Linked customers', 'العملاء التابعون ({n})': 'Linked customers ({n})', 'فتح ملفه كعميل': 'Open their customer file',
+  // المحاصيل
+  'اختر المحصول من القائمة': 'Pick a crop from the list', 'أو اكتب اسم المحصول ثم اضغط Enter': 'or type a crop, then press Enter', 'المحاصيل وأشجار الفاكهة': 'Crops & fruit trees', 'كل محصول يُسجَّل وحده. يمكن حذف المحصول غير المستخدم الذي لا توجد له مواعيد زراعة أو حصاد': 'Each crop is recorded on its own. An unused crop with no planting or harvest dates can be removed',
+  'اسم المحصول': 'Crop name', 'يرجى إضافة محصول واحد في كل مرة': 'Please add one crop at a time', 'المحصول موجود بالفعل: {c}': 'This crop already exists: {c}', 'حذف محصول: {c}': 'Removed crop: {c}',
+  // الأجهزة والأسعار
+  'السعر الحالي': 'Current price', 'السعر': 'Price', 'السوق': 'Market', 'الكل': 'All', 'لا توجد أجهزة متاحة': 'No devices available', 'أسعار داخل مصر (بالجنيه)': 'Prices inside Egypt (EGP)', 'أسعار خارج مصر (بالدولار)': 'Prices outside Egypt (USD)',
+  'أسعار داخل مصر بالجنيه، وأسعار خارج مصر بالدولار. يُحفظ السعر فور تعديله، ويظهر في نموذج العميل والطلبات. الأسعار المسجلة في الطلبات السابقة لا تتغير.': 'Egypt prices are in EGP and export prices in USD. A price is saved as soon as you change it and appears in the customer and order forms. Prices on existing orders do not change.',
+  'إظهار الموقوف': 'Show inactive', 'إضافة جهاز أو مقاس': 'Add a device or size', 'اختر نوعًا موجودًا لإضافة مقاس جديد له، أو اكتب نوعًا جديدًا': 'Pick an existing type to add a new size, or type a new type', 'هذا الجهاز بهذا المقاس موجود بالفعل، ويمكن تعديل سعره من الجدول': 'This device and size already exist. You can edit its price in the table', 'تمت إضافة الجهاز': 'Device added',
+  // التحاليل
+  'التحاليل': 'Analyses', 'التحاليل ({n})': 'Analyses ({n})', 'نوع الملف': 'File type', 'الملف': 'File', 'رفعه': 'Uploaded by', 'عرض': 'View', 'تنزيل': 'Download', 'حذف الملف': 'Delete file', 'سيُحذف "{name}" من ملف العميل.': '"{name}" will be removed from the customer file.',
+  'تحليل المياه أو التربة (اختياري)': 'Water or soil analysis (optional)', 'صورة أو ملف PDF، ويمكن إضافته لاحقًا من ملف العميل': 'An image or PDF. You can also add it later from the customer file', 'اختياري، مثل تاريخ التحليل أو اسم المعمل': 'Optional, e.g. analysis date or lab name',
+  'صورة أو PDF حتى 8 ميجابايت': 'Image or PDF up to 8 MB', 'في هذا الوضع يُحفظ الملف في هذا المتصفح فقط': 'In this mode the file is stored in this browser only', 'لا توجد تحاليل مرفوعة بعد': 'No analyses uploaded yet', 'جارٍ رفع الملفات...': 'Uploading files...', 'تم رفع الملفات: {n}': 'Files uploaded: {n}',
+  'يُقبل ملف صورة أو PDF فقط': 'Only an image or PDF file is accepted', 'حجم الملف أكبر من 8 ميجابايت': 'The file is larger than 8 MB', 'الملف غير موجود': 'File not found', 'العميل غير موجود': 'Customer not found',
+  'يلزم تحديث خدمة جوجل لتفعيل رفع الملفات. يرجى إبلاغ إدارة الشركة': 'The Google service must be updated to enable file uploads. Please inform company management',
+  'هذا الملف محفوظ في متصفح الجهاز الذي رُفع منه فقط': 'This file is stored only in the browser of the device it was uploaded from', 'هذا الملف محفوظ في مكان آخر غير المتصل به الآن': 'This file is stored somewhere other than the one connected now',
+  'إضافة موزع: {n}': 'Added distributor: {n}', 'رفع تحليل للعميل: {name}': 'Uploaded an analysis for: {name}', 'حذف تحليل من ملف العميل: {name}': 'Removed an analysis from: {name}',
   // الحسابات وكلمات المرور
   'مرحبًا {name}. اختر كلمة مرور خاصة بك قبل البدء': 'Welcome {name}. Choose your own password before you start', 'تأكيد كلمة المرور': 'Confirm password', '8 أحرف على الأقل، ولا تُشارك كلمة المرور مع أحد': 'At least 8 characters. Do not share your password with anyone', 'حفظ والدخول': 'Save and sign in',
   'كلمتا المرور غير متطابقتين': 'The passwords do not match', 'اختر كلمة مرور مختلفة عن كلمة المرور المؤقتة': 'Choose a password different from the temporary one',
@@ -921,7 +980,7 @@ const EN = {
 <script>
 // طبقة البيانات والمنطق. كل القراءة والكتابة تمر من هنا، وعند ربط الخادم يُستبدل هذا الملف
 const KEY = 'dw_crm_v1';
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 // بيانات الدخول للحسابات التجريبية: للنسخة التجريبية فقط وموثقة في README.md
 const DEMO_PASSWORD = 'Delta@Test2026';
 
@@ -947,7 +1006,7 @@ const OUTCOMES = ['تم الرد', 'لم يرد', 'مشغول', 'رقم خطأ',
 const curLabel = o => t(o.currency === 'USD' ? 'دولار' : 'ج.م');
 
 const FIELD_LABELS = {
-  name: 'الاسم', phone1: 'رقم الهاتف 1', phone2: 'رقم الهاتف 2', address: 'العنوان', govCode: 'كود المحافظة', subCode: 'كود المنطقة الفرعية', country: 'الدولة', area: 'المساحة', irrigation: 'نوع الري', crops: 'نوع المحصول', salinity: 'درجة ملوحة المياه', waterSource: 'مصدر المياه', deviceType: 'نوع الجهاز المطلوب', deviceSize: 'مقاس الجهاز المطلوب', source: 'مصدر المعرفة', rating: 'تقييم العميل', contactDate: 'تاريخ الاتصال', followupDate: 'تاريخ المتابعة', ownerId: 'رجل البيع', payType: 'حالة الشراء', deposit: 'قيمة المقدم', payDate: 'تاريخ السداد', domainId: 'المجال', assistantIds: 'الزملاء المساعدون', asNextDate: 'موعد متابعة ما بعد البيع', asLastDate: 'آخر متابعة بعد البيع', purchased: 'عميل مشترٍ', purchaseDate: 'تاريخ الشراء',
+  name: 'الاسم', category: 'تصنيف العميل', viaDistributorId: 'عن طريق الوكيل أو الموزع', phone1: 'رقم الهاتف 1', phone2: 'رقم الهاتف 2', address: 'العنوان', govCode: 'كود المحافظة', subCode: 'كود المنطقة الفرعية', country: 'الدولة', area: 'المساحة', irrigation: 'نوع الري', crops: 'نوع المحصول', salinity: 'درجة ملوحة المياه', waterSource: 'مصدر المياه', deviceType: 'نوع الجهاز المطلوب', deviceSize: 'مقاس الجهاز المطلوب', source: 'مصدر المعرفة', rating: 'تقييم العميل', contactDate: 'تاريخ الاتصال', followupDate: 'تاريخ المتابعة', ownerId: 'رجل البيع', payType: 'حالة الشراء', deposit: 'قيمة المقدم', payDate: 'تاريخ السداد', domainId: 'المجال', assistantIds: 'الزملاء المساعدون', asNextDate: 'موعد متابعة ما بعد البيع', asLastDate: 'آخر متابعة بعد البيع', purchased: 'عميل مشترٍ', purchaseDate: 'تاريخ الشراء',
 };
 
 let DB = null;
@@ -1004,17 +1063,20 @@ const CLOUD_KEY_STORE = 'dw_crm_cloud_key';
 const cloudMode = !!window.DW_CLOUD_URL;
 const cloudApi = (action, extra = '') => `${window.DW_CLOUD_URL}?key=${encodeURIComponent(localStorage.getItem(CLOUD_KEY_STORE) || '')}&action=${action}${extra}`;
 // صفحة رابط جوجل تتصل بالخدمة مباشرة عبر google.script.run، والملف يتصل عبر الإنترنت بالرابط نفسه
-function cloudCall(action, { base, rev, body } = {}) {
+const CLOUD_POST = ['save', 'send', 'upload', 'delfile'];
+function cloudCall(action, { base, rev, body, id } = {}) {
   const key = localStorage.getItem(CLOUD_KEY_STORE) || '';
   const call = window.google?.script?.run
-    ? new Promise((ok, fail) => google.script.run.withSuccessHandler(s => ok(JSON.parse(s))).withFailureHandler(fail).rpc(action, key, base ?? '', rev ?? '', body ?? '{}'))
+    ? new Promise((ok, fail) => google.script.run.withSuccessHandler(s => ok(JSON.parse(s))).withFailureHandler(fail).rpc(action, key, base ?? '', rev ?? '', body ?? '{}', id ?? ''))
     : (async () => {
-      const extra = action === 'save' ? `&base=${base}&rev=${rev}` : '';
-      const post = action === 'save' || action === 'send';
+      const extra = action === 'save' ? `&base=${base}&rev=${rev}` : id ? `&id=${encodeURIComponent(id)}` : '';
+      const post = CLOUD_POST.includes(action);
       const res = await fetch(cloudApi(action, extra), post ? { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body ?? '{}' } : { cache: 'no-store' });
       return res.json();
     })();
-  const limit = new Promise((_, fail) => setTimeout(() => fail(new Error('timeout')), 60000));
+  // رفع الملفات وتنزيلها يحتاج وقتًا أطول على الإنترنت البطيء
+  const wait = action === 'upload' || action === 'file' ? 180000 : 60000;
+  const limit = new Promise((_, fail) => setTimeout(() => fail(new Error('timeout')), wait));
   return Promise.race([call, limit]);
 }
 const cloudReady = () => !cloudMode && !!(DB?.settings?.mailSyncUrl && DB.settings.mailSyncKey);
@@ -1323,7 +1385,7 @@ const nextCustomerCode = () => {
 };
 function createCustomer(data, opts = {}) {
   const c = {
-    id: uid(), code: nextCustomerCode(), market: 'egypt', country: '', govCode: '', subCode: '', name: '', phone1: '', phone2: '', address: '', area: '', irrigation: '', crops: [], salinity: '', waterSource: '', deviceType: '', deviceSize: '', source: '', rating: 'جيد', contactDate: today(), followupDate: '', payType: '', deposit: '', payDate: '', ownerId: ME?.id, createdAt: nowStamp(), archived: false, domainId: DB.domains[0]?.id, custom: {}, assistantIds: [], shares: [], stageId: '', stageHistory: [], ...data,
+    id: uid(), code: nextCustomerCode(), market: 'egypt', country: '', govCode: '', subCode: '', name: '', category: '', viaDistributorId: '', files: [], phone1: '', phone2: '', address: '', area: '', irrigation: '', crops: [], salinity: '', waterSource: '', deviceType: '', deviceSize: '', source: '', rating: 'جيد', contactDate: today(), followupDate: '', payType: '', deposit: '', payDate: '', ownerId: ME?.id, createdAt: nowStamp(), archived: false, domainId: DB.domains[0]?.id, custom: {}, assistantIds: [], shares: [], stageId: '', stageHistory: [], ...data,
   };
   if (!c.stageId) c.stageId = stagesFor(c)[0]?.id || '';
   c.stageHistory = [{ stageId: c.stageId, at: nowStamp(), userId: ME?.id || c.ownerId, note: '' }];
@@ -1338,6 +1400,7 @@ const fieldStr = (f, v) => {
   if (f === 'ownerId') return userName(v);
   if (f === 'payType') return PAY_TYPES[v] || v || '';
   if (f === 'domainId') return DB.domains.find(d => d.id === v)?.name || '';
+  if (f === 'viaDistributorId') return distName(v);
   return String(v ?? '');
 };
 function updateCustomer(id, patch, key, params) {
@@ -1364,6 +1427,177 @@ function updateCustomer(id, patch, key, params) {
 const label = item => !item ? '' : (LANG === 'en' && item.en ? item.en : (LANG === 'en' ? tv(item.name) : item.name));
 const activeDomains = () => DB.domains.filter(d => d.active !== false);
 const activeProducts = domainId => DB.products.filter(p => p.active !== false && (!domainId || !p.domainId || p.domainId === domainId));
+// المنتجات حسب السوق: داخل مصر بالجنيه، وخارج مصر بالدولار
+const PRODUCT_MARKETS = { egypt: 'داخل مصر', intl: 'خارج مصر' };
+const productMarket = p => p?.market === 'intl' ? 'intl' : 'egypt';
+const productCurrency = p => productMarket(p) === 'intl' ? 'USD' : 'EGP';
+const curName = cur => t(cur === 'USD' ? 'دولار' : 'ج.م');
+// سعر المنتج بعملة معينة، ويُحوَّل بسعر الدولار في الإعدادات إذا اختلفت عملته
+const productPrice = (p, cur) => {
+  if (!p) return 0;
+  const own = productCurrency(p), rate = DB.settings.usdRate || 1;
+  if (!cur || own === cur) return +p.price || 0;
+  return Math.round(own === 'USD' ? p.price * rate : p.price / rate);
+};
+const productsFor = (domainId, market) => activeProducts(domainId).filter(p => !market || productMarket(p) === market);
+const productLabel = p => `${tv(p.type)} - ${tv(p.size)}`;
+
+// ------- المحاصيل: كل محصول قيمة مستقلة -------
+// مفتاح المقارنة يتجاهل الهمزات والتاء المربوطة والألف المقصورة و"ال" في أول الكلمة
+const cropKey = s => String(s ?? '').replace(/ـ/g, '').trim().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ')
+  .split(' ').map(w => w.length > 3 && w.startsWith('ال') ? w.slice(2) : w).join(' ');
+function resolveCrop(raw, crops = DB.crops) {
+  const v = String(raw ?? '').trim();
+  if (!v) return '';
+  const k = cropKey(v);
+  const hit = crops.find(c => cropKey(c.name) === k) || crops.find(c => DV[c.name] && normHeader(DV[c.name]) === normHeader(v));
+  if (hit) return hit.name;
+  const alias = Object.entries(CROP_ALIASES).find(([a]) => cropKey(a) === k);
+  return alias ? alias[1] : v;
+}
+// "عنب - مانجو" أو "موالح، زيتون" تصبح محصولين منفصلين
+const CROP_SPLIT = /[،,+/\\|؛;\-–—]| و /;
+const splitCrops = (list, crops) => [...new Set((Array.isArray(list) ? list : [list]).flatMap(x => String(x ?? '').split(CROP_SPLIT)).map(x => resolveCrop(x, crops)).filter(Boolean))];
+const cropGroupLabel = name => DB.crops.find(c => c.name === name)?.group || cropGroupOf(name) || 'أخرى';
+function groupCrops(names) {
+  const by = {};
+  names.forEach(n => { const g = cropGroupLabel(n); (by[g] = by[g] || []).push(n); });
+  return [...CROP_GROUPS.map(g => g[0]), 'أخرى'].filter(g => by[g]).map(g => [g, by[g].sort((a, b) => tv(a).localeCompare(tv(b), LANG))]);
+}
+const cropOptions = (names, sel, blank) => (blank !== undefined ? `<option value="">${esc(blank)}</option>` : '')
+  + groupCrops(names).map(([g, list]) => `<optgroup label="${esc(t(g))}">${list.map(n => `<option value="${esc(n)}" ${n === sel ? 'selected' : ''}>${esc(tv(n))}</option>`).join('')}</optgroup>`).join('');
+
+// ------- تصنيف العميل والوكلاء والموزعون -------
+const CUSTOMER_CATEGORIES = ['مزارع', 'مهندس زراعي', 'وكيل', 'موزع'];
+const PARTNER_TYPES = ['وكيل', 'موزع'];
+const isPartner = v => PARTNER_TYPES.includes(v);
+const distName = id => DB.distributors.find(d => d.id === id)?.name || '';
+// العميل المصنف وكيلًا أو موزعًا يُضاف تلقائيًا إلى قائمة الموزعين ويرتبط بها
+function syncPartner(c) {
+  if (!isPartner(c.category)) return null;
+  let d = DB.distributors.find(x => x.id === c.partnerId) || DB.distributors.find(x => x.customerId === c.id)
+    || DB.distributors.find(x => normPhone(x.phone) && normPhone(x.phone) === normPhone(c.phone1));
+  const fresh = !d;
+  if (!d) {
+    d = { id: uid(), name: c.name, type: c.category, govCode: c.govCode || '', phone: c.phone1, notes: '', active: true, createdAt: nowStamp() };
+    DB.distributors.push(d);
+  }
+  Object.assign(d, { customerId: c.id, type: c.category, phone: d.phone || c.phone1, govCode: d.govCode || c.govCode || '' });
+  c.partnerId = d.id;
+  if (fresh) audit('create', 'distributor', d.id, 'إضافة موزع: {n}', { n: d.name });
+  else saveDB();
+  return { d, fresh };
+}
+const viaCustomers = id => liveCustomers().filter(c => c.viaDistributorId === id);
+
+// ------- ملفات العملاء: تحاليل المياه والتربة -------
+// الملف نفسه لا يدخل قاعدة البيانات حتى لا يكبر حجمها. يُحفظ على خدمة جوجل، أو ملف النظام عند التشغيل من start.bat، أو هذا المتصفح
+const FILE_KINDS = { water: 'تحليل مياه', soil: 'تحليل تربة', other: 'مستند آخر' };
+const FILE_MAX = 8 * 1024 * 1024;
+const FILE_TYPES = /^(image\/(jpeg|png|webp|gif|heic|heif)|application\/pdf)$/;
+const fileStore = () => cloudMode ? 'cloud' : serverOn ? 'server' : 'local';
+function toBase64(buf) {
+  const b = new Uint8Array(buf);
+  let s = '';
+  for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+function fromBase64(s) {
+  const bin = atob(s), out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+const idbOpen = () => new Promise((ok, fail) => {
+  const r = indexedDB.open('dw_crm_files', 1);
+  r.onupgradeneeded = () => r.result.createObjectStore('files');
+  r.onsuccess = () => ok(r.result);
+  r.onerror = () => fail(r.error);
+});
+async function idbDo(mode, fn) {
+  const db = await idbOpen();
+  return new Promise((ok, fail) => {
+    const tx = db.transaction('files', mode), req = fn(tx.objectStore('files'));
+    tx.oncomplete = () => ok(req?.result);
+    tx.onerror = () => fail(tx.error);
+  });
+}
+// الصور الكبيرة تُصغَّر قبل الرفع، وتبقى واضحة للقراءة
+async function shrinkImage(file) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 1.5 * 1024 * 1024 || !window.createImageBitmap) return file;
+  try {
+    const bmp = await createImageBitmap(file);
+    const k = Math.min(1, 2200 / Math.max(bmp.width, bmp.height));
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(bmp, 0, 0, cv.width, cv.height);
+    const out = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.85));
+    return out && out.size < file.size ? out : file;
+  } catch { return file; }
+}
+async function storeFile(blob, name) {
+  const store = fileStore();
+  if (store === 'cloud') {
+    const out = await cloudCall('upload', { body: JSON.stringify({ name, mime: blob.type, data: toBase64(await blob.arrayBuffer()) }) });
+    if (out.error === 'unknown action') throw new Error(t('يلزم تحديث خدمة جوجل لتفعيل رفع الملفات. يرجى إبلاغ إدارة الشركة'));
+    if (!out.ok) throw new Error(out.error || 'failed');
+    return { store, ref: out.id };
+  }
+  const ref = uid() + uid();
+  if (store === 'server') {
+    const res = await fetch(`/api/file?id=${ref}`, { method: 'PUT', headers: { 'Content-Type': blob.type || 'application/octet-stream' }, body: blob });
+    if (!res.ok) throw new Error(String(res.status));
+  } else await idbDo('readwrite', s => s.put(blob, ref));
+  return { store, ref };
+}
+async function fetchFile(f) {
+  if (f.store !== fileStore()) throw new Error(t(f.store === 'local' ? 'هذا الملف محفوظ في متصفح الجهاز الذي رُفع منه فقط' : 'هذا الملف محفوظ في مكان آخر غير المتصل به الآن'));
+  if (f.store === 'cloud') {
+    const out = await cloudCall('file', { id: f.ref });
+    if (!out.ok) throw new Error(out.error === 'not found' ? t('الملف غير موجود') : out.error || 'failed');
+    return new Blob([fromBase64(out.data)], { type: out.mime || f.mime });
+  }
+  if (f.store === 'server') {
+    const res = await fetch(`/api/file?id=${encodeURIComponent(f.ref)}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(t('الملف غير موجود'));
+    return new Blob([await res.arrayBuffer()], { type: f.mime });
+  }
+  const b = await idbDo('readonly', s => s.get(f.ref));
+  if (!b) throw new Error(t('الملف غير موجود'));
+  return b;
+}
+async function removeStoredFile(f) {
+  try {
+    if (f.store !== fileStore()) return;
+    if (f.store === 'cloud') await cloudCall('delfile', { id: f.ref });
+    else if (f.store === 'server') await fetch(`/api/file?id=${encodeURIComponent(f.ref)}`, { method: 'DELETE' });
+    else await idbDo('readwrite', s => s.delete(f.ref));
+  } catch {}
+}
+async function addCustomerFile(customerId, file, kind, note = '') {
+  if (!FILE_TYPES.test(file.type)) throw new Error(t('يُقبل ملف صورة أو PDF فقط'));
+  const blob = file.type === 'application/pdf' ? file : await shrinkImage(file);
+  if (blob.size > FILE_MAX) throw new Error(t('حجم الملف أكبر من 8 ميجابايت'));
+  const { store, ref } = await storeFile(blob, file.name);
+  // تُقرأ بيانات العميل من جديد بعد الرفع، فقد تتغير أثناء الانتظار
+  const c = custById(customerId);
+  if (!c) { removeStoredFile({ store, ref }); throw new Error(t('العميل غير موجود')); }
+  const meta = { id: uid(), kind, note, name: file.name, mime: blob.type || file.type, size: blob.size, store, ref, at: nowStamp(), by: ME.id };
+  c.files = [meta, ...(c.files || [])];
+  audit('update', 'customer', c.id, 'رفع تحليل للعميل: {name}', { name: c.name }, [{ field: 'التحاليل', from: '', to: `${FILE_KINDS[kind] || ''}: ${file.name}` }]);
+  return meta;
+}
+function removeCustomerFile(c, fileId) {
+  const f = (c.files || []).find(x => x.id === fileId);
+  if (!f) return;
+  c.files = c.files.filter(x => x.id !== fileId);
+  audit('update', 'customer', c.id, 'حذف تحليل من ملف العميل: {name}', { name: c.name }, [{ field: 'التحاليل', from: `${FILE_KINDS[f.kind] || ''}: ${f.name}`, to: '' }]);
+  removeStoredFile(f);
+}
+const canUploadFiles = () => can('followups.add') || can('customers.edit');
+const fileSize = n => n >= 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`;
+
 const activeFields = domainId => DB.customFields.filter(f => f.active !== false && (!domainId || !f.domainId || f.domainId === domainId));
 const stagesAll = domainId => DB.stages.filter(s => s.active !== false && (!s.domainId || !domainId || s.domainId === domainId)).sort((a, b) => a.order - b.order);
 const stagesFor = c => stagesAll(c.domainId);
@@ -1569,6 +1803,7 @@ const BASE_COLUMNS = [
   ['name', 'الاسم', c => c.name],
   ['phone1', 'رقم الهاتف 1', c => c.phone1],
   ['phone2', 'رقم الهاتف 2', c => c.phone2],
+  ['category', 'تصنيف العميل', c => tv(c.category)],
   ['country', 'الدولة', c => c.market === 'intl' ? countryLabel(c.country) : tv('مصر')],
   ['gov', 'المحافظة', c => c.market === 'egypt' ? custLocation(c) : ''],
   ['regionCode', 'كود المنطقة', c => c.subCode || c.govCode || ''],
@@ -1581,6 +1816,7 @@ const BASE_COLUMNS = [
   ['deviceType', 'نوع الجهاز المطلوب', c => tv(c.deviceType)],
   ['deviceSize', 'مقاس الجهاز المطلوب', c => tv(c.deviceSize)],
   ['source', 'مصدر المعرفة', c => tv(c.source)],
+  ['via', 'عن طريق الوكيل أو الموزع', c => distName(c.viaDistributorId)],
   ['rating', 'تقييم العميل', c => tv(c.rating)],
   ['stage', 'المرحلة', c => label(stageById(c.stageId))],
   ['contactDate', 'تاريخ الاتصال', c => fmtDate(c.contactDate)],
@@ -1646,6 +1882,7 @@ const IMPORT_HEADERS = {
   phone1: ['رقم الهاتف 1', 'رقم التليفون 1', 'رقم التليفون1', 'رقم التليفون', 'رقم الهاتف', 'التليفون', 'الهاتف', 'تليفون 1', 'موبايل', 'الموبايل', 'رقم الموبايل', 'phone', 'phone 1', 'mobile'],
   phone2: ['رقم الهاتف 2', 'رقم التليفون 2', 'رقم التليفون2', 'تليفون 2', 'موبايل 2', 'phone 2'],
   address: ['العنوان', 'address'],
+  category: ['تصنيف العميل', 'تصنيف', 'category'],
   country: ['الدولة', 'البلد', 'country'],
   gov: ['المحافظة', 'governorate'],
   regionCode: ['كود المنطقة', 'الكود', 'كود المحافظة', 'code', 'area code'],
@@ -1664,7 +1901,7 @@ const IMPORT_HEADERS = {
   deposit: ['قيمة المقدم', 'مقدم كام', 'المقدم', 'مقدم', 'deposit'],
   payDate: ['تاريخ السداد', 'payment date'],
 };
-const IMPORT_TEMPLATE = () => [...['الاسم', 'رقم الهاتف 1', 'رقم الهاتف 2', 'الدولة', 'المحافظة', 'كود المنطقة', 'العنوان', 'المساحة', 'نوع الري', 'نوع المحصول', 'درجة ملوحة المياه', 'مصدر المياه', 'نوع الجهاز المطلوب', 'مقاس الجهاز المطلوب', 'مصدر المعرفة', 'تقييم العميل', 'تاريخ الاتصال', 'تاريخ المتابعة', 'حالة الشراء', 'قيمة المقدم', 'تاريخ السداد'].map(x => t(x)), ...activeFields().map(f => label(f))];
+const IMPORT_TEMPLATE = () => [...['الاسم', 'رقم الهاتف 1', 'رقم الهاتف 2', 'تصنيف العميل', 'الدولة', 'المحافظة', 'كود المنطقة', 'العنوان', 'المساحة', 'نوع الري', 'نوع المحصول', 'درجة ملوحة المياه', 'مصدر المياه', 'نوع الجهاز المطلوب', 'مقاس الجهاز المطلوب', 'مصدر المعرفة', 'تقييم العميل', 'تاريخ الاتصال', 'تاريخ المتابعة', 'حالة الشراء', 'قيمة المقدم', 'تاريخ السداد'].map(x => t(x)), ...activeFields().map(f => label(f))];
 const normHeader = s => String(s ?? '').trim().toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/\s+/g, ' ');
 function parseDateCell(v) {
   if (v === '' || v === null || v === undefined) return '';
@@ -1741,11 +1978,13 @@ function analyzeImport(rows, ownerId) {
     const payType = /كاش|نقد|cash/i.test(ptext) ? 'cash' : /قسط|تقسيط|install/i.test(ptext) ? 'installment' : /مقدم|deposit/i.test(ptext) ? 'deposit' : '';
     const rtext = String(raw.rating || '').replace('جدا', 'جدًا');
     const rating = RATINGS.find(x => rtext.includes(x) || normHeader(rtext) === normHeader(EN[x])) || 'جيد';
-    const crops = String(raw.crops || '').split(/[،,+/]| و /).map(x => x.trim()).filter(Boolean).map(x => DB.crops.find(cc => cc.name === x || cc.name === 'ال' + x || normHeader(DV[cc.name]) === normHeader(x))?.name || x);
+    const crops = splitCrops(String(raw.crops || ''));
+    const ctg = String(raw.category || '').trim();
+    const category = CUSTOMER_CATEGORIES.find(x => cropKey(x) === cropKey(ctg) || normHeader(EN[x] || DV[x]) === normHeader(ctg)) || ctg;
     const custom = {};
     Object.entries(fieldIdx).forEach(([id, i]) => { custom[id] = r[i] ?? ''; });
     const item = {
-      ownerId, name, phone1: p1, phone2: p2, market, country, ...loc, address: String(raw.address || '').trim(), area: raw.area === '' || raw.area === undefined ? '' : (parseFloat(raw.area) || ''), irrigation: String(raw.irrigation || ''), crops, salinity: String(raw.salinity || ''), waterSource: String(raw.waterSource || ''), deviceType: String(raw.deviceType || ''), deviceSize: String(raw.deviceSize || ''), source: String(raw.source || ''), rating, contactDate: parseDateCell(raw.contactDate) || today(), followupDate: parseDateCell(raw.followupDate), payType, deposit: raw.deposit ? (parseFloat(raw.deposit) || '') : '', payDate: parseDateCell(raw.payDate), custom,
+      ownerId, name, category, phone1: p1, phone2: p2, market, country, ...loc, address: String(raw.address || '').trim(), area: raw.area === '' || raw.area === undefined ? '' : (parseFloat(raw.area) || ''), irrigation: String(raw.irrigation || ''), crops, salinity: String(raw.salinity || ''), waterSource: String(raw.waterSource || ''), deviceType: String(raw.deviceType || ''), deviceSize: String(raw.deviceSize || ''), source: String(raw.source || ''), rating, contactDate: parseDateCell(raw.contactDate) || today(), followupDate: parseDateCell(raw.followupDate), payType, deposit: raw.deposit ? (parseFloat(raw.deposit) || '') : '', payDate: parseDateCell(raw.payDate), custom,
     };
     Object.defineProperty(item, '_raw', { value: r, enumerable: false });
     res.items.push(item);
@@ -1787,9 +2026,22 @@ const defaultPlan = () => [
   { name: 'متابعة بعد ثلاثة أشهر', days: 90 },
   { name: 'متابعة بعد الموسم', days: 180 },
 ];
-const DEFAULT_PRODUCTS = () => [
-  ['جهاز معالجة مغناطيسية - خط رئيسي', '2 بوصة', 28000], ['جهاز معالجة مغناطيسية - خط رئيسي', '3 بوصة', 42000], ['جهاز معالجة مغناطيسية - خط رئيسي', '4 بوصة', 58000], ['جهاز معالجة مغناطيسية - خط رئيسي', '6 بوصة', 85000], ['جهاز معالجة مغناطيسية - خط رئيسي', '8 بوصة', 120000], ['جهاز معالجة مغناطيسية - شبكة فرعية', '1 بوصة', 9500], ['جهاز معالجة مغناطيسية - شبكة فرعية', '2 بوصة', 16000], ['جهاز مزارع الدواجن والماشية', '1 بوصة', 11000], ['جهاز مزارع الدواجن والماشية', '2 بوصة', 19000],
-].map(([type, size, price]) => ({ id: uid(), type, size, price, domainId: DEFAULT_DOMAIN_ID, active: true }));
+// قائمة أسعار دلتا ووتر 2026: داخل مصر بالجنيه (23/04/2026)، وخارج مصر بالدولار. تعدّلها الإدارة من الإعدادات
+const DEVICE_MODELS = ['موديل X1 - 2000 PPM', 'موديل X2 - 4000 PPM', 'موديل X3 - 6000 PPM', 'موديل X4 - 8000 PPM'];
+// السعر لكل موديل بالترتيب X1، X2، X3، X4. الصفر يعني أن المقاس غير متاح في هذا الموديل
+const EGYPT_PRICES_2026 = {
+  '1 بوصة': [0, 16000, 0, 24000], '2 بوصة': [25000, 31000, 36000, 41000], '3 بوصة': [37000, 48000, 56000, 61000], '4 بوصة': [48000, 58000, 72000, 82000],
+  '5 بوصة': [79000, 89000, 105000, 126000], '6 بوصة': [120000, 138000, 176000, 195000], '8 بوصة': [0, 250000, 0, 350000],
+};
+const EXPORT_PRICES_2026 = { '1 بوصة': 650, '2 بوصة': 1250, '3 بوصة': 2200, '4 بوصة': 2900, '5 بوصة': 4500, '6 بوصة': 6200, '8 بوصة': 9500 };
+const PRICE_LIST_2026 = () => [
+  ...DEVICE_MODELS.flatMap((type, i) => Object.entries(EGYPT_PRICES_2026).filter(([, p]) => p[i]).map(([size, p]) => ['egypt', type, size, p[i]])),
+  ['egypt', 'جهاز منزلي (30 سم)', '1 بوصة', 6000], ['egypt', 'جهاز قياس الملوحة', 'قطعة واحدة', 3000],
+  ...Object.entries(EXPORT_PRICES_2026).map(([size, price]) => ['intl', DEVICE_MODELS[3], size, price]),
+];
+const DEFAULT_PRODUCTS = () => PRICE_LIST_2026().map(([market, type, size, price]) => ({ id: uid(), market, type, size, price, domainId: DEFAULT_DOMAIN_ID, active: true }));
+// أجهزة النسخة التجريبية الأولى، وتبقى موقوفة حتى لا تتأثر الطلبات المسجلة بها
+const OLD_DEMO_TYPES = ['جهاز معالجة مغناطيسية - خط رئيسي', 'جهاز معالجة مغناطيسية - شبكة فرعية', 'جهاز مزارع الدواجن والماشية'];
 const TICKET_TYPES = ['عطل في الجهاز', 'تركيب', 'صيانة', 'استفسار فني', 'زيارة ميدانية'];
 
 function emptyDB() {
@@ -1799,7 +2051,8 @@ function emptyDB() {
     lists: {
       irrigation: ['تنقيط', 'رش', 'محوري', 'غمر', 'تسطير', 'مختلط'],
       waterSource: ['بئر', 'ترعة / نيل', 'صرف معالج', 'خلط', 'تحلية'],
-      source: ['فيسبوك', 'إنستجرام', 'يوتيوب', 'واتساب', 'ترشيح عميل', 'معرض', 'مهندس زراعي', 'موقع الشركة', 'اتصال مباشر'],
+      source: ['فيسبوك', 'إنستجرام', 'يوتيوب', 'واتساب', 'ترشيح عميل', 'معرض', 'مهندس زراعي', 'موقع الشركة', 'اتصال مباشر', 'وكيل', 'موزع'],
+      customerCategory: [...CUSTOMER_CATEGORIES],
       ticketType: [...TICKET_TYPES],
       distributorType: [...DISTRIBUTOR_TYPES],
     },
@@ -1837,7 +2090,34 @@ function migrateDB(db) {
   const v2 = migrateV2(db);
   const v3 = migrateV3(db);
   const v4 = migrateV4(db);
-  return v2 || v3 || v4;
+  const v5 = migrateV5(db);
+  return v2 || v3 || v4 || v5;
+}
+// الإصدار 5: قائمة أسعار 2026 لمصر والخارج، والمحاصيل المصنفة كل منها مستقل، وتصنيف العميل، والوكلاء والموزعون، وملفات التحاليل
+function migrateV5(db) {
+  if ((db.version || 1) >= 5) return false;
+  db.products.forEach(p => { if (!p.market) p.market = 'egypt'; if (OLD_DEMO_TYPES.includes(p.type)) p.active = false; });
+  DEFAULT_PRODUCTS().forEach(p => {
+    if (!db.products.some(x => productMarket(x) === p.market && x.type === p.type && x.size === p.size)) db.products.push(p);
+  });
+  const map = {};
+  db.crops.forEach(c => { map[c.name] = c; });
+  addCropGroups(map);
+  db.crops = Object.values(map).sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+  db.customers.forEach(c => {
+    c.crops = splitCrops(c.crops || [], db.crops);
+    if (c.category === undefined) c.category = '';
+    if (!c.files) c.files = [];
+  });
+  (db.grants || []).forEach(g => { if (g.crops?.length) g.crops = splitCrops(g.crops, db.crops); });
+  db.lists.customerCategory = db.lists.customerCategory || [...CUSTOMER_CATEGORIES];
+  db.lists.distributorType = db.lists.distributorType || [...DISTRIBUTOR_TYPES];
+  PARTNER_TYPES.forEach(v => {
+    if (!db.lists.source.includes(v)) db.lists.source.push(v);
+    if (!db.lists.distributorType.includes(v)) db.lists.distributorType.push(v);
+  });
+  db.version = 5;
+  return true;
 }
 // الإصدار 4: العملاء المشتركون، ودمج أدوار المساعد وما بعد البيع والدعم في رجل البيع، وصلاحية تسجيل المستخدمين
 function migrateV4(db) {
@@ -1965,7 +2245,7 @@ function seedDemo(db) {
     const ownerId = repIds[i % repIds.length];
     const govCode = market === 'egypt' ? pick(govWeights) : '';
     const reg = govCode ? regionByCode(govCode) : null;
-    const prod = pick(db.products);
+    const prod = pick(db.products.filter(p => p.active !== false && productMarket(p) === market));
     const country = market === 'intl' ? pick(intlCountries) : '';
     const dial = market === 'intl' ? findCountry(country)?.dial : '';
     const offset = rnd() < .16 ? 0 : rnd() < .2 ? -int(1, 7) : int(1, 24);
@@ -1973,7 +2253,7 @@ function seedDemo(db) {
     db.counters.customer++;
     return {
       id: uid(), code: `C-${String(db.counters.customer).padStart(5, '0')}`, market, country, govCode, subCode: reg ? pick(reg.items).code : '',
-      name: `${pick(first)} ${pick(first)} ${pick(last)}`,
+      name: `${pick(first)} ${pick(first)} ${pick(last)}`, category: pick(['مزارع', 'مزارع', 'مزارع', 'مهندس زراعي']), files: [],
       phone1: market === 'egypt' ? `${pick(['010', '011', '012', '015'])}${int(10000000, 99999999)}` : `+${dial}${int(100000000, 999999999)}`,
       phone2: rnd() < .3 ? `${pick(['010', '011', '012'])}${int(10000000, 99999999)}` : '',
       address: '', area: pick([5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 300]), irrigation: pick(db.lists.irrigation), crops: rnd() < .3 ? [pick(crops), pick(crops)].filter((v, x, a) => a.indexOf(v) === x) : [pick(crops)],
@@ -2013,10 +2293,10 @@ function seedDemo(db) {
       d.setDate(int(1, back === 0 ? new Date().getDate() : 28));
       const date = iso(d);
       const c = pick(db.customers);
-      const prod = db.products.find(p => p.type === c.deviceType && p.size === c.deviceSize) || pick(db.products);
+      const prod = db.products.find(p => p.type === c.deviceType && p.size === c.deviceSize && productMarket(p) === c.market) || pick(db.products.filter(p => p.active !== false));
       const qty = rnd() < .75 ? 1 : int(2, 3);
       const usd = c.market === 'intl';
-      const price = usd ? Math.round(prod.price / db.settings.usdRate) : prod.price;
+      const price = productPrice(prod, usd ? 'USD' : 'EGP');
       const total = price * qty;
       const payType = pick(['cash', 'cash', 'installment', 'installment', 'deposit']);
       let deposit = 0;
@@ -2077,7 +2357,7 @@ function seedDemo(db) {
   seedSharesDemo(db);
 }
 
-const DISTRIBUTOR_TYPES = ['شركة', 'مزارع', 'مهندس زراعي'];
+const DISTRIBUTOR_TYPES = ['شركة', 'مزارع', 'مهندس زراعي', 'وكيل', 'موزع'];
 // النسخة المنشورة تستبدل العناوين بعناوين وهمية، فتُترك القائمة فارغة وتستخدم خدمة جوجل عناوينها الافتراضية
 const DEFAULT_MAIL_MANAGERS = ['user@example.com', 'user@example.com'].filter(m => !/@example\.com$/i.test(m));
 function seedDistributorsDemo(db) {
@@ -2305,6 +2585,7 @@ function filterCustomers(market, f) {
     if (market === 'egypt' && f.code && c.govCode !== f.code) return false;
     if (f.rating && c.rating !== f.rating) return false;
     if (f.crop && !c.crops.includes(f.crop)) return false;
+    if (f.ctg && c.category !== f.ctg) return false;
     if (f.rep && !followedBy(c, f.rep)) return false;
     if (f.stage && c.stageId !== f.stage) return false;
     if (f.pay === 'none' ? c.payType : f.pay && c.payType !== f.pay) return false;
@@ -2338,7 +2619,8 @@ function viewCustomers(root, market) {
     ${market === 'egypt' ? `<select class="inp" id="gov" aria-label="${t('المحافظة')}">${govOptions(st.gov)}</select><select class="inp" id="code" aria-label="${t('كود المنطقة')}"></select>` : ''}
     <select class="inp" id="stage" aria-label="${t('المرحلة')}">${opts(stagesAll().map(s => [s.id, label(s)]), st.stage, t('جميع المراحل'))}</select>
     <select class="inp" id="rating" aria-label="${t('التقييم')}">${optsT(RATINGS, st.rating, t('جميع التقييمات'))}</select>
-    <select class="inp" id="crop" aria-label="${t('المحصول')}">${optsT(usedCrops, st.crop, t('جميع المحاصيل'))}</select>
+    <select class="inp" id="crop" aria-label="${t('المحصول')}">${cropOptions(usedCrops, st.crop, t('جميع المحاصيل'))}</select>
+    <select class="inp" id="ctg" aria-label="${t('تصنيف العميل')}">${optsT(DB.lists.customerCategory || CUSTOMER_CATEGORIES, st.ctg, t('جميع التصنيفات'))}</select>
     ${can('customers.view_all') ? `<select class="inp" id="rep" aria-label="${t('رجل البيع')}">${repOptions(st.rep)}</select>` : ''}
     <select class="inp" id="pay" aria-label="${t('حالة الشراء')}">${optsT([['cash', 'نقدًا'], ['installment', 'تقسيط'], ['deposit', 'مقدم'], ['none', 'لم يشترِ']], st.pay, t('جميع حالات الشراء'))}</select>
     <select class="inp" id="follow" aria-label="${t('المتابعة')}">${optsT([['today', 'متابعات اليوم'], ['late', 'متأخرة']], st.follow, t('جميع المتابعات'))}</select>
@@ -2376,14 +2658,14 @@ function viewCustomers(root, market) {
     if (!rows.length) { el.innerHTML = `<div class="card empty">${t('لا يوجد عملاء مطابقون.')} ${t(visibleCustomers().some(c => c.market === market) ? 'جرّب تغيير عوامل التصفية.' : 'ابدأ برفع ملف أو إضافة عميل جديد.')}</div>`; return; }
     const manyOwners = can('customers.view_all') || (ME.assists || []).length;
     el.innerHTML = `<div class="tbl-wrap"><table class="tbl"><thead>
-      <tr><th class="sticky-col" rowspan="2">${t('الاسم')}</th><th rowspan="2">${t('رقم الهاتف 1')}</th><th rowspan="2">${t('رقم الهاتف 2')}</th><th rowspan="2">${t(market === 'egypt' ? 'العنوان' : 'الدولة / العنوان')}</th>${market === 'egypt' ? `<th rowspan="2">${t('الكود')}</th>` : ''}<th rowspan="2">${t('المساحة')}</th><th rowspan="2">${t('نوع الري')}</th><th rowspan="2">${t('نوع المحصول')}</th><th rowspan="2">${t('الملوحة')}</th><th rowspan="2">${t('مصدر المياه')}</th><th rowspan="2">${t('نوع الجهاز')}</th><th rowspan="2">${t('المقاس')}</th><th rowspan="2">${t('مصدر المعرفة')}</th><th rowspan="2">${t('التقييم')}</th><th rowspan="2">${t('المرحلة')}</th><th rowspan="2">${t('تاريخ الاتصال')}</th><th rowspan="2">${t('تاريخ المتابعة')}</th><th colspan="3" class="grp">${t('حالة الشراء')}</th>${fields.map(f => `<th rowspan="2">${esc(label(f))}</th>`).join('')}${manyOwners ? `<th rowspan="2">${t('رجل البيع')}</th>` : ''}</tr>
+      <tr><th class="sticky-col" rowspan="2">${t('الاسم')}</th><th rowspan="2">${t('التصنيف')}</th><th rowspan="2">${t('رقم الهاتف 1')}</th><th rowspan="2">${t('رقم الهاتف 2')}</th><th rowspan="2">${t(market === 'egypt' ? 'العنوان' : 'الدولة / العنوان')}</th>${market === 'egypt' ? `<th rowspan="2">${t('الكود')}</th>` : ''}<th rowspan="2">${t('المساحة')}</th><th rowspan="2">${t('نوع الري')}</th><th rowspan="2">${t('نوع المحصول')}</th><th rowspan="2">${t('الملوحة')}</th><th rowspan="2">${t('مصدر المياه')}</th><th rowspan="2">${t('نوع الجهاز')}</th><th rowspan="2">${t('المقاس')}</th><th rowspan="2">${t('مصدر المعرفة')}</th><th rowspan="2">${t('التقييم')}</th><th rowspan="2">${t('المرحلة')}</th><th rowspan="2">${t('تاريخ الاتصال')}</th><th rowspan="2">${t('تاريخ المتابعة')}</th><th colspan="3" class="grp">${t('حالة الشراء')}</th>${fields.map(f => `<th rowspan="2">${esc(label(f))}</th>`).join('')}${manyOwners ? `<th rowspan="2">${t('رجل البيع')}</th>` : ''}</tr>
       <tr><th class="grp">${t('الدفع')}</th><th class="grp">${t('قيمة المقدم')}</th><th class="grp">${t('تاريخ السداد')}</th></tr></thead><tbody>
       ${rows.map(c => {
         const seas = customerSeason(c, m).length > 0;
         return `<tr class="click ${seas ? 'season' : ''}" data-id="${c.id}">
-        <td class="sticky-col">${esc(c.name)} ${c.rating === 'مميز' ? ratingPill(c.rating) : ''}</td><td>${phoneLink(c.phone1)}</td><td>${phoneLink(c.phone2)}</td>
+        <td class="sticky-col">${esc(c.name)} ${c.rating === 'مميز' ? ratingPill(c.rating) : ''}${(c.files || []).length ? ` <span class="pill p-gray" title="${t('التحاليل')}">📎 ${c.files.length}</span>` : ''}</td><td>${c.category ? categoryPill(c.category) : ''}</td><td>${phoneLink(c.phone1)}</td><td>${phoneLink(c.phone2)}</td>
         <td class="wrap">${esc(custAddress(c))}</td>${market === 'egypt' ? `<td><span class="code-tag">${esc(c.subCode || c.govCode || '-')}</span></td>` : ''}
-        <td>${c.area === '' ? '' : `${esc(c.area)} ${t('فدان')}`}</td><td>${esc(tv(c.irrigation))}</td><td>${esc(c.crops.map(tv).join(LANG === 'en' ? ', ' : '، '))} ${seasonBadges(c, m)}</td><td class="num">${esc(c.salinity)}</td><td>${esc(tv(c.waterSource))}</td><td>${esc(tv(c.deviceType))}</td><td>${esc(tv(c.deviceSize))}</td><td>${esc(tv(c.source))}</td>
+        <td>${c.area === '' ? '' : `${esc(c.area)} ${t('فدان')}`}</td><td>${esc(tv(c.irrigation))}</td><td>${esc(c.crops.map(tv).join(LANG === 'en' ? ', ' : '، '))} ${seasonBadges(c, m)}</td><td class="num">${esc(c.salinity)}</td><td>${esc(tv(c.waterSource))}</td><td>${esc(tv(c.deviceType))}</td><td>${esc(tv(c.deviceSize))}</td><td>${esc(tv(c.source))}${c.viaDistributorId ? `<div class="muted">${esc(distName(c.viaDistributorId))}</div>` : ''}</td>
         <td>${ratingPill(c.rating)}</td><td>${stagePill(c)}</td><td>${fmtDate(c.contactDate)}</td><td>${followPill(c.followupDate)}</td>
         <td>${payPill(c)}</td><td>${c.deposit ? money(c.deposit) : ''}</td><td>${fmtDate(c.payDate)}</td>${fields.map(f => `<td>${esc(c.custom?.[f.id] ?? '')}</td>`).join('')}${manyOwners ? `<td>${esc(userName(c.ownerId))}</td>` : ''}</tr>`;
       }).join('')}</tbody></table>
@@ -2393,7 +2675,7 @@ function viewCustomers(root, market) {
     $('#next', el).onclick = () => { st.page++; draw(); };
   };
 
-  ['rating', 'crop', 'rep', 'pay', 'follow', 'gov', 'code', 'stage'].forEach(k => {
+  ['rating', 'crop', 'ctg', 'rep', 'pay', 'follow', 'gov', 'code', 'stage'].forEach(k => {
     const el = $('#' + k, root);
     if (el) el.onchange = () => {
       st[k] = el.value; st.page = 1;
@@ -2452,32 +2734,111 @@ function bindLocation(root, prefix, d) {
   gov.onchange = () => { d.subCode = ''; fill(); };
   fill();
 }
-const cropPicker = () => `<input class="inp" id="cropq" list="croplist" placeholder="${t('اكتب اسم المحصول ثم اضغط Enter')}"><datalist id="croplist">${DB.crops.map(c => `<option value="${esc(tv(c.name))}">`).join('')}</datalist><div class="chips mt" id="cropchips"></div>`;
+// المحاصيل: اختيار من قائمة مصنفة أو كتابة الاسم، وكل محصول يُحفظ وحده
+const cropPicker = () => `<div class="grid2"><select class="inp" id="cropsel" aria-label="${t('اختر المحصول من القائمة')}">${cropOptions(DB.crops.map(c => c.name), '', t('اختر المحصول من القائمة'))}</select><input class="inp" id="cropq" list="croplist" placeholder="${t('أو اكتب اسم المحصول ثم اضغط Enter')}"></div><datalist id="croplist">${DB.crops.map(c => `<option value="${esc(tv(c.name))}">`).join('')}</datalist><div class="chips mt" id="cropchips"></div>`;
 function bindCropPicker(root, d) {
   const draw = () => {
     $('#cropchips', root).innerHTML = d.crops.map(c => `<button type="button" class="chip on" data-c="${esc(c)}">${esc(tv(c))} <span class="x">×</span></button>`).join('');
     $$('#cropchips .chip', root).forEach(b => b.onclick = () => { d.crops = d.crops.filter(x => x !== b.dataset.c); draw(); });
   };
+  const push = list => { splitCrops(list).forEach(c => { if (!d.crops.includes(c)) d.crops.push(c); }); draw(); };
   const add = () => {
     const inp = $('#cropq', root), v = inp.value.trim();
     if (!v) return;
-    const crop = DB.crops.find(c => c.name === v || c.name === 'ال' + v || tv(c.name).toLowerCase() === v.toLowerCase())?.name || v;
-    if (!d.crops.includes(crop)) d.crops.push(crop);
-    inp.value = ''; draw();
+    // الاسم الإنجليزي المختار من القائمة يُحوَّل إلى اسمه المعتمد
+    push(DB.crops.find(c => tv(c.name).toLowerCase() === v.toLowerCase())?.name || v);
+    inp.value = '';
   };
   $('#cropq', root).addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
   $('#cropq', root).addEventListener('change', add);
+  $('#cropsel', root).onchange = e => { if (e.target.value) push(e.target.value); e.target.value = ''; };
   draw();
 }
+const CATEGORY_PILL = { 'مزارع': 'p-plant', 'مهندس زراعي': 'p-after', 'وكيل': 'p-blue', 'موزع': 'p-orange' };
+const categoryPill = v => `<span class="pill ${CATEGORY_PILL[v] || 'p-gray'}">${esc(tv(v))}</span>`;
+const categoryChips = d => `<div class="field"><label>${t('تصنيف العميل')}</label><div class="chips" id="ctgc">${(DB.lists.customerCategory || CUSTOMER_CATEGORIES).map(v => `<button type="button" class="chip ${d.category === v ? 'on' : ''}" data-ctg="${esc(v)}">${esc(tv(v))}</button>`).join('')}</div><small class="muted" id="ctgHint">${isPartner(d.category) ? t('سيُضاف تلقائيًا إلى قائمة الموزعين') : ''}</small></div>`;
+function bindCategory(root, d) {
+  $$('#ctgc .chip', root).forEach(b => b.onclick = () => {
+    d.category = d.category === b.dataset.ctg ? '' : b.dataset.ctg;
+    $$('#ctgc .chip', root).forEach(x => x.classList.toggle('on', x.dataset.ctg === d.category));
+    $('#ctgHint', root).textContent = isPartner(d.category) ? t('سيُضاف تلقائيًا إلى قائمة الموزعين') : '';
+  });
+}
+// مصدر المعرفة "وكيل" أو "موزع": يُختار اسمه من قائمة الموزعين، أو يُضاف اسم جديد
+const viaField = d => {
+  const list = DB.distributors.filter(x => x.active !== false || x.id === d.viaDistributorId).map(x => [x.id, `${x.name}${x.type ? ` (${tv(x.type)})` : ''}`]).sort((a, b) => a[1].localeCompare(b[1], 'ar'));
+  return `<div class="field" id="viaWrap" ${isPartner(d.source) ? '' : 'hidden'}><label>${t('اسم الوكيل أو الموزع')} <span class="req">*</span></label><select class="inp" id="via">${opts(list, d.viaDistributorId || '', t('اختر'))}<option value="__new">+ ${esc(t('إضافة اسم جديد'))}</option></select><input class="inp mt" id="viaNew" hidden placeholder="${t('اسم الوكيل أو الموزع الجديد')}"></div>`;
+};
+function bindVia(root) {
+  const src = $('[data-f="source"]', root), wrap = $('#viaWrap', root), sel = $('#via', root), nw = $('#viaNew', root);
+  src.addEventListener('change', () => { wrap.hidden = !isPartner(src.value); });
+  sel.onchange = () => { nw.hidden = sel.value !== '__new'; if (!nw.hidden) nw.focus(); };
+}
+// يعيد رقم الموزع المختار، أو الاسم الجديد ليُضاف عند الحفظ
+function readVia(root, source) {
+  if (!isPartner(source)) return { id: '', newName: '' };
+  const sel = $('#via', root);
+  if (sel.value === '__new') {
+    const name = $('#viaNew', root).value.trim();
+    return name ? { id: '', newName: name } : { error: t('يرجى كتابة اسم الوكيل أو الموزع') };
+  }
+  return sel.value ? { id: sel.value, newName: '' } : { error: t('يرجى اختيار الوكيل أو الموزع') };
+}
+const viaId = (via, source) => via.newName ? findOrCreateDistributor(via.newName, source) : via.id || '';
+// الأجهزة حسب سوق العميل: داخل مصر بالجنيه وخارجها بالدولار، مع السعر الحالي من قائمة الأسعار
 const deviceFields = d => {
-  const types = [...new Set(activeProducts(d.domainId).map(p => p.type))];
-  return `<div class="grid2"><div class="field"><label>${t('نوع الجهاز المطلوب')}</label><select class="inp" id="deviceType">${optsT(types, d.deviceType, t('اختر'))}</select></div><div class="field"><label>${t('مقاس الجهاز المطلوب')}</label><select class="inp" id="deviceSize"></select></div></div>`;
+  const list = productsFor(d.domainId, d.market || 'egypt');
+  const types = [...new Set(list.map(p => p.type))];
+  // الجهاز المسجل سابقًا يبقى ظاهرًا حتى لو أُوقف، فلا يُمسح عند حفظ التعديل
+  if (d.deviceType && !types.includes(d.deviceType)) types.push(d.deviceType);
+  return `<div class="grid2"><div class="field"><label>${t('نوع الجهاز المطلوب')}</label><select class="inp" id="deviceType">${optsT(types, d.deviceType, t('اختر'))}</select></div><div class="field"><label>${t('مقاس الجهاز المطلوب')}</label><select class="inp" id="deviceSize"></select><small class="muted" id="devPrice"></small></div></div>`;
 };
 function bindDevice(root, d) {
-  const typeSel = $('#deviceType', root), s = $('#deviceSize', root);
-  const fill = () => { s.innerHTML = optsT(activeProducts(d.domainId).filter(p => p.type === typeSel.value).map(p => p.size), d.deviceSize, typeSel.value ? t('اختر') : '—'); };
+  const typeSel = $('#deviceType', root), s = $('#deviceSize', root), price = $('#devPrice', root);
+  const list = () => productsFor(d.domainId, d.market || 'egypt').filter(p => p.type === typeSel.value);
+  const showPrice = () => {
+    const p = list().find(x => x.size === s.value);
+    price.textContent = p ? `${t('السعر الحالي')}: ${money(p.price)} ${curName(productCurrency(p))}` : '';
+  };
+  const fill = () => {
+    const sizes = list().map(p => p.size);
+    if (typeSel.value === d.deviceType && d.deviceSize && !sizes.includes(d.deviceSize)) sizes.push(d.deviceSize);
+    s.innerHTML = optsT(sizes, d.deviceSize, typeSel.value ? t('اختر') : '—');
+    showPrice();
+  };
   typeSel.onchange = () => { d.deviceSize = ''; fill(); };
+  s.onchange = showPrice;
   fill();
+}
+// رفع تحليل المياه أو التربة: صورة أو PDF
+const fileKindSelect = (id, sel = 'water') => `<select class="inp" id="${id}">${optsT(Object.entries(FILE_KINDS), sel)}</select>`;
+const FILE_ACCEPT = 'image/*,application/pdf';
+const fileKindPill = k => `<span class="pill ${k === 'water' ? 'p-blue' : k === 'soil' ? 'p-harvest' : 'p-gray'}">${esc(tv(FILE_KINDS[k] || FILE_KINDS.other))}</span>`;
+async function uploadFiles(customerId, list) {
+  let ok = 0;
+  for (const p of list) {
+    try { await addCustomerFile(customerId, p.file, p.kind, p.note || ''); ok++; }
+    catch (err) { toast(`${p.file.name}: ${err.message}`, 'err'); }
+  }
+  if (ok) toast(t('تم رفع الملفات: {n}', { n: ok }), 'ok');
+  return ok;
+}
+// الصورة تُعرض داخل النظام، وملف PDF يُفتح في نافذة جديدة أو يُنزَّل إذا منع المتصفح النوافذ
+async function openStoredFile(f) {
+  if (!f) return;
+  const isImg = /^image\/(jpeg|png|webp|gif)$/.test(f.mime);
+  const win = isImg ? null : window.open('', '_blank');
+  try {
+    const blob = await fetchFile(f);
+    const url = URL.createObjectURL(blob);
+    if (isImg) openModal({ title: esc(f.name), wide: true, body: `<div style="text-align:center"><img src="${url}" alt="${esc(f.name)}" style="max-width:100%;height:auto;border-radius:8px"></div>`, footer: `<a class="btn" href="${url}" download="${esc(f.name)}">⬇ ${t('تنزيل')}</a>` });
+    else if (win) win.location.href = url;
+    else { const a = document.createElement('a'); a.href = url; a.download = f.name; a.click(); }
+    setTimeout(() => URL.revokeObjectURL(url), 10 * 60000);
+  } catch (err) {
+    if (win) win.close();
+    toast(err.message, 'err');
+  }
 }
 // الحقول التي أضافها المدير
 function customFieldInputs(section, d) {
@@ -2501,9 +2862,11 @@ const missingRequired = (root, domainId, values) => activeFields(domainId).filte
 
 function openWizard(market = 'egypt') {
   const defOwner = userCan(ME, 'customers.hold') ? ME.id : (sellers()[0]?.id || ME.id);
-  const d = { market, country: '', govCode: '', subCode: '', name: '', phone1: '', phone2: '', address: '', area: '', irrigation: '', crops: [], salinity: '', waterSource: '', deviceType: '', deviceSize: '', source: '', rating: 'جيد', contactDate: today(), followupDate: addDays(today(), 3), firstNote: '', ownerId: defOwner, domainId: activeDomains()[0]?.id, custom: {} };
+  const d = { market, category: '', viaDistributorId: '', country: '', govCode: '', subCode: '', name: '', phone1: '', phone2: '', address: '', area: '', irrigation: '', crops: [], salinity: '', waterSource: '', deviceType: '', deviceSize: '', source: '', rating: 'جيد', contactDate: today(), followupDate: addDays(today(), 3), firstNote: '', ownerId: defOwner, domainId: activeDomains()[0]?.id, custom: {} };
   const STEPS = ['بيانات الاتصال', 'الموقع', 'الأرض والمياه', 'الطلب والتقييم', 'المتابعة'];
-  let step = 0;
+  let step = 0, via = { id: '', newName: '' };
+  // ملفات التحاليل المختارة أثناء الإدخال، وتُرفع بعد حفظ العميل
+  const pending = [];
   const m = openModal({ title: t('عميل جديد'), wide: true, body: '<div id="w"></div>', footer: `<button class="btn primary" id="nx">${t('التالي')}</button><button class="btn" id="bk">${t('السابق')}</button><span class="spacer"></span><span class="muted" id="st"></span>` });
   const box = $('#w', m.el);
   const collect = () => {
@@ -2525,6 +2888,11 @@ function openWizard(market = 'egypt') {
     }
     if (step === 2 && !d.crops.length) return t('يرجى اختيار محصول واحد على الأقل، فهو ما يربط العميل بموسمه');
     if (step === 3 && !d.rating) return t('يرجى اختيار تقييم العميل');
+    if (step === 3) {
+      const v = readVia(box, d.source);
+      if (v.error) return v.error;
+      via = v; d.viaDistributorId = v.id;
+    }
     if (step === 4 && !d.followupDate) return t('يجب تحديد تاريخ المتابعة التالية');
     const miss = missingRequired(box, d.domainId, d.custom);
     if (miss.length) return t('يرجى إدخال: {f}', { f: label(miss[0]) });
@@ -2539,6 +2907,7 @@ function openWizard(market = 'egypt') {
         <div class="field"><label>${t('رقم الهاتف 2')}</label><input class="inp" dir="ltr" data-f="phone2" value="${esc(d.phone2)}"></div>
         ${activeDomains().length > 1 ? `<div class="field"><label>${t('المجال')}</label><select class="inp" data-f="domainId">${opts(activeDomains().map(x => [x.id, label(x)]), d.domainId)}</select></div>` : ''}</div>
         <div class="field"><label>${t('نوع العميل')}</label><div class="chips"><button type="button" class="chip ${d.market === 'egypt' ? 'on' : ''}" data-mk="egypt">${t('داخل مصر')}</button><button type="button" class="chip ${d.market === 'intl' ? 'on' : ''}" data-mk="intl">${t('خارج مصر')}</button></div></div>
+        ${categoryChips(d)}
         <div class="grid2">${customFieldInputs('basic', d)}</div>`,
       () => d.market === 'egypt'
         ? `${locationFields('x', d)}<div class="field"><label>${t('العنوان بالتفصيل')}</label><input class="inp" data-f="address" value="${esc(d.address)}" placeholder="${t('القرية، الجمعية، علامة مميزة')}"></div>`
@@ -2548,8 +2917,9 @@ function openWizard(market = 'egypt') {
         <div class="field"><label>${t('مصدر المياه')}</label><select class="inp" data-f="waterSource">${optsT(DB.lists.waterSource, d.waterSource, t('اختر'))}</select></div></div>
         <div class="field"><label>${t('درجة ملوحة المياه')}</label><input class="inp" data-f="salinity" dir="ltr" value="${esc(d.salinity)}" placeholder="2500 ppm"></div>
         <div class="field"><label>${t('نوع المحصول')} <span class="req">*</span></label>${cropPicker()}</div>
+        <div class="field"><label>${t('تحليل المياه أو التربة (اختياري)')}</label><div class="grid2">${fileKindSelect('wkind')}<input class="inp" type="file" id="wfile" accept="${FILE_ACCEPT}" multiple></div><div class="chips mt" id="wfiles"></div><small class="muted">${t('صورة أو ملف PDF، ويمكن إضافته لاحقًا من ملف العميل')}</small></div>
         <div class="grid2">${customFieldInputs('land', d)}</div>`,
-      () => `${deviceFields(d)}<div class="field"><label>${t('مصدر المعرفة')}</label><select class="inp" data-f="source">${optsT(DB.lists.source, d.source, t('اختر'))}</select></div>
+      () => `${deviceFields(d)}<div class="grid2"><div class="field"><label>${t('مصدر المعرفة')}</label><select class="inp" data-f="source">${optsT(DB.lists.source, d.source, t('اختر'))}</select></div>${viaField(d)}</div>
         <div class="field"><label>${t('تقييم العميل')} <span class="req">*</span></label><div class="chips" id="rate">${RATINGS.map(r => `<button type="button" class="chip ${d.rating === r ? 'on' : ''}" data-r="${r}">${tv(r)}</button>`).join('')}</div></div>
         <div class="grid2">${customFieldInputs('request', d)}</div>`,
       () => `<div class="grid2"><div class="field"><label>${t('تاريخ الاتصال')}</label><input class="inp" type="date" data-f="contactDate" value="${d.contactDate}"></div><div class="field"><label>${t('تاريخ المتابعة التالية')} <span class="req">*</span></label><input class="inp" type="date" data-f="followupDate" min="${today()}" value="${d.followupDate}"></div></div>
@@ -2567,12 +2937,29 @@ function openWizard(market = 'egypt') {
         el.className = dup ? 'bad' : '';
         el.textContent = dup ? t('هذا الرقم مسجل باسم "{name}" لدى {owner}', { name: dup.name, owner: userName(dup.ownerId) }) : '';
       };
-      $$('[data-mk]', box).forEach(b => b.onclick = () => { collect(); d.market = b.dataset.mk; render(); });
+      $$('[data-mk]', box).forEach(b => b.onclick = () => { collect(); d.market = b.dataset.mk; d.deviceType = ''; d.deviceSize = ''; render(); });
+      bindCategory(box, d);
     }
     if (step === 1 && d.market === 'egypt') bindLocation(box, 'x', d);
-    if (step === 2) bindCropPicker(box, d);
+    if (step === 2) {
+      bindCropPicker(box, d);
+      const drawFiles = () => {
+        $('#wfiles', box).innerHTML = pending.map((p, i) => `<button type="button" class="chip on" data-pf="${i}">📎 ${esc(tv(FILE_KINDS[p.kind]))}: ${esc(p.file.name)} <span class="x">×</span></button>`).join('');
+        $$('[data-pf]', box).forEach(b => b.onclick = () => { pending.splice(+b.dataset.pf, 1); drawFiles(); });
+      };
+      $('#wfile', box).onchange = e => {
+        [...e.target.files].forEach(file => {
+          if (!FILE_TYPES.test(file.type)) toast(t('يُقبل ملف صورة أو PDF فقط'), 'err');
+          else pending.push({ file, kind: $('#wkind', box).value });
+        });
+        e.target.value = '';
+        drawFiles();
+      };
+      drawFiles();
+    }
     if (step === 3) {
       bindDevice(box, d);
+      bindVia(box);
       $$('#rate .chip', box).forEach(b => b.onclick = () => { d.rating = b.dataset.r; $$('#rate .chip', box).forEach(x => x.classList.toggle('on', x === b)); });
     }
   };
@@ -2583,14 +2970,18 @@ function openWizard(market = 'egypt') {
     if (step < STEPS.length - 1) { step++; render(); return; }
     const { firstNote, ...data } = d;
     if (data.market === 'intl') { data.govCode = ''; data.subCode = ''; } else data.country = '';
+    data.viaDistributorId = viaId(via, data.source);
     const c = createCustomer(data);
     if (firstNote) {
       DB.followups.unshift({ id: uid(), customerId: c.id, userId: ME.id, at: nowStamp(), text: firstNote, outcome: 'تم الرد', nextDate: c.followupDate, viaVoice: false, stageId: c.stageId });
       saveDB();
     }
+    const partner = syncPartner(c);
     m.close();
     toast(t('تم حفظ العميل {name} بالكود {code}', { name: c.name, code: c.code }), 'ok');
+    if (partner?.fresh) toast(t('أُضيف {name} إلى قائمة الموزعين بتصنيف {type}', { name: c.name, type: tv(c.category) }), 'ok');
     route();
+    if (pending.length) uploadFiles(c.id, pending.splice(0));
   };
   $('#bk', m.el).onclick = () => { collect(); step = Math.max(0, step - 1); render(); };
   render();
@@ -2666,7 +3057,7 @@ function openCustomer(id, tab = 'journey') {
     const after = afterSalesOf(c.id);
     const tickets = c.market === 'egypt' && can('support.view') ? DB.tickets.filter(x => x.customerId === c.id) : [];
     const showSupport = c.market === 'egypt' && can('support.view');
-    const tabs = [['journey', t('المسار والمتابعات')], ['info', t('البيانات')], ['ord', t('الطلبات ({n})', { n: orders.length })]];
+    const tabs = [['journey', t('المسار والمتابعات')], ['info', t('البيانات')], ['files', t('التحاليل ({n})', { n: (c.files || []).length })], ['ord', t('الطلبات ({n})', { n: orders.length })]];
     if (can('aftersales.view')) tabs.push(['after', t('ما بعد البيع ({n})', { n: after.length })]);
     if (showSupport) tabs.push(['support', t('الدعم الفني ({n})', { n: tickets.length })]);
     tabs.push(['log', t('سجل التعديلات ({n})', { n: history.length })]);
@@ -2701,6 +3092,7 @@ function openCustomer(id, tab = 'journey') {
       const assistants = DB.users.filter(u => (u.assists || []).includes(c.ownerId) && !(c.assistantIds || []).includes(u.id)).map(u => u.id);
       const shared = sharesOf(c).filter(s => sharedWith(c, s.userId)).map(s => `${esc(userName(s.userId))} <span class="muted">(${t('عيّنه {u} في {d}', { u: esc(userName(s.by)), d: fmtDate(s.at) })})</span>`).join('<br>');
       body.innerHTML = `<div class="card"><div class="kv">
+        ${kv(t('تصنيف العميل'), c.category ? `${categoryPill(c.category)}${c.partnerId ? ` <span class="muted">${t('مسجل في قائمة الموزعين')}</span>` : ''}` : '')}${kv(t('عن طريق الوكيل أو الموزع'), esc(distName(c.viaDistributorId)))}
         ${kv(t('رقم الهاتف 1'), phoneLink(c.phone1))}${kv(t('رقم الهاتف 2'), phoneLink(c.phone2))}
         ${kv(t('العنوان'), esc(custAddress(c)))}${kv(t('كود المنطقة'), c.subCode || c.govCode ? `<span class="code-tag">${esc(c.subCode || c.govCode)}</span>` : '')}
         ${activeDomains().length > 1 ? kv(t('المجال'), esc(label(DB.domains.find(x => x.id === c.domainId)))) : ''}${kv(t('المرحلة'), stagePill(c))}
@@ -2714,6 +3106,26 @@ function openCustomer(id, tab = 'journey') {
         ${kv(t('يتابعه أيضًا'), shared)}${assistants.length ? kv(t('الزملاء المساعدون'), esc(assistants.map(userName).join('، '))) : ''}
         ${activeFields(c.domainId).map(f => kv(esc(label(f)), esc(c.custom?.[f.id] ?? ''))).join('')}
       </div></div>`;
+    } else if (tab === 'files') {
+      const files = c.files || [];
+      const canDel = f => f.by === ME.id || can('customers.edit');
+      body.innerHTML = `${canUploadFiles() ? `<div class="card"><div class="grid3" style="align-items:end"><div class="field"><label>${t('نوع الملف')}</label>${fileKindSelect('fk')}</div><div class="field"><label>${t('ملاحظة')}</label><input class="inp" id="fnote" placeholder="${t('اختياري، مثل تاريخ التحليل أو اسم المعمل')}"></div><div class="field"><label>${t('الملف')}</label><input class="inp" type="file" id="ff" accept="${FILE_ACCEPT}" multiple></div></div>
+        <small class="muted">${t('صورة أو PDF حتى 8 ميجابايت')}${fileStore() === 'local' ? ` · ${t('في هذا الوضع يُحفظ الملف في هذا المتصفح فقط')}` : ''}</small><div id="fup" class="muted mt" role="status"></div></div>` : ''}
+        ${files.length ? `<div class="tbl-wrap mt"><table class="tbl"><thead><tr><th>${t('النوع')}</th><th>${t('الملف')}</th><th>${t('ملاحظة')}</th><th>${t('رفعه')}</th><th>${t('التاريخ')}</th><th></th></tr></thead><tbody>${files.map(f => `<tr><td>${fileKindPill(f.kind)}</td><td class="wrap">${esc(f.name)} <span class="muted">${fileSize(f.size)}</span></td><td class="wrap">${esc(f.note)}</td><td>${esc(userName(f.by))}</td><td>${fmtDT(f.at)}</td><td><button class="btn sm" data-fo="${f.id}">${t('عرض')}</button>${canDel(f) ? ` <button class="btn sm danger" data-fd="${f.id}">${t('حذف')}</button>` : ''}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty mt">${t('لا توجد تحاليل مرفوعة بعد')}</div>`}`;
+      const ff = $('#ff', body);
+      if (ff) ff.onchange = async () => {
+        const list = [...ff.files].map(file => ({ file, kind: $('#fk', body).value, note: $('#fnote', body).value.trim() }));
+        if (!list.length) return;
+        ff.disabled = true;
+        $('#fup', body).textContent = t('جارٍ رفع الملفات...');
+        await uploadFiles(c.id, list);
+        draw();
+      };
+      $$('[data-fo]', body).forEach(b => b.onclick = () => openStoredFile(files.find(f => f.id === b.dataset.fo)));
+      $$('[data-fd]', body).forEach(b => b.onclick = () => {
+        const f = files.find(x => x.id === b.dataset.fd);
+        confirmBox(t('حذف الملف'), t('سيُحذف "{name}" من ملف العميل.', { name: esc(f.name) }), () => { removeCustomerFile(c, f.id); draw(); }, t('حذف'));
+      });
     } else if (tab === 'ord') {
       body.innerHTML = orders.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('الإجمالي')}</th><th>${t('الدفع')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${orders.map(o => `<tr class="click" data-o="${o.id}"><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${money(o.total)} ${curLabel(o)}</td><td>${t(PAY_TYPES[o.payType])}</td><td>${statusPill(o.status)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا توجد طلبات بعد')}</div>`;
       $$('[data-o]', body).forEach(tr => tr.onclick = () => openOrder(tr.dataset.o, draw));
@@ -2744,6 +3156,7 @@ function openEditCustomer(id, onDone) {
     title: t('تعديل: {name}', { name: esc(c.name) }), wide: true,
     body: `<div class="grid2"><div class="field"><label>${t('الاسم')}</label><input class="inp" data-f="name" value="${esc(c.name)}"></div>${can('customers.assign') ? `<div class="field"><label>${t('رجل البيع (نقل العميل)')}</label><select class="inp" data-f="ownerId">${repOptions(c.ownerId, '')}</select></div>` : '<div></div>'}
       <div class="field"><label>${t('رقم الهاتف 1')}</label><input class="inp" dir="ltr" data-f="phone1" value="${esc(c.phone1)}"></div><div class="field"><label>${t('رقم الهاتف 2')}</label><input class="inp" dir="ltr" data-f="phone2" value="${esc(c.phone2)}"></div></div>
+      ${categoryChips(d)}
       ${c.market === 'egypt' ? locationFields('e', d) : `<div class="field"><label>${t('الدولة')}</label><select class="inp" data-f="country">${countryOptions(c.country)}</select></div>`}
       <div class="field"><label>${t('العنوان')}</label><input class="inp" data-f="address" value="${esc(c.address)}"></div>
       <div class="grid3"><div class="field"><label>${t('المساحة (فدان)')}</label><input class="inp" type="number" data-f="area" value="${esc(c.area)}"></div><div class="field"><label>${t('نوع الري')}</label><select class="inp" data-f="irrigation">${optsT(DB.lists.irrigation, c.irrigation, t('اختر'))}</select></div><div class="field"><label>${t('مصدر المياه')}</label><select class="inp" data-f="waterSource">${optsT(DB.lists.waterSource, c.waterSource, t('اختر'))}</select></div></div>
@@ -2751,6 +3164,7 @@ function openEditCustomer(id, onDone) {
       <div class="field"><label>${t('نوع المحصول')}</label>${cropPicker()}</div>
       ${deviceFields(c)}
       <div class="grid3"><div class="field"><label>${t('مصدر المعرفة')}</label><select class="inp" data-f="source">${optsT(DB.lists.source, c.source, t('اختر'))}</select></div><div class="field"><label>${t('التقييم')}</label><select class="inp" data-f="rating">${optsT(RATINGS, c.rating)}</select></div><div class="field"><label>${t('تاريخ المتابعة')}</label><input class="inp" type="date" data-f="followupDate" value="${c.followupDate}"></div></div>
+      ${viaField(d)}
       <div class="grid3"><div class="field"><label>${t('حالة الشراء')}</label><select class="inp" data-f="payType">${optsT(Object.entries(PAY_TYPES), c.payType, t('لم يشترِ'))}</select></div><div class="field"><label>${t('قيمة المقدم')}</label><input class="inp" type="number" data-f="deposit" value="${esc(c.deposit)}"></div><div class="field"><label>${t('تاريخ السداد')}</label><input class="inp" type="date" data-f="payDate" value="${c.payDate}"></div></div>
       ${can('customers.assign') || (can('customers.share') && c.ownerId === ME.id) ? `<div class="field"><label>${t('يتابعه أيضًا (متابعة مشتركة)')}</label><div class="chips" id="asst">${others.map(u => `<button type="button" class="chip ${(c.assistantIds || []).includes(u.id) ? 'on' : ''}" data-u="${u.id}">${esc(u.name)}</button>`).join('')}</div></div>` : ''}
       <div class="grid2">${customFieldInputs('', d)}</div>`,
@@ -2759,10 +3173,14 @@ function openEditCustomer(id, onDone) {
   if (c.market === 'egypt') bindLocation(m.el, 'e', d);
   bindCropPicker(m.el, d);
   bindDevice(m.el, c);
+  bindCategory(m.el, d);
+  bindVia(m.el);
   $$('#asst .chip', m.el).forEach(b => b.onclick = () => b.classList.toggle('on'));
   $('#sv', m.el).onclick = () => {
-    const patch = { crops: d.crops, custom: readCustomFields(m.el, c.custom) };
+    const patch = { crops: d.crops, category: d.category, custom: readCustomFields(m.el, c.custom) };
     $$('[data-f]', m.el).forEach(el => { patch[el.dataset.f] = el.value.trim(); });
+    const via = readVia(m.el, patch.source);
+    if (via.error) { toast(via.error, 'err'); return; }
     if (c.market === 'egypt') { patch.govCode = $('#egov', m.el).value; patch.subCode = $('#esub', m.el).value; }
     patch.deviceType = $('#deviceType', m.el).value; patch.deviceSize = $('#deviceSize', m.el).value;
     const shareTo = $('#asst', m.el) ? $$('#asst .chip.on', m.el).map(b => b.dataset.u) : null;
@@ -2771,7 +3189,10 @@ function openEditCustomer(id, onDone) {
     if (miss.length) { toast(t('يرجى إدخال: {f}', { f: label(miss[0]) }), 'err'); return; }
     const dup = findDuplicate([patch.phone1, patch.phone2], c.id);
     if (dup) { toast(t('هذا الرقم مسجل باسم "{name}" لدى {owner}', { name: dup.name, owner: userName(dup.ownerId) }), 'err'); return; }
+    patch.viaDistributorId = viaId(via, patch.source);
     let changed = updateCustomer(c.id, patch);
+    const partner = syncPartner(c);
+    if (partner?.fresh) toast(t('أُضيف {name} إلى قائمة الموزعين بتصنيف {type}', { name: c.name, type: tv(c.category) }), 'ok');
     if (shareTo) {
       const removed = (c.assistantIds || []).filter(id => !shareTo.includes(id));
       removed.forEach(id => unshareCustomer(c, id));
@@ -2796,7 +3217,7 @@ function openImport() {
   });
   let result = null;
   const extra = activeFields().map(() => '');
-  $('#tmpl', m.el).onclick = () => downloadBlob(buildXlsx([{ name: t('العملاء'), rows: [IMPORT_TEMPLATE(), [t('محمد علي (مثال)'), '01000000000', '', tv('مصر'), tv('البحيرة (الصحراوي)'), '1/A14', t('بجوار الجمعية'), 25, tv('تنقيط'), tv('الموالح'), '2500 ppm', tv('بئر'), tv('جهاز معالجة مغناطيسية - خط رئيسي'), tv('3 بوصة'), tv('فيسبوك'), tv('جيد جدًا'), fmtDate(today()), fmtDate(addDays(today(), 3)), t('مقدم'), 10000, fmtDate(addDays(today(), 30)), ...extra], ['Ali Hassan', '+966500000000', '', '', '', '', 'Riyadh', 100, tv('محوري'), tv('نخيل البلح'), '', tv('بئر'), '', '', tv('معرض'), tv('مميز'), '', '', '', '', '', ...extra]] }]), `${t('نموذج ملف العملاء')}.xlsx`);
+  $('#tmpl', m.el).onclick = () => downloadBlob(buildXlsx([{ name: t('العملاء'), rows: [IMPORT_TEMPLATE(), [t('محمد علي (مثال)'), '01000000000', '', tv('مزارع'), tv('مصر'), tv('البحيرة (الصحراوي)'), '1/A14', t('بجوار الجمعية'), 25, tv('تنقيط'), tv('الموالح'), '2500 ppm', tv('بئر'), tv(DEVICE_MODELS[3]), tv('3 بوصة'), tv('فيسبوك'), tv('جيد جدًا'), fmtDate(today()), fmtDate(addDays(today(), 3)), t('مقدم'), 10000, fmtDate(addDays(today(), 30)), ...extra], ['Ali Hassan', '+966500000000', '', tv('مهندس زراعي'), '', '', '', 'Riyadh', 100, tv('محوري'), tv('نخيل البلح'), '', tv('بئر'), '', '', tv('معرض'), tv('مميز'), '', '', '', '', '', ...extra]] }]), `${t('نموذج ملف العملاء')}.xlsx`);
   $('#impFile', m.el).onchange = async e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -2821,7 +3242,7 @@ function openImport() {
     }
   };
   $('#impGo', m.el).onclick = () => {
-    result.items.forEach(it => createCustomer(it, { silent: true }));
+    result.items.forEach(it => syncPartner(createCustomer(it, { silent: true })));
     audit('import', 'customer', null, 'رفع ملف عملاء: {a} جديد، {b} مكرر، {c} ناقص', { a: result.items.length, b: result.duplicates.length, c: result.errors.length });
     toast(t('أُضيف العملاء وقُسِّموا تلقائيًا: {n}', { n: result.items.length }), 'ok');
     m.close();
@@ -3210,29 +3631,40 @@ function markPaid(oid, iid) {
 }
 
 function drawPrices(ob) {
-  ob.innerHTML = `${DB.settings.demo ? `<div class="demo-banner">${t('هذه الأجهزة والأسعار أمثلة للتجربة، ويلزم استبدالها بقائمة دلتا ووتر الفعلية.')}</div>` : ''}
-  <div class="filters">${can('catalog.manage') ? `<a class="btn" href="#/settings/catalog">${t('إدارة المنتجات والأسعار')}</a>` : ''}</div>
-  <div class="tbl-wrap"><table class="tbl"><thead><tr>${activeDomains().length > 1 ? `<th>${t('المجال')}</th>` : ''}<th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('السعر (ج.م)')}</th></tr></thead><tbody>${activeProducts().map(p => `<tr>${activeDomains().length > 1 ? `<td>${esc(label(DB.domains.find(d => d.id === p.domainId)))}</td>` : ''}<td>${esc(tv(p.type))}</td><td>${esc(tv(p.size))}</td><td>${money(p.price)}</td></tr>`).join('')}</tbody></table></div>`;
+  const multi = activeDomains().length > 1;
+  const table = mk => {
+    const list = productsFor(null, mk);
+    const cur = curName(mk === 'intl' ? 'USD' : 'EGP');
+    return `<div class="section-bar">${t(mk === 'intl' ? 'أسعار خارج مصر (بالدولار)' : 'أسعار داخل مصر (بالجنيه)')}</div>${list.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr>${multi ? `<th>${t('المجال')}</th>` : ''}<th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('السعر')} (${cur})</th></tr></thead><tbody>${list.map(p => `<tr>${multi ? `<td>${esc(label(DB.domains.find(d => d.id === p.domainId)))}</td>` : ''}<td>${esc(tv(p.type))}</td><td>${esc(tv(p.size))}</td><td>${money(p.price)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا توجد أجهزة متاحة')}</div>`}`;
+  };
+  ob.innerHTML = `<div class="filters">${can('catalog.manage') ? `<a class="btn" href="#/settings/catalog">${t('إدارة المنتجات والأسعار')}</a>` : ''}</div>${table('egypt')}${table('intl')}`;
 }
 
 function openOrderForm(customerId) {
   const customers = visibleCustomers().sort((a, b) => a.name.localeCompare(b.name, 'ar'));
   const items = [{ productId: '', qty: 1, price: 0 }];
   const preset = customerId ? custById(customerId) : null;
+  const presetCur = preset?.market === 'intl' ? 'USD' : 'EGP';
   if (preset) {
-    const p = activeProducts().find(x => x.type === preset.deviceType && x.size === preset.deviceSize);
-    if (p) { items[0].productId = p.id; items[0].price = preset.market === 'intl' ? Math.round(p.price / (DB.settings.usdRate || 1)) : p.price; }
+    const same = x => x.type === preset.deviceType && x.size === preset.deviceSize;
+    const p = productsFor(null, preset.market).find(same) || activeProducts().find(same);
+    if (p) { items[0].productId = p.id; items[0].price = productPrice(p, presetCur); }
   }
+  // قائمة الأجهزة مقسمة: داخل مصر بالجنيه، وخارج مصر بالدولار
+  const productOpts = sel => `<option value="">${t('اختر')}</option>${Object.entries(PRODUCT_MARKETS).map(([mk, l]) => {
+    const list = productsFor(null, mk);
+    return list.length ? `<optgroup label="${esc(t(l))}">${list.map(p => `<option value="${p.id}" ${p.id === sel ? 'selected' : ''}>${esc(productLabel(p))} · ${money(p.price)} ${curName(productCurrency(p))}</option>`).join('')}</optgroup>` : '';
+  }).join('')}`;
   const m = openModal({
     title: t('طلب جديد'), wide: true,
-    body: `<div class="grid2"><div class="field"><label>${t('العميل')} <span class="req">*</span></label><input class="inp" id="oc" list="ocl" value="${preset ? esc(`${preset.name} | ${preset.code}`) : ''}" placeholder="${t('اكتب اسم العميل')}"><datalist id="ocl">${customers.map(c => `<option value="${esc(`${c.name} | ${c.code}`)}">`).join('')}</datalist></div><div class="field"><label>${t('تاريخ الطلب')}</label><input class="inp" type="date" id="od" value="${today()}"></div><div class="field"><label>${t('عن طريق الموزع')}</label><select class="inp" id="odist">${opts(DB.distributors.filter(d => d.active !== false).map(d => [d.id, d.name]), '', t('بدون موزع'))}</select></div></div>
+    body: `<div class="grid2"><div class="field"><label>${t('العميل')} <span class="req">*</span></label><input class="inp" id="oc" list="ocl" value="${preset ? esc(`${preset.name} | ${preset.code}`) : ''}" placeholder="${t('اكتب اسم العميل')}"><datalist id="ocl">${customers.map(c => `<option value="${esc(`${c.name} | ${c.code}`)}">`).join('')}</datalist></div><div class="field"><label>${t('تاريخ الطلب')}</label><input class="inp" type="date" id="od" value="${today()}"></div><div class="field"><label>${t('عن طريق الموزع')}</label><select class="inp" id="odist">${opts(DB.distributors.filter(d => d.active !== false || d.id === preset?.viaDistributorId).map(d => [d.id, d.name]), preset?.viaDistributorId || '', t('بدون موزع'))}</select></div></div>
     <div id="its"></div><button class="btn sm" id="addIt">+ ${t('جهاز آخر')}</button>
-    <div class="grid3 mt"><div class="field"><label>${t('العملة')}</label><select class="inp" id="cur">${optsT([['EGP', 'جنيه مصري'], ['USD', 'دولار']], preset?.market === 'intl' ? 'USD' : 'EGP')}</select></div><div class="field"><label>${t('الخصم')}</label><input class="inp" type="number" min="0" id="disc" value="0"></div><div class="field"><label>${t('الإجمالي')}</label><div class="kpi" style="padding:5px 10px"><div class="v" id="tot" style="font-size:18px">0</div></div></div></div>
+    <div class="grid3 mt"><div class="field"><label>${t('العملة')}</label><select class="inp" id="cur">${optsT([['EGP', 'جنيه مصري'], ['USD', 'دولار']], presetCur)}</select></div><div class="field"><label>${t('الخصم')}</label><input class="inp" type="number" min="0" id="disc" value="0"></div><div class="field"><label>${t('الإجمالي')}</label><div class="kpi" style="padding:5px 10px"><div class="v" id="tot" style="font-size:18px">0</div></div></div></div>
     <div class="field"><label>${t('طريقة الدفع')}</label><div class="chips" id="pt">${Object.entries(PAY_TYPES).map(([k, v]) => `<button type="button" class="chip ${k === 'cash' ? 'on' : ''}" data-p="${k}">${t(v)}</button>`).join('')}</div></div><div id="payBox"></div>`,
     footer: `<button class="btn primary" id="sv">${t('حفظ الطلب')}</button>`,
   });
   let payType = 'cash';
-  const curRate = () => $('#cur', m.el).value === 'USD' ? (DB.settings.usdRate || 1) : 1;
+  const cur = () => $('#cur', m.el).value;
   const total = () => Math.max(0, items.reduce((s, i) => s + (+i.qty || 0) * (+i.price || 0), 0) - (+$('#disc', m.el).value || 0));
   const schedule = () => {
     const dep = +($('#dep', m.el)?.value) || 0, rest = Math.max(0, total() - dep);
@@ -3258,13 +3690,13 @@ function openOrderForm(customerId) {
   };
   const drawItems = () => {
     const box = $('#its', m.el);
-    box.innerHTML = items.map((it, i) => `<div class="grid3" style="grid-template-columns:minmax(0,3fr) minmax(0,1fr) minmax(0,1.3fr) auto;align-items:end"><div class="field"><label>${t('الجهاز')}</label><select class="inp" data-i="${i}" data-k="productId">${opts(activeProducts().map(p => [p.id, `${tv(p.type)} - ${tv(p.size)}`]), it.productId, t('اختر'))}</select></div><div class="field"><label>${t('الكمية')}</label><input class="inp" type="number" min="1" data-i="${i}" data-k="qty" value="${it.qty}"></div><div class="field"><label>${t('سعر الوحدة')}</label><input class="inp" type="number" min="0" data-i="${i}" data-k="price" value="${it.price}"></div><div class="field">${items.length > 1 ? `<button class="btn sm danger" data-rm="${i}">×</button>` : ''}</div></div>`).join('');
+    box.innerHTML = items.map((it, i) => `<div class="grid3" style="grid-template-columns:minmax(0,3fr) minmax(0,1fr) minmax(0,1.3fr) auto;align-items:end"><div class="field"><label>${t('الجهاز')}</label><select class="inp" data-i="${i}" data-k="productId">${productOpts(it.productId)}</select></div><div class="field"><label>${t('الكمية')}</label><input class="inp" type="number" min="1" data-i="${i}" data-k="qty" value="${it.qty}"></div><div class="field"><label>${t('سعر الوحدة')}</label><input class="inp" type="number" min="0" data-i="${i}" data-k="price" value="${it.price}"></div><div class="field">${items.length > 1 ? `<button class="btn sm danger" data-rm="${i}">×</button>` : ''}</div></div>`).join('');
     $$('[data-k]', box).forEach(el => el.oninput = el.onchange = () => {
       const it = items[+el.dataset.i];
       it[el.dataset.k] = el.value;
       if (el.dataset.k === 'productId') {
         const p = DB.products.find(x => x.id === el.value);
-        it.price = p ? Math.round(p.price / curRate()) : 0;
+        it.price = productPrice(p, cur());
         drawItems();
       }
       upd();
@@ -3274,7 +3706,7 @@ function openOrderForm(customerId) {
   $('#addIt', m.el).onclick = () => { items.push({ productId: '', qty: 1, price: 0 }); drawItems(); };
   $('#disc', m.el).oninput = upd;
   $('#cur', m.el).onchange = () => {
-    items.forEach(it => { const p = DB.products.find(x => x.id === it.productId); if (p) it.price = Math.round(p.price / curRate()); });
+    items.forEach(it => { const p = DB.products.find(x => x.id === it.productId); if (p) it.price = productPrice(p, cur()); });
     drawItems(); upd();
   };
   $$('#pt .chip', m.el).forEach(b => b.onclick = () => { payType = b.dataset.p; $$('#pt .chip', m.el).forEach(x => x.classList.toggle('on', x === b)); drawPay(); });
@@ -3815,10 +4247,11 @@ function applyBuyer(c, ex, it) {
   if (it.followupDate) c.asNextDate = it.followupDate;
   const after = stageById('st_after') || stageAfter1(c.domainId);
   if (after) advanceTo(c, after);
-  const prod = activeProducts().find(p => p.type === it.deviceType && (!it.deviceSize || p.size === it.deviceSize));
+  const same = p => p.type === it.deviceType && (!it.deviceSize || p.size === it.deviceSize);
+  const prod = productsFor(null, c.market).find(same) || activeProducts().find(same);
   if (!it.deviceType) return false;
   const qty = Math.max(1, parseInt(ex.qty, 10) || 1);
-  const price = parseFloat(ex.price) || prod?.price || 0;
+  const price = parseFloat(ex.price) || productPrice(prod, c.market === 'intl' ? 'USD' : 'EGP');
   DB.counters.order++;
   DB.orders.unshift({ id: uid(), no: `DW-${new Date().getFullYear()}-${String(DB.counters.order).padStart(4, '0')}`, customerId: c.id, repId: c.ownerId, shareIds: [...(c.assistantIds || [])], date, items: [{ productId: prod?.id || '', type: it.deviceType, size: it.deviceSize || prod?.size || '', qty, price }], discount: 0, total: qty * price, currency: c.market === 'intl' ? 'USD' : 'EGP', payType: it.payType || 'cash', deposit: +it.deposit || 0, installments: [], status: 'delivered', statusReason: '', postponedTo: '', createdAt: nowStamp(), distributorId: findOrCreateDistributor(ex.distributor, ex.distributorType), imported: true });
   return true;
@@ -3833,7 +4266,7 @@ function openBuyersImport(onDone) {
     footer: `<button class="btn primary" id="impGo" disabled>${t('إضافة العملاء')}</button>`,
   });
   let res = null;
-  $('#tmpl', m.el).onclick = () => downloadBlob(buildXlsx([{ name: t('العملاء المشترون'), rows: [BUYER_TEMPLATE.map(x => t(x)), [t('محمد علي (مثال)'), '01000000000', '', tv('مصر'), tv('الشرقية'), '7/A25', '', tv('الموالح'), tv('جهاز معالجة مغناطيسية - خط رئيسي'), tv('3 بوصة'), 1, 42000, fmtDate(today()), 'شركة النيل للري الحديث', tv('شركة'), t('نقدًا'), '', fmtDate(addDays(today(), 30)), tv('جيد جدًا')]] }]), `${t('نموذج العملاء المشترين')}.xlsx`);
+  $('#tmpl', m.el).onclick = () => downloadBlob(buildXlsx([{ name: t('العملاء المشترون'), rows: [BUYER_TEMPLATE.map(x => t(x)), [t('محمد علي (مثال)'), '01000000000', '', tv('مصر'), tv('الشرقية'), '7/A25', '', tv('الموالح'), tv(DEVICE_MODELS[3]), tv('3 بوصة'), 1, 61000, fmtDate(today()), 'شركة النيل للري الحديث', tv('شركة'), t('نقدًا'), '', fmtDate(addDays(today(), 30)), tv('جيد جدًا')]] }]), `${t('نموذج العملاء المشترين')}.xlsx`);
   $('#impFile', m.el).onchange = async e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -3883,7 +4316,7 @@ function distributorStats(d, st = {}) {
   const list = DB.orders.filter(o => o.distributorId === d.id && countsAsSale(o) && inDateRange(o.date, st));
   return { orders: list, count: list.length, units: list.reduce((s, o) => s + o.items.reduce((a, i) => a + i.qty, 0), 0), value: list.reduce((s, o) => s + orderValue(o), 0), last: list.map(o => o.date).sort().pop() || '' };
 }
-const distTypePill = type => `<span class="pill ${type === 'شركة' ? 'p-blue' : type === 'مزارع' ? 'p-plant' : type === 'مهندس زراعي' ? 'p-after' : 'p-gray'}">${esc(tv(type) || '—')}</span>`;
+const distTypePill = type => `<span class="pill ${type === 'شركة' || type === 'وكيل' ? 'p-blue' : type === 'موزع' ? 'p-orange' : type === 'مزارع' ? 'p-plant' : type === 'مهندس زراعي' ? 'p-after' : 'p-gray'}">${esc(tv(type) || '—')}</span>`;
 function viewDistributors(root) {
   const st = distState, q = st.q.trim().toLowerCase();
   const rows = DB.distributors.filter(d => (!st.type || d.type === st.type) && (!q || d.name.toLowerCase().includes(q) || normPhone(d.phone).includes(normPhone(q) || '@'))).map(d => ({ d, s: distributorStats(d, st) })).sort((a, b) => b.s.units - a.s.units);
@@ -3892,7 +4325,7 @@ function viewDistributors(root) {
   root.innerHTML = `<div class="page-head"><h1>${t('الموزعون')}</h1><span class="spacer"></span>${manage ? `<button class="btn" id="imp">⬆ ${t('رفع ملف إكسيل')}</button>` : ''}${canExport() ? `<button class="btn" id="exp">⬇ ${t('تصدير')}</button>` : ''}${manage ? `<button class="btn primary" id="add">+ ${t('موزع جديد')}</button>` : ''}<div class="hint">${t('عدد الأجهزة المباعة عن طريق كل موزع يُحسب من الطلبات المرتبطة به')}</div></div>
   <div class="kpis"><div class="kpi"><div class="l">${t('الموزعون')}</div><div class="v">${rows.length}</div></div><div class="kpi"><div class="l">${t('الأجهزة المباعة عن طريقهم')}</div><div class="v">${totals.units}</div></div><div class="kpi"><div class="l">${t('قيمة المبيعات')}</div><div class="v">${money(totals.value)} <small>${t('ج.م')}</small></div></div></div>
   <div class="filters"><input class="inp search" id="q" placeholder="${t('ابحث بالاسم أو الرقم')}" value="${esc(st.q)}"><select class="inp" id="type" aria-label="${t('التصنيف')}">${optsT(DB.lists.distributorType, st.type, t('جميع التصنيفات'))}</select>${dateRangeHtml(st, t('المبيعات من'))}</div>
-  ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="sticky-col">${t('الموزع')}</th><th>${t('التصنيف')}</th><th>${t('المحافظة')}</th><th>${t('الهاتف')}</th><th>${t('الأجهزة المباعة')}</th><th>${t('الطلبات')}</th><th>${t('قيمة المبيعات')}</th><th>${t('آخر بيع')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${rows.map(({ d, s }) => `<tr class="click" data-d="${d.id}"><td class="sticky-col">${esc(d.name)}</td><td>${distTypePill(d.type)}</td><td>${d.govCode && regionByCode(d.govCode) ? esc(govLabel(regionByCode(d.govCode).gov)) : ''}</td><td>${phoneLink(d.phone)}</td><td><b>${s.units}</b></td><td>${s.count}</td><td>${money(s.value)}</td><td>${fmtDate(s.last)}</td><td>${d.active !== false ? `<span class="pill p-green">${t('نشط')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا يوجد موزعون بعد')}</div>`}`;
+  ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="sticky-col">${t('الموزع')}</th><th>${t('التصنيف')}</th><th>${t('المحافظة')}</th><th>${t('الهاتف')}</th><th>${t('العملاء التابعون')}</th><th>${t('الأجهزة المباعة')}</th><th>${t('الطلبات')}</th><th>${t('قيمة المبيعات')}</th><th>${t('آخر بيع')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${rows.map(({ d, s }) => `<tr class="click" data-d="${d.id}"><td class="sticky-col">${esc(d.name)}</td><td>${distTypePill(d.type)}</td><td>${d.govCode && regionByCode(d.govCode) ? esc(govLabel(regionByCode(d.govCode).gov)) : ''}</td><td>${phoneLink(d.phone)}</td><td>${viaCustomers(d.id).length}</td><td><b>${s.units}</b></td><td>${s.count}</td><td>${money(s.value)}</td><td>${fmtDate(s.last)}</td><td>${d.active !== false ? `<span class="pill p-green">${t('نشط')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا يوجد موزعون بعد')}</div>`}`;
   const redraw = () => viewDistributors(root);
   $('#q', root).oninput = e => { st.q = e.target.value; clearTimeout(st.qt); st.qt = setTimeout(() => { redraw(); const i = $('#q', root); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 300); };
   $('#type', root).onchange = e => { st.type = e.target.value; redraw(); };
@@ -3906,12 +4339,18 @@ function viewDistributors(root) {
 function openDistributor(id, onDone) {
   const d = DB.distributors.find(x => x.id === id);
   const s = distributorStats(d);
+  const custs = viaCustomers(d.id).filter(customerVisible);
+  const own = d.customerId && custById(d.customerId);
+  const custTable = custs.length ? `<div class="section-bar mt">${t('العملاء التابعون ({n})', { n: custs.length })}</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('العميل')}</th><th>${t('الموقع')}</th><th>${t('المحصول')}</th><th>${t('الجهاز المطلوب')}</th><th>${t('المرحلة')}</th><th>${t('رجل البيع')}</th></tr></thead><tbody>${custs.map(c => `<tr class="click" data-c="${c.id}"><td>${esc(c.name)}</td><td>${esc(custLocation(c))}</td><td>${esc(c.crops.map(tv).join('، '))}</td><td>${esc(`${tv(c.deviceType)} ${tv(c.deviceSize)}`.trim())}</td><td>${stagePill(c)}</td><td>${esc(userName(c.ownerId))}</td></tr>`).join('')}</tbody></table></div>` : '';
   const m = openModal({
     title: esc(d.name), wide: true,
-    body: `<div class="kv"><div><div class="k">${t('التصنيف')}</div><div class="val">${distTypePill(d.type)}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(d.phone)}</div></div><div><div class="k">${t('الأجهزة المباعة')}</div><div class="val">${s.units}</div></div><div><div class="k">${t('قيمة المبيعات')}</div><div class="val">${money(s.value)} ${t('ج.م')}</div></div><div><div class="k">${t('ملاحظات')}</div><div class="val">${esc(d.notes)}</div></div></div>
-    ${s.orders.length ? `<table class="tbl mt"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th><th>${t('الجهاز')}</th><th>${t('الكمية')}</th></tr></thead><tbody>${s.orders.sort((a, b) => b.date.localeCompare(a.date)).map(o => `<tr><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name || '')}</td><td>${esc(o.items.map(i => `${tv(i.type)} ${tv(i.size)}`).join(' + '))}</td><td>${o.items.reduce((a, i) => a + i.qty, 0)}</td></tr>`).join('')}</tbody></table>` : `<div class="empty">${t('لا توجد مبيعات مرتبطة بهذا الموزع بعد')}</div>`}`,
+    body: `${own && customerVisible(own) ? `<div class="filters"><button class="btn sm" id="ownC">${t('فتح ملفه كعميل')}</button></div>` : ''}<div class="kv"><div><div class="k">${t('التصنيف')}</div><div class="val">${distTypePill(d.type)}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(d.phone)}</div></div><div><div class="k">${t('الأجهزة المباعة')}</div><div class="val">${s.units}</div></div><div><div class="k">${t('قيمة المبيعات')}</div><div class="val">${money(s.value)} ${t('ج.م')}</div></div><div><div class="k">${t('ملاحظات')}</div><div class="val">${esc(d.notes)}</div></div></div>
+    ${s.orders.length ? `<table class="tbl mt"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th><th>${t('الجهاز')}</th><th>${t('الكمية')}</th></tr></thead><tbody>${s.orders.sort((a, b) => b.date.localeCompare(a.date)).map(o => `<tr><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name || '')}</td><td>${esc(o.items.map(i => `${tv(i.type)} ${tv(i.size)}`).join(' + '))}</td><td>${o.items.reduce((a, i) => a + i.qty, 0)}</td></tr>`).join('')}</tbody></table>` : `<div class="empty">${t('لا توجد مبيعات مرتبطة بهذا الموزع بعد')}</div>`}${custTable}`,
     footer: can('distributors.manage') ? `<button class="btn primary" id="ed">${t('تعديل')}</button>` : '',
   });
+  $$('[data-c]', m.el).forEach(tr => tr.onclick = () => { m.close(); openCustomer(tr.dataset.c); });
+  const ownC = $('#ownC', m.el);
+  if (ownC) ownC.onclick = () => { m.close(); openCustomer(d.customerId); };
   const ed = $('#ed', m.el);
   if (ed) ed.onclick = () => { m.close(); openDistributorForm(id, onDone); };
 }
@@ -4642,9 +5081,13 @@ function drawCatalog(sb, redraw) {
   <div class="card"><p class="muted" style="margin-top:0">${t('المجال هو نشاط تجاري مستقل، ولكل مجال منتجاته ومراحله وحقوله. عند إضافة مجال ثانٍ يظهر اختيار المجال في ملف العميل.')}</p>
   <div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('المجال')}</th><th>${t('المنتجات')}</th><th>${t('العملاء')}</th><th>${t('الحالة')}</th><th></th></tr></thead><tbody>${DB.domains.map(d => `<tr><td><b>${esc(label(d))}</b></td><td>${DB.products.filter(p => p.domainId === d.id).length}</td><td>${liveCustomers().filter(c => c.domainId === d.id).length}</td><td>${d.active !== false ? `<span class="pill p-green">${t('نشط')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td><td><button class="btn sm" data-ed-d="${d.id}">${t('تعديل')}</button> <button class="btn sm" data-tg-d="${d.id}" ${activeDomains().length === 1 && d.active !== false ? 'disabled' : ''}>${t(d.active !== false ? 'إيقاف' : 'تفعيل')}</button></td></tr>`).join('')}</tbody></table></div><div class="mt"><button class="btn" id="addD">+ ${t('مجال جديد')}</button></div></div>
   <div class="section-bar">${t('المنتجات والأسعار')}</div>
-  ${DB.settings.demo ? `<div class="demo-banner">${t('هذه الأجهزة والأسعار أمثلة للتجربة، ويلزم استبدالها بقائمة دلتا ووتر الفعلية.')}</div>` : ''}
-  <div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('المجال')}</th><th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('السعر (ج.م)')}</th><th>${t('الحالة')}</th><th></th></tr></thead><tbody>${DB.products.map(p => `<tr><td>${esc(domainName(p.domainId))}</td><td>${esc(tv(p.type))}</td><td>${esc(tv(p.size))}</td><td><input class="inp" style="width:120px" type="number" min="0" data-price="${p.id}" value="${p.price}" aria-label="${t('السعر (ج.م)')}"></td><td>${p.active !== false ? `<span class="pill p-green">${t('متاح')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td><td><button class="btn sm" data-tg-p="${p.id}">${t(p.active !== false ? 'إيقاف' : 'تفعيل')}</button></td></tr>`).join('')}</tbody></table></div>
-  <div class="card mt"><h3>${t('إضافة منتج')}</h3><div class="grid2"><div class="field"><label>${t('المجال')}</label><select class="inp" id="pd">${opts(activeDomains().map(d => [d.id, label(d)]), activeDomains()[0]?.id)}</select></div><div class="field"><label>${t('نوع المنتج')} <span class="req">*</span></label><input class="inp" id="nt" list="ntl"><datalist id="ntl">${[...new Set(DB.products.map(p => p.type))].map(x => `<option value="${esc(x)}">`).join('')}</datalist></div><div class="field"><label>${t('المقاس أو الموديل')} <span class="req">*</span></label><input class="inp" id="ns"></div><div class="field"><label>${t('السعر (ج.م)')} <span class="req">*</span></label><input class="inp" type="number" min="0" id="np"></div></div><button class="btn primary" id="na">${t('إضافة')}</button></div>`;
+  <div class="card"><p class="muted" style="margin:0">${t('أسعار داخل مصر بالجنيه، وأسعار خارج مصر بالدولار. يُحفظ السعر فور تعديله، ويظهر في نموذج العميل والطلبات. الأسعار المسجلة في الطلبات السابقة لا تتغير.')}</p>
+  <div class="tabs mt">${['all', 'egypt', 'intl'].map(k => `<button class="tab ${catState.market === k ? 'on' : ''}" data-mk="${k}">${t(k === 'all' ? 'الكل' : PRODUCT_MARKETS[k])}</button>`).join('')}<label class="perm" style="margin-inline-start:auto"><input type="checkbox" id="showOff" ${catState.off ? 'checked' : ''}> ${t('إظهار الموقوف')}</label></div></div>
+  <div class="tbl-wrap"><table class="tbl"><thead><tr>${activeDomains().length > 1 ? `<th>${t('المجال')}</th>` : ''}<th>${t('السوق')}</th><th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('السعر')}</th><th>${t('الحالة')}</th><th></th></tr></thead><tbody>${shownProducts().map(p => `<tr><td style="display:${activeDomains().length > 1 ? '' : 'none'}">${esc(domainName(p.domainId))}</td><td>${esc(t(PRODUCT_MARKETS[productMarket(p)]))}</td><td>${esc(tv(p.type))}</td><td>${esc(tv(p.size))}</td><td><input class="inp" style="width:120px" type="number" min="0" data-price="${p.id}" value="${p.price}" aria-label="${t('السعر')}"> ${curName(productCurrency(p))}</td><td>${p.active !== false ? `<span class="pill p-green">${t('متاح')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td><td><button class="btn sm" data-tg-p="${p.id}">${t(p.active !== false ? 'إيقاف' : 'تفعيل')}</button></td></tr>`).join('')}</tbody></table></div>
+  <div class="card mt"><h3>${t('إضافة جهاز أو مقاس')}</h3><p class="muted" style="margin-top:0">${t('اختر نوعًا موجودًا لإضافة مقاس جديد له، أو اكتب نوعًا جديدًا')}</p><div class="grid2">${activeDomains().length > 1 ? `<div class="field"><label>${t('المجال')}</label><select class="inp" id="pd">${opts(activeDomains().map(d => [d.id, label(d)]), activeDomains()[0]?.id)}</select></div>` : ''}<div class="field"><label>${t('السوق')}</label><select class="inp" id="pm">${optsT(Object.entries(PRODUCT_MARKETS), catState.market === 'intl' ? 'intl' : 'egypt')}</select></div><div class="field"><label>${t('نوع الجهاز')} <span class="req">*</span></label><input class="inp" id="nt" list="ntl"><datalist id="ntl">${[...new Set(DB.products.map(p => p.type))].map(x => `<option value="${esc(x)}">`).join('')}</datalist></div><div class="field"><label>${t('المقاس')} <span class="req">*</span></label><input class="inp" id="ns" list="nsl" placeholder="5 بوصة"><datalist id="nsl">${[...new Set(DB.products.map(p => p.size))].map(x => `<option value="${esc(x)}">`).join('')}</datalist></div><div class="field"><label>${t('السعر')} <span class="req">*</span> <span class="muted" id="npc">(${curName(catState.market === 'intl' ? 'USD' : 'EGP')})</span></label><input class="inp" type="number" min="0" id="np"></div></div><button class="btn primary" id="na">${t('إضافة')}</button></div>`;
+  $$('[data-mk]', sb).forEach(b => b.onclick = () => { catState.market = b.dataset.mk; redraw(); });
+  $('#showOff', sb).onchange = e => { catState.off = e.target.checked; redraw(); };
+  $('#pm', sb).onchange = e => { $('#npc', sb).textContent = `(${curName(e.target.value === 'intl' ? 'USD' : 'EGP')})`; };
   const domainForm = d => {
     const m = openModal({ title: t(d ? 'تعديل المجال' : 'مجال جديد'), body: nameFields(d?.name, d?.en), footer: `<button class="btn primary" id="sv">${t('حفظ')}</button>` });
     $('#sv', m.el).onclick = () => {
@@ -4668,7 +5111,7 @@ function drawCatalog(sb, redraw) {
   $$('[data-price]', sb).forEach(inp => inp.onchange = () => {
     const p = DB.products.find(x => x.id === inp.dataset.price), old = p.price;
     p.price = +inp.value || 0;
-    audit('config', 'product', p.id, 'تعديل سعر: {n}', { n: `${p.type} ${p.size}` }, [{ field: 'السعر', from: String(old), to: String(p.price) }]);
+    audit('config', 'product', p.id, 'تعديل سعر: {n}', { n: `${p.type} ${p.size} (${productCurrency(p)})` }, [{ field: 'السعر', from: String(old), to: String(p.price) }]);
     toast(t('تم تعديل السعر'), 'ok');
   });
   $$('[data-tg-p]', sb).forEach(b => b.onclick = () => {
@@ -4678,12 +5121,22 @@ function drawCatalog(sb, redraw) {
     redraw();
   });
   $('#na', sb).onclick = () => {
-    const type = $('#nt', sb).value.trim(), size = $('#ns', sb).value.trim(), price = +$('#np', sb).value;
+    const type = $('#nt', sb).value.trim(), size = $('#ns', sb).value.trim(), price = +$('#np', sb).value, market = $('#pm', sb).value;
+    const domainId = $('#pd', sb)?.value || activeDomains()[0]?.id || DEFAULT_DOMAIN_ID;
     if (!type || !size || !price) { toast(t('يرجى استكمال النوع والمقاس والسعر'), 'err'); return; }
-    DB.products.push({ id: uid(), type, size, price, domainId: $('#pd', sb).value, active: true });
-    audit('config', 'product', null, 'إضافة منتج: {n}', { n: `${type} ${size} (${price})` });
+    if (DB.products.some(p => p.type === type && p.size === size && productMarket(p) === market && p.domainId === domainId)) { toast(t('هذا الجهاز بهذا المقاس موجود بالفعل، ويمكن تعديل سعره من الجدول'), 'err'); return; }
+    DB.products.push({ id: uid(), market, type, size, price, domainId, active: true });
+    audit('config', 'product', null, 'إضافة منتج: {n}', { n: `${type} ${size} (${price} ${market === 'intl' ? 'USD' : 'EGP'})` });
+    toast(t('تمت إضافة الجهاز'), 'ok');
     redraw();
   };
+}
+const catState = { market: 'all', off: false };
+const sizeNum = s => parseFloat(String(s).replace(/[^\d.]/g, '')) || 999;
+// ترتيب الأسعار: السوق ثم نوع الجهاز ثم المقاس من الأصغر للأكبر
+function shownProducts() {
+  return DB.products.filter(p => (catState.market === 'all' || productMarket(p) === catState.market) && (catState.off || p.active !== false))
+    .sort((a, b) => productMarket(a).localeCompare(productMarket(b)) || a.type.localeCompare(b.type, 'ar') || sizeNum(a.size) - sizeNum(b.size));
 }
 
 function drawStages(sb, redraw) {
@@ -4774,7 +5227,30 @@ function drawFields(sb, redraw) {
 }
 function drawLists(sb, redraw) {
   const editor = (key, title) => `<div class="card"><h3>${t(title)}</h3><div class="chips">${DB.lists[key].map(v => `<button class="chip" data-del-list="${key}|${esc(v)}" aria-label="${t('حذف')} ${esc(tv(v))}">${esc(tv(v))} <span class="x">×</span></button>`).join('')}</div><div class="filters mt"><input class="inp" data-new-list="${key}" placeholder="${t('إضافة قيمة')}"><button class="btn sm" data-add-list="${key}">${t('إضافة')}</button></div></div>`;
-  sb.innerHTML = `<div class="cols2">${editor('irrigation', 'أنواع الري')}${editor('waterSource', 'مصادر المياه')}${editor('source', 'مصادر المعرفة')}${editor('ticketType', 'أنواع طلبات الدعم')}</div>`;
+  DB.lists.customerCategory = DB.lists.customerCategory || [...CUSTOMER_CATEGORIES];
+  const used = new Set(liveCustomers().flatMap(c => c.crops));
+  const removable = c => !used.has(c.name) && !Object.keys(c.plant).length && !Object.keys(c.harvest).length;
+  sb.innerHTML = `<div class="cols2">${editor('customerCategory', 'تصنيفات العملاء')}${editor('source', 'مصادر المعرفة')}${editor('distributorType', 'تصنيفات الموزعين')}${editor('irrigation', 'أنواع الري')}${editor('waterSource', 'مصادر المياه')}${editor('ticketType', 'أنواع طلبات الدعم')}</div>
+  <div class="card mt"><h3>${t('المحاصيل وأشجار الفاكهة')}</h3><p class="muted" style="margin-top:0">${t('كل محصول يُسجَّل وحده. يمكن حذف المحصول غير المستخدم الذي لا توجد له مواعيد زراعة أو حصاد')}</p>
+  ${groupCrops(DB.crops.map(c => c.name)).map(([g, names]) => `<div class="field"><label>${esc(t(g))} <span class="muted">(${names.length})</span></label><div class="chips">${names.map(n => { const c = DB.crops.find(x => x.name === n); return removable(c) ? `<button class="chip" data-del-crop="${esc(n)}" aria-label="${t('حذف')} ${esc(tv(n))}">${esc(tv(n))} <span class="x">×</span></button>` : `<span class="chip">${esc(tv(n))}</span>`; }).join('')}</div></div>`).join('')}
+  <div class="filters mt"><input class="inp" id="ncrop" placeholder="${t('اسم المحصول')}"><select class="inp" id="ncg" aria-label="${t('التصنيف')}">${opts(CROP_GROUPS.map(g => [g[0], t(g[0])]), CROP_GROUPS[0][0])}</select><button class="btn sm" id="addCrop">${t('إضافة')}</button></div></div>`;
+  $$('[data-del-crop]', sb).forEach(b => b.onclick = () => {
+    const n = b.dataset.delCrop;
+    DB.crops = DB.crops.filter(c => c.name !== n);
+    audit('config', 'crops', n, 'حذف محصول: {c}', { c: n });
+    redraw();
+  });
+  $('#addCrop', sb).onclick = () => {
+    const name = $('#ncrop', sb).value.trim();
+    if (!name) return;
+    if (splitCrops(name).length > 1) { toast(t('يرجى إضافة محصول واحد في كل مرة'), 'err'); return; }
+    const exists = DB.crops.find(c => cropKey(c.name) === cropKey(name));
+    if (exists) { toast(t('المحصول موجود بالفعل: {c}', { c: tv(exists.name) }), 'err'); return; }
+    DB.crops.push({ name, plant: {}, harvest: {}, group: $('#ncg', sb).value });
+    DB.crops.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+    audit('create', 'crops', name, 'إضافة محصول: {c}', { c: name });
+    redraw();
+  };
   $$('[data-del-list]', sb).forEach(b => b.onclick = () => {
     const [k, v] = b.dataset.delList.split('|');
     DB.lists[k] = DB.lists[k].filter(x => x !== v);
