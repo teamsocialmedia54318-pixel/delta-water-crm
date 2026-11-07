@@ -737,7 +737,8 @@ const DV = {
   'موديل X1 - 2000 PPM': 'Model X1 - 2000 PPM', 'موديل X2 - 4000 PPM': 'Model X2 - 4000 PPM', 'موديل X3 - 6000 PPM': 'Model X3 - 6000 PPM', 'موديل X4 - 8000 PPM': 'Model X4 - 8000 PPM',
   '5 بوصة': '5 inch', 'جهاز منزلي (30 سم)': 'Home unit (30 cm)', 'جهاز قياس الملوحة': 'Salinity meter', 'قطعة واحدة': 'Single unit',
   // تصنيف العميل والتحاليل
-  'وكيل': 'Agent', 'موزع': 'Distributor', 'تحليل مياه': 'Water analysis', 'تحليل تربة': 'Soil analysis', 'مستند آخر': 'Other document',
+  'وكيل': 'Agent', 'موزع': 'Distributor', 'الخليج العربي': 'Arabian Gulf',
+  'الوجه القبلي': 'Upper Egypt', 'الوجه البحري والدلتا': 'Lower Egypt & Delta', 'القاهرة الكبرى': 'Greater Cairo', 'الإسكندرية والساحل الشمالي': 'Alexandria & North Coast', 'القناة وسيناء والبحر الأحمر': 'Canal, Sinai & Red Sea', 'تحليل مياه': 'Water analysis', 'تحليل تربة': 'Soil analysis', 'مستند آخر': 'Other document',
   // ملاحظات المواعيد
   'منتصف يناير': 'Mid-January', 'صيفية مبكرة': 'Early summer', 'وجه قبلي': 'Upper Egypt', 'مشتل': 'Nursery', 'عروة الربيع': 'Spring crop', 'الدلتا': 'Delta', 'منتصف مارس': 'Mid-March', 'صيفية متأخرة': 'Late summer', 'وجه بحري وقبلي': 'Lower & Upper Egypt', 'وجه بحري': 'Lower Egypt', 'منتصف إبريل - وجه بحري': 'Mid-April - Lower Egypt', 'أرض مستديمة': 'Permanent field', 'منتصف إبريل': 'Mid-April', 'بطيخ الجورمة': 'Gourmet melon', 'لب الخشب': 'Wood pulp type', 'منتصف مايو': 'Mid-May', 'نيلية/خريفية': 'Nile / autumn', 'منتصف أغسطس': 'Mid-August', 'الأراضي الصحراوية': 'Desert lands', 'شتوية/الصعيد فقط': 'Winter / Upper Egypt only', 'عروة الخريف': 'Autumn crop', 'الكيرلي': 'Curly', 'منتصف نوفمبر': 'Mid-November', 'منتصف فبراير': 'Mid-February', 'الأسبوع الأخير': 'Last week', 'حتى 20 يونيو': 'Until June 20', '10 يونيو': 'June 10', 'منتصف يونيو': 'Mid-June', 'منتصف يوليو': 'Mid-July', 'حتى 20 يوليو': 'Until July 20', 'نصف أكتوبر': 'Mid-October', 'منتصف أكتوبر': 'Mid-October', 'الصعيد': 'Upper Egypt',
   // الموزعون والأدوار
@@ -845,6 +846,16 @@ const EN = {
   'اختر المحصول من القائمة': 'Pick a crop from the list', 'أو اكتب اسم المحصول ثم اضغط Enter': 'or type a crop, then press Enter', 'المحاصيل وأشجار الفاكهة': 'Crops & fruit trees', 'كل محصول يُسجَّل وحده. يمكن حذف المحصول غير المستخدم الذي لا توجد له مواعيد زراعة أو حصاد': 'Each crop is recorded on its own. An unused crop with no planting or harvest dates can be removed',
   'اسم المحصول': 'Crop name', 'يرجى إضافة محصول واحد في كل مرة': 'Please add one crop at a time', 'المحصول موجود بالفعل: {c}': 'This crop already exists: {c}', 'حذف محصول: {c}': 'Removed crop: {c}',
   // الأجهزة والأسعار
+  // التحليل حسب قائمة الأسعار والوكلاء
+  'موديل X{n} (حتى {ppm})': 'Model X{n} (up to {ppm})', 'الأجهزة حسب قائمة الأسعار': 'Devices by price list', 'المبيعات حسب الموديل': 'Sales by model', 'الموديل يحدد درجة الملوحة التي يعالجها الجهاز': 'The model sets the salinity level the device treats', 'الموديل': 'Model',
+  'المبيعات حسب المقاس': 'Sales by size', 'كل الموديلات': 'All models', 'الأجهزة المباعة بالتفصيل': 'Devices sold in detail', 'كل مقاس مع موديله، من الأكثر مبيعًا': 'Each size with its model, best-selling first', 'العملاء والوكلاء': 'Customers & agents',
+  'المبيعات حسب تصنيف العميل': 'Sales by customer category', 'مزارع، مهندس زراعي، وكيل، موزع': 'Farmer, agronomist, agent, distributor', 'مبيعات الوكلاء خارج مصر': 'Agent sales outside Egypt', 'حسب دولة العميل أو الوكيل المختار في الطلب': "By the customer's country or the agent chosen on the order", 'الوكيل': 'Agent',
+  'لا توجد مبيعات خارج مصر في هذه الفترة': 'No sales outside Egypt in this period', 'الموديلات': 'Models', 'المقاسات': 'Sizes', 'الأجهزة بالتفصيل': 'Devices in detail', 'تصنيف العملاء': 'Customer categories', 'الوكلاء': 'Agents', 'الدول': 'Countries', 'الموزعون داخل مصر': 'Distributors in Egypt',
+  'وكيل جديد': 'New agent', 'تعديل الوكيل': 'Edit agent', 'لا يوجد وكلاء بعد': 'No agents yet', 'دول بها عملاء دون وكيل': 'Countries with customers but no agent', 'ابحث بالاسم أو الدولة أو الرقم': 'Search by name, country or number', 'ابحث بالاسم أو المنطقة أو الرقم': 'Search by name, area or number',
+  'منطقة التغطية': 'Coverage area', 'غير محددة': 'Not set', 'الدول التي يغطيها الوكيل': 'Countries the agent covers', 'ابحث عن دولة': 'Search for a country', 'اضغط على القطاع لاختيار محافظاته كلها، أو اختر محافظات بعينها': 'Tap a sector to select all its governorates, or pick specific governorates',
+  'وكيل الدولة': 'Country agent', 'موزع المنطقة': 'Area distributor',
+  'لكل وكيل دولة أو أكثر، وعملاء هذه الدول يتبعونه تلقائيًا. يمكن تغيير الوكيل أو إضافة وكيل آخر لنفس الدولة من زر التعديل': "Each agent covers one or more countries, and those countries' customers follow the agent automatically. You can change the agent or add another agent for the same country with the edit button",
+  'لكل موزع محافظات أو قطاع داخل مصر، وعملاء منطقته يتبعونه تلقائيًا، إلى جانب من جاء عن طريقه': 'Each distributor covers governorates or a sector in Egypt. Customers in that area follow the distributor automatically, along with those who came through them',
   'نُشر تحديث جديد للنظام، وسيظهر عند فتح الصفحة القادمة': 'A new system update was published and will appear the next time you open the page', 'تصفية': 'Filter',
   'جهاز {size} X{n} (حتى {ppm})': '{size} unit X{n} (up to {ppm})', 'حتى {ppm}': 'up to {ppm}', 'أجهزة أخرى': 'Other devices', 'السعر الحالي': 'Current price', 'السعر': 'Price', 'السوق': 'Market', 'الكل': 'All', 'لا توجد أجهزة متاحة': 'No devices available', 'أسعار داخل مصر (بالجنيه)': 'Prices inside Egypt (EGP)', 'أسعار خارج مصر (بالدولار)': 'Prices outside Egypt (USD)',
   'أسعار داخل مصر بالجنيه، وأسعار خارج مصر بالدولار. يُحفظ السعر فور تعديله، ويظهر في نموذج العميل والطلبات. الأسعار المسجلة في الطلبات السابقة لا تتغير.': 'Egypt prices are in EGP and export prices in USD. A price is saved as soon as you change it and appears in the customer and order forms. Prices on existing orders do not change.',
@@ -1029,7 +1040,7 @@ const EN = {
 <script>
 // طبقة البيانات والمنطق. كل القراءة والكتابة تمر من هنا، وعند ربط الخادم يُستبدل هذا الملف
 const KEY = 'dw_crm_v1';
-const DB_VERSION = 5;
+const DB_VERSION = 6;
 // بيانات الدخول للحسابات التجريبية: للنسخة التجريبية فقط وموثقة في README.md
 const DEMO_PASSWORD = 'Delta@Test2026';
 
@@ -1547,12 +1558,49 @@ function syncPartner(c) {
     DB.distributors.push(d);
   }
   Object.assign(d, { customerId: c.id, type: c.category, phone: d.phone || c.phone1, govCode: d.govCode || c.govCode || '' });
+  // وكيل من خارج مصر يغطي دولته، وموزع داخل مصر يغطي محافظته، حتى تعدّل الإدارة ذلك
+  if (isAgent(d) && c.market === 'intl' && c.country && !(d.countries || []).length) d.countries = [c.country];
+  if (!isAgent(d) && custGov(c) && !(d.govs || []).length) d.govs = [custGov(c)];
   c.partnerId = d.id;
   if (fresh) audit('create', 'distributor', d.id, 'إضافة موزع: {n}', { n: d.name });
   else saveDB();
   return { d, fresh };
 }
 const viaCustomers = id => liveCustomers().filter(c => c.viaDistributorId === id);
+// الوكيل يغطي دولة أو أكثر خارج مصر، والموزع يغطي محافظات أو قطاعًا داخل مصر. تعدّلها الإدارة في أي وقت
+const isAgent = d => d?.type === 'وكيل';
+const custGov = c => c.market === 'egypt' ? regionByCode(c.govCode)?.gov || '' : '';
+const covers = (d, c) => d.active !== false && (isAgent(d) ? c.market === 'intl' && (d.countries || []).includes(c.country) : c.market === 'egypt' && (d.govs || []).includes(custGov(c)));
+// الوكلاء أو الموزعون المسؤولون عن منطقة العميل
+const territoryPartners = c => DB.distributors.filter(d => covers(d, c));
+const territoryCustomers = d => liveCustomers().filter(c => covers(d, c));
+// عملاء الوكيل أو الموزع: من في منطقته، ومن جاء عن طريقه
+const partnerCustomers = d => { const ids = new Set(); return [...territoryCustomers(d), ...viaCustomers(d.id)].filter(c => !ids.has(c.id) && ids.add(c.id)); };
+// القطاعات اختصارات لاختيار محافظات الموزع دفعة واحدة. الأسماء مختصرة وتُطابَق مع أسماء المحافظات في النظام
+const SECTOR_SHORT = {
+  'الوجه القبلي': ['الفيوم', 'بني سويف', 'المنيا', 'أسيوط', 'سوهاج', 'قنا', 'الأقصر', 'أسوان', 'الوادي الجديد'],
+  'الوجه البحري والدلتا': ['البحيرة', 'المنوفية', 'الغربية', 'كفر الشيخ', 'الدقهلية', 'دمياط', 'الشرقية', 'القليوبية'],
+  'القاهرة الكبرى': ['القاهرة', 'الجيزة', 'القليوبية'],
+  'الإسكندرية والساحل الشمالي': ['الأسكندرية', 'البحيرة (الصحراوي)', 'مطروح', 'سيوة'],
+  'القناة وسيناء والبحر الأحمر': ['الإسماعيلية', 'بورسعيد', 'السويس', 'سيناء', 'البحر الأحمر'],
+};
+let sectorCache = null;
+const sectors = () => sectorCache || (sectorCache = Object.fromEntries(Object.entries(SECTOR_SHORT).map(([s, gs]) => [s, GOVS.filter(g => gs.includes(govShort(g)))])));
+// الدول التي لها وكلاء حاليًا، والخليج العربي وكيل واحد لعدة دول
+const AGENT_REGIONS = { 'الخليج العربي': ['السعودية', 'الإمارات', 'الكويت', 'البحرين', 'عُمان'] };
+const CURRENT_AGENTS = [['ليبيا'], ['المغرب'], ['تونس'], ['الأردن'], ['الجزائر'], ['موريتانيا'], ['جنوب أفريقيا'], ['الخليج العربي', AGENT_REGIONS['الخليج العربي']], ['أمريكا', ['الولايات المتحدة']], ['فرنسا'], ['أستراليا'], ['تركيا'], ['قطر'], ['اليمن'], ['سوريا']];
+// اسم القطاع إذا طابقت المحافظات قطاعًا كاملًا، وإلا أسماء المحافظات
+function coverageLabel(d) {
+  if (isAgent(d)) {
+    const list = d.countries || [];
+    const region = Object.entries(AGENT_REGIONS).find(([, cs]) => cs.length === list.length && cs.every(x => list.includes(x)));
+    return region ? tv(region[0]) : list.map(countryLabel).join('، ');
+  }
+  const govs = d.govs || [];
+  const full = Object.entries(sectors()).filter(([, gs]) => gs.length && gs.every(g => govs.includes(g)));
+  const rest = govs.filter(g => !full.some(([, gs]) => gs.includes(g)));
+  return [...full.map(([s]) => tv(s)), ...rest.map(govLabel)].join('، ');
+}
 
 // ------- ملفات العملاء: تحاليل المياه والتربة -------
 // الملف نفسه لا يدخل قاعدة البيانات حتى لا يكبر حجمها. يُحفظ على خدمة جوجل، أو ملف النظام عند التشغيل من start.bat، أو هذا المتصفح
@@ -2155,7 +2203,51 @@ function migrateDB(db) {
   const v3 = migrateV3(db);
   const v4 = migrateV4(db);
   const v5 = migrateV5(db);
-  return v2 || v3 || v4 || v5;
+  const v6 = migrateV6(db);
+  return v2 || v3 || v4 || v5 || v6;
+}
+// الإصدار 6: الوكلاء حسب الدولة والموزعون حسب المحافظة أو القطاع، وطلبات البيانات التجريبية على موديلات قائمة الأسعار
+function migrateV6(db) {
+  if ((db.version || 1) >= 6) return false;
+  db.distributors.forEach(d => {
+    if (isAgent(d)) d.countries = d.countries || [];
+    else d.govs = d.govs || (d.govCode && regionByCode(d.govCode) ? [regionByCode(d.govCode).gov] : []);
+  });
+  seedAgents(db);
+  if (db.settings.demo) remapDemoDevices(db);
+  db.version = 6;
+  return true;
+}
+// وكلاء الدول الحاليون بأسماء مؤقتة، وتعدّل الإدارة الاسم والهاتف
+function seedAgents(db) {
+  CURRENT_AGENTS.forEach(([label, countries = [label]]) => {
+    if (db.distributors.some(d => isAgent(d) && countries.every(x => (d.countries || []).includes(x)))) return;
+    db.distributors.push({ id: uid(), name: `وكيل ${label}`, type: 'وكيل', countries: [...countries], govCode: '', govs: [], phone: '', notes: 'اسم مؤقت: يرجى تعديل اسم الوكيل وهاتفه', active: true, createdAt: nowStamp() });
+  });
+}
+// البيانات التجريبية فقط: أجهزة التجربة القديمة تصبح موديلات من قائمة الأسعار بنفس المقاس، ويبقى المبلغ المسجل كما هو
+function remapDemoDevices(db) {
+  const live = db.products.filter(p => p.active !== false && MODEL_RX.test(p.type));
+  const hash = s => [...String(s)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  const pickFor = (market, size, seed) => {
+    const list = live.filter(p => productMarket(p) === market);
+    const same = list.filter(p => p.size === size);
+    const pool = same.length ? same : list;
+    return pool.length ? pool[hash(seed) % pool.length] : null;
+  };
+  db.orders.forEach(o => {
+    const c = db.customers.find(x => x.id === o.customerId);
+    o.items.forEach((i, k) => {
+      if (!OLD_DEMO_TYPES.includes(i.type)) return;
+      const p = pickFor(c?.market === 'intl' ? 'intl' : 'egypt', i.size, o.id + k);
+      if (p) Object.assign(i, { productId: p.id, type: p.type, size: p.size });
+    });
+  });
+  db.customers.forEach(c => {
+    if (!OLD_DEMO_TYPES.includes(c.deviceType)) return;
+    const p = pickFor(c.market === 'intl' ? 'intl' : 'egypt', c.deviceSize, c.id);
+    if (p) Object.assign(c, { deviceType: p.type, deviceSize: p.size });
+  });
 }
 // الإصدار 5: قائمة أسعار 2026 لمصر والخارج، والمحاصيل المصنفة كل منها مستقل، وتصنيف العميل، والوكلاء والموزعون، وملفات التحاليل
 function migrateV5(db) {
@@ -2428,7 +2520,7 @@ function seedDistributorsDemo(db) {
   const rnd = makeSeedRng(91);
   const pick = a => a[Math.floor(rnd() * a.length)];
   const list = [['شركة النيل للري الحديث', 'شركة', 'A24'], ['الوادي الأخضر للتوريدات الزراعية', 'شركة', 'A34'], ['م. حسام عبد الرحمن (تجريبي)', 'مهندس زراعي', 'A14'], ['م. إيمان فاروق (تجريبي)', 'مهندس زراعي', 'A25'], ['الحاج رجب السيد (تجريبي)', 'مزارع', 'A7'], ['مزارع الصفوة (تجريبي)', 'مزارع', 'A19']];
-  list.forEach(([name, type, govCode]) => db.distributors.push({ id: uid(), name, type, govCode, phone: `010${Math.floor(10000000 + rnd() * 89999999)}`, notes: '', active: true, createdAt: nowStamp() }));
+  list.forEach(([name, type, govCode]) => db.distributors.push({ id: uid(), name, type, govCode, govs: regionByCode(govCode) ? [regionByCode(govCode).gov] : [], phone: `010${Math.floor(10000000 + rnd() * 89999999)}`, notes: '', active: true, createdAt: nowStamp() }));
   db.orders.forEach(o => { if (!o.distributorId && rnd() < .45) o.distributorId = pick(db.distributors).id; });
 }
 
@@ -2480,6 +2572,7 @@ async function resetDB(withDemo) {
   await makeUsers(DB);
   if (withDemo) seedDemo(DB);
   else { DB.settings.demo = false; DB.users = DB.users.filter(u => ['owner', 'manager'].includes(u.role)); }
+  seedAgents(DB);
   saveDB();
 }
 
@@ -3163,7 +3256,7 @@ function openCustomer(id, tab = 'journey') {
       const assistants = DB.users.filter(u => (u.assists || []).includes(c.ownerId) && !(c.assistantIds || []).includes(u.id)).map(u => u.id);
       const shared = sharesOf(c).filter(s => sharedWith(c, s.userId)).map(s => `${esc(userName(s.userId))} <span class="muted">(${t('عيّنه {u} في {d}', { u: esc(userName(s.by)), d: fmtDate(s.at) })})</span>`).join('<br>');
       body.innerHTML = `<div class="card"><div class="kv">
-        ${kv(t('تصنيف العميل'), c.category ? `${categoryPill(c.category)}${c.partnerId ? ` <span class="muted">${t('مسجل في قائمة الموزعين')}</span>` : ''}` : '')}${kv(t('عن طريق الوكيل أو الموزع'), esc(distName(c.viaDistributorId)))}
+        ${kv(t('تصنيف العميل'), c.category ? `${categoryPill(c.category)}${c.partnerId ? ` <span class="muted">${t('مسجل في قائمة الموزعين')}</span>` : ''}` : '')}${kv(t('عن طريق الوكيل أو الموزع'), esc(distName(c.viaDistributorId)))}${kv(t(c.market === 'intl' ? 'وكيل الدولة' : 'موزع المنطقة'), esc(territoryPartners(c).map(d => d.name).join('، ')))}
         ${kv(t('رقم الهاتف 1'), phoneLink(c.phone1))}${kv(t('رقم الهاتف 2'), phoneLink(c.phone2))}
         ${kv(t('العنوان'), esc(custAddress(c)))}${kv(t('كود المنطقة'), c.subCode || c.govCode ? `<span class="code-tag">${esc(c.subCode || c.govCode)}</span>` : '')}
         ${activeDomains().length > 1 ? kv(t('المجال'), esc(label(DB.domains.find(x => x.id === c.domainId)))) : ''}${kv(t('المرحلة'), stagePill(c))}
@@ -3738,7 +3831,7 @@ function openOrderForm(customerId) {
   }).join('')}`;
   const m = openModal({
     title: t('طلب جديد'), wide: true,
-    body: `<div class="grid2"><div class="field"><label>${t('العميل')} <span class="req">*</span></label><input class="inp" id="oc" list="ocl" value="${preset ? esc(`${preset.name} | ${preset.code}`) : ''}" placeholder="${t('اكتب اسم العميل')}"><datalist id="ocl">${customers.map(c => `<option value="${esc(`${c.name} | ${c.code}`)}">`).join('')}</datalist></div><div class="field"><label>${t('تاريخ الطلب')}</label><input class="inp" type="date" id="od" value="${today()}"></div><div class="field"><label>${t('عن طريق الموزع')}</label><select class="inp" id="odist">${opts(DB.distributors.filter(d => d.active !== false || d.id === preset?.viaDistributorId).map(d => [d.id, d.name]), preset?.viaDistributorId || '', t('بدون موزع'))}</select></div></div>
+    body: `<div class="grid2"><div class="field"><label>${t('العميل')} <span class="req">*</span></label><input class="inp" id="oc" list="ocl" value="${preset ? esc(`${preset.name} | ${preset.code}`) : ''}" placeholder="${t('اكتب اسم العميل')}"><datalist id="ocl">${customers.map(c => `<option value="${esc(`${c.name} | ${c.code}`)}">`).join('')}</datalist></div><div class="field"><label>${t('تاريخ الطلب')}</label><input class="inp" type="date" id="od" value="${today()}"></div><div class="field"><label>${t('عن طريق الموزع')}</label><select class="inp" id="odist">${opts(DB.distributors.filter(d => d.active !== false || d.id === preset?.viaDistributorId).map(d => [d.id, `${d.name}${d.type ? ` (${tv(d.type)})` : ''}`]), preset ? preset.viaDistributorId || territoryPartners(preset)[0]?.id || '' : '', t('بدون موزع'))}</select></div></div>
     <div id="its"></div><button class="btn sm" id="addIt">+ ${t('جهاز آخر')}</button>
     <div class="grid3 mt"><div class="field"><label>${t('العملة')}</label><select class="inp" id="cur">${optsT([['EGP', 'جنيه مصري'], ['USD', 'دولار']], presetCur)}</select></div><div class="field"><label>${t('الخصم')}</label><input class="inp" type="number" min="0" id="disc" value="0"></div><div class="field"><label>${t('الإجمالي')}</label><div class="kpi" style="padding:5px 10px"><div class="v" id="tot" style="font-size:18px">0</div></div></div></div>
     <div class="field"><label>${t('طريقة الدفع')}</label><div class="chips" id="pt">${Object.entries(PAY_TYPES).map(([k, v]) => `<button type="button" class="chip ${k === 'cash' ? 'on' : ''}" data-p="${k}">${t(v)}</button>`).join('')}</div></div><div id="payBox"></div>`,
@@ -4393,39 +4486,51 @@ function openBuyersImport(onDone) {
 
 // ------- الموزعون -------
 const distState = { q: '', type: '', from: '', to: '' };
+const agentState = { q: '', type: '', from: '', to: '' };
+// مبيعات الوكيل: الطلبات المسجلة باسمه، وطلبات عملاء دولته التي لم يُختر لها وكيل آخر
 function distributorStats(d, st = {}) {
-  const list = DB.orders.filter(o => o.distributorId === d.id && countsAsSale(o) && inDateRange(o.date, st));
+  const ids = isAgent(d) ? new Set(territoryCustomers(d).map(c => c.id)) : null;
+  const list = DB.orders.filter(o => countsAsSale(o) && inDateRange(o.date, st) && (o.distributorId === d.id || (ids && ids.has(o.customerId) && !isAgent(DB.distributors.find(x => x.id === o.distributorId)))));
   return { orders: list, count: list.length, units: list.reduce((s, o) => s + o.items.reduce((a, i) => a + i.qty, 0), 0), value: list.reduce((s, o) => s + orderValue(o), 0), last: list.map(o => o.date).sort().pop() || '' };
 }
 const distTypePill = type => `<span class="pill ${type === 'شركة' || type === 'وكيل' ? 'p-blue' : type === 'موزع' ? 'p-orange' : type === 'مزارع' ? 'p-plant' : type === 'مهندس زراعي' ? 'p-after' : 'p-gray'}">${esc(tv(type) || '—')}</span>`;
-function viewDistributors(root) {
-  const st = distState, q = st.q.trim().toLowerCase();
-  const rows = DB.distributors.filter(d => (!st.type || d.type === st.type) && (!q || d.name.toLowerCase().includes(q) || normPhone(d.phone).includes(normPhone(q) || '@'))).map(d => ({ d, s: distributorStats(d, st) })).sort((a, b) => b.s.units - a.s.units);
+const viewDistributors = root => viewPartners(root, false);
+const viewAgents = root => viewPartners(root, true);
+// صفحة الوكلاء (حسب الدولة) وصفحة الموزعين (حسب المحافظة أو القطاع) بنفس الشكل
+function viewPartners(root, agents) {
+  const st = agents ? agentState : distState, q = st.q.trim().toLowerCase();
+  const rows = DB.distributors.filter(d => isAgent(d) === agents && (!st.type || d.type === st.type) && (!q || d.name.toLowerCase().includes(q) || coverageLabel(d).toLowerCase().includes(q) || normPhone(d.phone).includes(normPhone(q) || '@')))
+    .map(d => ({ d, s: distributorStats(d, st), n: partnerCustomers(d).length })).sort((a, b) => (b.d.active !== false) - (a.d.active !== false) || b.s.value - a.s.value || a.d.name.localeCompare(b.d.name, 'ar'));
   const totals = rows.reduce((a, r) => ({ units: a.units + r.s.units, value: a.value + r.s.value }), { units: 0, value: 0 });
   const manage = can('distributors.manage');
-  root.innerHTML = `<div class="page-head"><h1>${t('الموزعون')}</h1><span class="spacer"></span>${manage ? `<button class="btn" id="imp">⬆ ${t('رفع ملف إكسيل')}</button>` : ''}${canExport() ? `<button class="btn" id="exp">⬇ ${t('تصدير')}</button>` : ''}${manage ? `<button class="btn primary" id="add">+ ${t('موزع جديد')}</button>` : ''}<div class="hint">${t('عدد الأجهزة المباعة عن طريق كل موزع يُحسب من الطلبات المرتبطة به')}</div></div>
-  <div class="kpis"><div class="kpi"><div class="l">${t('الموزعون')}</div><div class="v">${rows.length}</div></div><div class="kpi"><div class="l">${t('الأجهزة المباعة عن طريقهم')}</div><div class="v">${totals.units}</div></div><div class="kpi"><div class="l">${t('قيمة المبيعات')}</div><div class="v">${money(totals.value)} <small>${t('ج.م')}</small></div></div></div>
-  <div class="filters"><input class="inp search" id="q" placeholder="${t('ابحث بالاسم أو الرقم')}" value="${esc(st.q)}"><select class="inp" id="type" aria-label="${t('التصنيف')}">${optsT(DB.lists.distributorType, st.type, t('جميع التصنيفات'))}</select>${dateRangeHtml(st, t('المبيعات من'))}</div>
-  ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="sticky-col">${t('الموزع')}</th><th>${t('التصنيف')}</th><th>${t('المحافظة')}</th><th>${t('الهاتف')}</th><th>${t('العملاء التابعون')}</th><th>${t('الأجهزة المباعة')}</th><th>${t('الطلبات')}</th><th>${t('قيمة المبيعات')}</th><th>${t('آخر بيع')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${rows.map(({ d, s }) => `<tr class="click" data-d="${d.id}"><td class="sticky-col">${esc(d.name)}</td><td>${distTypePill(d.type)}</td><td>${d.govCode && regionByCode(d.govCode) ? esc(govLabel(regionByCode(d.govCode).gov)) : ''}</td><td>${phoneLink(d.phone)}</td><td>${viaCustomers(d.id).length}</td><td><b>${s.units}</b></td><td>${s.count}</td><td>${money(s.value)}</td><td>${fmtDate(s.last)}</td><td>${d.active !== false ? `<span class="pill p-green">${t('نشط')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t('لا يوجد موزعون بعد')}</div>`}`;
-  const redraw = () => viewDistributors(root);
+  const title = t(agents ? 'الوكلاء' : 'الموزعون');
+  // دول بها عملاء وليس لها وكيل نشط
+  const uncovered = agents ? Object.entries(liveCustomers().filter(c => c.market === 'intl' && c.country && !territoryPartners(c).some(isAgent)).reduce((m, c) => { m[c.country] = (m[c.country] || 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1]) : [];
+  root.innerHTML = `<div class="page-head"><h1>${title}</h1><span class="spacer"></span>${manage && !agents ? `<button class="btn" id="imp">⬆ ${t('رفع ملف إكسيل')}</button>` : ''}${canExport() ? `<button class="btn" id="exp">⬇ ${t('تصدير')}</button>` : ''}${manage ? `<button class="btn primary" id="add">+ ${t(agents ? 'وكيل جديد' : 'موزع جديد')}</button>` : ''}<div class="hint">${t(agents ? 'لكل وكيل دولة أو أكثر، وعملاء هذه الدول يتبعونه تلقائيًا. يمكن تغيير الوكيل أو إضافة وكيل آخر لنفس الدولة من زر التعديل' : 'لكل موزع محافظات أو قطاع داخل مصر، وعملاء منطقته يتبعونه تلقائيًا، إلى جانب من جاء عن طريقه')}</div></div>
+  <div class="kpis"><div class="kpi"><div class="l">${title}</div><div class="v">${rows.filter(r => r.d.active !== false).length}</div></div><div class="kpi"><div class="l">${t('الأجهزة المباعة عن طريقهم')}</div><div class="v">${totals.units}</div></div><div class="kpi"><div class="l">${t('قيمة المبيعات')}</div><div class="v">${money(totals.value)} <small>${t('ج.م')}</small></div></div></div>
+  ${uncovered.length ? `<div class="card"><b>${t('دول بها عملاء دون وكيل')}</b><div class="chips mt">${uncovered.map(([c, n]) => `<span class="pill p-gray">${esc(countryLabel(c))}: ${n}</span>`).join('')}</div></div>` : ''}
+  <div class="filters"><input class="inp search" id="q" placeholder="${t(agents ? 'ابحث بالاسم أو الدولة أو الرقم' : 'ابحث بالاسم أو المنطقة أو الرقم')}" value="${esc(st.q)}">${agents ? '' : `<select class="inp" id="type" aria-label="${t('التصنيف')}">${optsT(DB.lists.distributorType.filter(x => x !== 'وكيل'), st.type, t('جميع التصنيفات'))}</select>`}${dateRangeHtml(st, t('المبيعات من'))}</div>
+  ${rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="sticky-col">${t(agents ? 'الوكيل' : 'الموزع')}</th>${agents ? '' : `<th>${t('التصنيف')}</th>`}<th>${t(agents ? 'الدول' : 'منطقة التغطية')}</th><th>${t('الهاتف')}</th><th>${t('العملاء التابعون')}</th><th>${t('الأجهزة المباعة')}</th><th>${t('الطلبات')}</th><th>${t('قيمة المبيعات')}</th><th>${t('آخر بيع')}</th><th>${t('الحالة')}</th></tr></thead><tbody>${rows.map(({ d, s, n }) => `<tr class="click" data-d="${d.id}"><td class="sticky-col card-title" data-label="">${esc(d.name)}</td>${agents ? '' : `<td data-label="${t('التصنيف')}">${distTypePill(d.type)}</td>`}<td class="wrap card-wide" data-label="${t(agents ? 'الدول' : 'منطقة التغطية')}">${esc(coverageLabel(d)) || `<span class="muted">${t('غير محددة')}</span>`}</td><td data-label="${t('الهاتف')}">${phoneLink(d.phone)}</td><td data-label="${t('العملاء التابعون')}">${n}</td><td data-label="${t('الأجهزة المباعة')}"><b>${s.units}</b></td><td class="card-hide" data-label="${t('الطلبات')}">${s.count}</td><td data-label="${t('قيمة المبيعات')}">${money(s.value)}</td><td class="card-hide" data-label="${t('آخر بيع')}">${fmtDate(s.last)}</td><td data-label="${t('الحالة')}">${d.active !== false ? `<span class="pill p-green">${t('نشط')}</span>` : `<span class="pill p-gray">${t('موقوف')}</span>`}</td></tr>`).join('')}</tbody></table></div>` : `<div class="card empty">${t(agents ? 'لا يوجد وكلاء بعد' : 'لا يوجد موزعون بعد')}</div>`}`;
+  const redraw = () => viewPartners(root, agents);
   $('#q', root).oninput = e => { st.q = e.target.value; clearTimeout(st.qt); st.qt = setTimeout(() => { redraw(); const i = $('#q', root); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 300); };
-  $('#type', root).onchange = e => { st.type = e.target.value; redraw(); };
+  const ty = $('#type', root);
+  if (ty) ty.onchange = e => { st.type = e.target.value; redraw(); };
   bindDateRange(root, st, redraw);
   $$('[data-d]', root).forEach(tr => tr.onclick = () => openDistributor(tr.dataset.d, redraw));
   const on = (sel, fn) => { const el = $(sel, root); if (el) el.onclick = fn; };
-  on('#add', () => openDistributorForm(null, redraw));
-  on('#exp', () => exportSheet(t('الموزعون'), [[t('الموزع'), t('التصنيف'), t('المحافظة'), t('الهاتف'), t('الأجهزة المباعة'), t('الطلبات'), t('قيمة المبيعات'), t('آخر بيع'), t('ملاحظات')], ...rows.map(({ d, s }) => [d.name, tv(d.type), d.govCode && regionByCode(d.govCode) ? govLabel(regionByCode(d.govCode).gov) : '', d.phone, s.units, s.count, Math.round(s.value), fmtDate(s.last), d.notes])]));
+  on('#add', () => openDistributorForm(null, redraw, agents ? 'وكيل' : ''));
+  on('#exp', () => exportSheet(title, [[t(agents ? 'الوكيل' : 'الموزع'), t('التصنيف'), t(agents ? 'الدول' : 'منطقة التغطية'), t('الهاتف'), t('العملاء التابعون'), t('الأجهزة المباعة'), t('الطلبات'), t('قيمة المبيعات'), t('آخر بيع'), t('الحالة'), t('ملاحظات')], ...rows.map(({ d, s, n }) => [d.name, tv(d.type), coverageLabel(d), d.phone, n, s.units, s.count, Math.round(s.value), fmtDate(s.last), t(d.active !== false ? 'نشط' : 'موقوف'), d.notes])]));
   on('#imp', () => openDistributorImport(redraw));
 }
 function openDistributor(id, onDone) {
   const d = DB.distributors.find(x => x.id === id);
   const s = distributorStats(d);
-  const custs = viaCustomers(d.id).filter(customerVisible);
+  const custs = partnerCustomers(d).filter(customerVisible);
   const own = d.customerId && custById(d.customerId);
   const custTable = custs.length ? `<div class="section-bar mt">${t('العملاء التابعون ({n})', { n: custs.length })}</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('العميل')}</th><th>${t('الموقع')}</th><th>${t('المحصول')}</th><th>${t('الجهاز المطلوب')}</th><th>${t('المرحلة')}</th><th>${t('رجل البيع')}</th></tr></thead><tbody>${custs.map(c => `<tr class="click" data-c="${c.id}"><td>${esc(c.name)}</td><td>${esc(custLocation(c))}</td><td>${esc(c.crops.map(tv).join('، '))}</td><td>${esc(deviceName(c.deviceType, c.deviceSize))}</td><td>${stagePill(c)}</td><td>${esc(userName(c.ownerId))}</td></tr>`).join('')}</tbody></table></div>` : '';
   const m = openModal({
     title: esc(d.name), wide: true,
-    body: `${own && customerVisible(own) ? `<div class="filters"><button class="btn sm" id="ownC">${t('فتح ملفه كعميل')}</button></div>` : ''}<div class="kv"><div><div class="k">${t('التصنيف')}</div><div class="val">${distTypePill(d.type)}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(d.phone)}</div></div><div><div class="k">${t('الأجهزة المباعة')}</div><div class="val">${s.units}</div></div><div><div class="k">${t('قيمة المبيعات')}</div><div class="val">${money(s.value)} ${t('ج.م')}</div></div><div><div class="k">${t('ملاحظات')}</div><div class="val">${esc(d.notes)}</div></div></div>
+    body: `${own && customerVisible(own) ? `<div class="filters"><button class="btn sm" id="ownC">${t('فتح ملفه كعميل')}</button></div>` : ''}<div class="kv"><div><div class="k">${t('التصنيف')}</div><div class="val">${distTypePill(d.type)}</div></div><div><div class="k">${t(isAgent(d) ? 'الدول' : 'منطقة التغطية')}</div><div class="val">${esc(coverageLabel(d)) || `<span class="muted">${t('غير محددة')}</span>`}</div></div><div><div class="k">${t('الهاتف')}</div><div class="val">${phoneLink(d.phone)}</div></div><div><div class="k">${t('الأجهزة المباعة')}</div><div class="val">${s.units}</div></div><div><div class="k">${t('قيمة المبيعات')}</div><div class="val">${money(s.value)} ${t('ج.م')}</div></div><div><div class="k">${t('ملاحظات')}</div><div class="val">${esc(d.notes)}</div></div></div>
     ${s.orders.length ? `<table class="tbl mt"><thead><tr><th>${t('الطلب')}</th><th>${t('التاريخ')}</th><th>${t('العميل')}</th><th>${t('الجهاز')}</th><th>${t('الكمية')}</th></tr></thead><tbody>${s.orders.sort((a, b) => b.date.localeCompare(a.date)).map(o => `<tr><td>${o.no}</td><td>${fmtDate(o.date)}</td><td>${esc(custById(o.customerId)?.name || '')}</td><td>${esc(o.items.map(i => deviceName(i.type, i.size)).join(' + '))}</td><td>${o.items.reduce((a, i) => a + i.qty, 0)}</td></tr>`).join('')}</tbody></table>` : `<div class="empty">${t('لا توجد مبيعات مرتبطة بهذا الموزع بعد')}</div>`}${custTable}`,
     footer: can('distributors.manage') ? `<button class="btn primary" id="ed">${t('تعديل')}</button>` : '',
   });
@@ -4435,25 +4540,54 @@ function openDistributor(id, onDone) {
   const ed = $('#ed', m.el);
   if (ed) ed.onclick = () => { m.close(); openDistributorForm(id, onDone); };
 }
-function openDistributorForm(id, onDone) {
+function openDistributorForm(id, onDone, presetType = '') {
   const d = id ? DB.distributors.find(x => x.id === id) : null;
+  const type0 = d?.type || presetType || DB.lists.distributorType.find(x => x !== 'وكيل') || DB.lists.distributorType[0];
+  const countries = new Set(d?.countries || []), govs = new Set(d?.govs || []);
+  const types = DB.lists.distributorType.includes(type0) ? DB.lists.distributorType : [...DB.lists.distributorType, type0];
   const m = openModal({
-    title: t(d ? 'تعديل الموزع' : 'موزع جديد'),
-    body: `<div class="field"><label>${t('اسم الموزع')} <span class="req">*</span></label><input class="inp" id="dn" value="${esc(d?.name || '')}"></div>
-    <div class="grid2"><div class="field"><label>${t('التصنيف')} <span class="req">*</span></label><select class="inp" id="dt">${optsT(DB.lists.distributorType, d?.type || DB.lists.distributorType[0])}</select></div><div class="field"><label>${t('الهاتف')}</label><input class="inp" dir="ltr" id="dp" value="${esc(d?.phone || '')}"></div>
-    <div class="field"><label>${t('المحافظة')}</label><select class="inp" id="dg">${opts(REGIONS.map(r => [r.code, regionLabel(r)]), d?.govCode || '', t('اختر'))}</select></div><div class="field"><label>${t('الحالة')}</label><select class="inp" id="da">${optsT([['1', 'نشط'], ['0', 'موقوف']], d?.active === false ? '0' : '1')}</select></div></div>
+    title: t(d ? (isAgent(d) ? 'تعديل الوكيل' : 'تعديل الموزع') : (presetType === 'وكيل' ? 'وكيل جديد' : 'موزع جديد')), wide: true,
+    body: `<div class="field"><label>${t('الاسم')} <span class="req">*</span></label><input class="inp" id="dn" value="${esc(d?.name || '')}"></div>
+    <div class="grid2"><div class="field"><label>${t('التصنيف')} <span class="req">*</span></label><select class="inp" id="dt">${optsT(types, type0)}</select></div><div class="field"><label>${t('الهاتف')}</label><input class="inp" dir="ltr" id="dp" value="${esc(d?.phone || '')}"></div>
+    <div class="field"><label>${t('الحالة')}</label><select class="inp" id="da">${optsT([['1', 'نشط'], ['0', 'موقوف']], d?.active === false ? '0' : '1')}</select></div></div>
+    <div id="cov"></div>
     <div class="field"><label>${t('ملاحظات')}</label><textarea class="inp" id="dno">${esc(d?.notes || '')}</textarea></div>`,
     footer: `<button class="btn primary" id="sv">${t('حفظ')}</button>`,
   });
+  // الوكيل يختار دوله، وغيره يختار محافظاته أو قطاعًا كاملًا
+  const drawCov = () => {
+    const box = $('#cov', m.el), agent = $('#dt', m.el).value === 'وكيل';
+    if (agent) {
+      const list = [...COUNTRIES].filter(c => c.name !== 'مصر').sort((a, b) => countryLabel(a.name).localeCompare(countryLabel(b.name), LANG));
+      box.innerHTML = `<div class="field"><label>${t('الدول التي يغطيها الوكيل')} <span class="muted">(${countries.size})</span></label>
+        <div class="chips">${Object.keys(AGENT_REGIONS).map(r => `<button type="button" class="chip" data-region="${esc(r)}">+ ${esc(tv(r))}</button>`).join('')}</div>
+        <input class="inp mt" id="cq" placeholder="${t('ابحث عن دولة')}"><div class="share-list mt" id="cl">${list.map(c => `<label class="chk" data-cn="${esc(countryLabel(c.name).toLowerCase())} ${esc(c.name)}" style="padding:4px 10px;margin:0"><input type="checkbox" value="${esc(c.name)}" ${countries.has(c.name) ? 'checked' : ''}> ${esc(countryLabel(c.name))}</label>`).join('')}</div></div>`;
+      $('#cq', box).oninput = e => { const v = e.target.value.trim().toLowerCase(); $$('#cl [data-cn]', box).forEach(l => { l.hidden = !!v && !l.dataset.cn.includes(v); }); };
+      $$('#cl input', box).forEach(i => i.onchange = () => { i.checked ? countries.add(i.value) : countries.delete(i.value); });
+      $$('[data-region]', box).forEach(b => b.onclick = () => { AGENT_REGIONS[b.dataset.region].forEach(c => countries.add(c)); drawCov(); });
+    } else {
+      box.innerHTML = `<div class="field"><label>${t('منطقة التغطية')} <span class="muted">(${govs.size})</span></label>
+        <div class="chips">${Object.entries(sectors()).map(([s, gs]) => `<button type="button" class="chip ${gs.every(g => govs.has(g)) ? 'on' : ''}" data-sector="${esc(s)}">${esc(tv(s))}</button>`).join('')}</div>
+        <div class="chips mt">${GOVS.map(g => `<button type="button" class="chip ${govs.has(g) ? 'on' : ''}" data-gov="${esc(g)}">${esc(govLabel(g))}</button>`).join('')}</div>
+        <small class="muted">${t('اضغط على القطاع لاختيار محافظاته كلها، أو اختر محافظات بعينها')}</small></div>`;
+      $$('[data-sector]', box).forEach(b => b.onclick = () => { const gs = sectors()[b.dataset.sector], all = gs.every(g => govs.has(g)); gs.forEach(g => all ? govs.delete(g) : govs.add(g)); drawCov(); });
+      $$('[data-gov]', box).forEach(b => b.onclick = () => { govs.has(b.dataset.gov) ? govs.delete(b.dataset.gov) : govs.add(b.dataset.gov); drawCov(); });
+    }
+  };
+  $('#dt', m.el).onchange = drawCov;
+  drawCov();
   $('#sv', m.el).onclick = () => {
-    const data = { name: $('#dn', m.el).value.trim(), type: $('#dt', m.el).value, phone: $('#dp', m.el).value.trim(), govCode: $('#dg', m.el).value, active: $('#da', m.el).value === '1', notes: $('#dno', m.el).value.trim() };
+    const agent = $('#dt', m.el).value === 'وكيل';
+    const data = { name: $('#dn', m.el).value.trim(), type: $('#dt', m.el).value, phone: $('#dp', m.el).value.trim(), active: $('#da', m.el).value === '1', notes: $('#dno', m.el).value.trim(), countries: agent ? [...countries] : [], govs: agent ? [] : [...govs] };
     if (!data.name) { toast(t('يرجى إدخال الاسم'), 'err'); return; }
     if (d) {
-      const changes = Object.keys(data).filter(k => String(d[k] ?? '') !== String(data[k] ?? '')).map(k => ({ field: { name: 'الاسم', type: 'التصنيف', phone: 'الهاتف', govCode: 'المحافظة', active: 'الحالة', notes: 'ملاحظات' }[k], from: String(d[k] ?? ''), to: String(data[k] ?? '') }));
+      const fieldName = { name: 'الاسم', type: 'التصنيف', phone: 'الهاتف', active: 'الحالة', notes: 'ملاحظات', countries: 'الدول', govs: 'منطقة التغطية' };
+      const show = (k, v) => k === 'countries' ? (v || []).join('، ') : k === 'govs' ? (v || []).join('، ') : String(v ?? '');
+      const changes = Object.keys(data).filter(k => show(k, d[k]) !== show(k, data[k])).map(k => ({ field: fieldName[k], from: show(k, d[k]), to: show(k, data[k]) }));
       Object.assign(d, data);
       audit('update', 'distributor', d.id, 'تعديل الموزع: {n}', { n: d.name }, changes);
     } else {
-      const nd = { id: uid(), ...data, createdAt: nowStamp() };
+      const nd = { id: uid(), govCode: '', ...data, createdAt: nowStamp() };
       DB.distributors.push(nd);
       audit('create', 'distributor', nd.id, 'إضافة موزع: {n}', { n: nd.name });
     }
@@ -4654,17 +4788,35 @@ function computeAnalytics(st) {
     return { u, shared: list.filter(o => orderReps(o).length > 1).length, sales: sum(list), orders: list.length, units: units(list), coll: collected(list), cust: uc.length, fu: DB.followups.filter(f => f.userId === u.id && f.at.slice(0, 10) >= r.from).length, late: uc.filter(c => c.followupDate && c.followupDate < today()).length };
   }).sort((a, b) => b.sales - a.sales);
   const sales = sum(inRange), coll = collected(inRange);
-  // أنواع الأجهزة: العدد والقيمة لكل نوع ولكل مقاس
-  const typeMap = {}, sizeMap = {};
+  // الأجهزة كما في قائمة الأسعار: العدد والقيمة لكل موديل (X1 إلى X4)، ولكل مقاس، ولكل جهاز (المقاس + الموديل)
+  const typeMap = {}, sizeMap = {}, inchMap = {};
+  const modelLabel = type => { const m = String(type).match(MODEL_RX); return m ? t('موديل X{n} (حتى {ppm})', { n: m[1], ppm: ppmText(m[2]) }) : tv(type); };
   inRange.forEach(o => o.items.forEach(i => {
     const share = o.total ? (i.qty * i.price) / Math.max(1, o.items.reduce((s, x) => s + x.qty * x.price, 0)) : 0;
     const v = orderValue(o) * share;
-    const ty = typeMap[i.type] = typeMap[i.type] || { units: 0, value: 0 };
+    const mk = modelLabel(i.type);
+    const ty = typeMap[mk] = typeMap[mk] || { units: 0, value: 0, order: MODEL_RX.test(i.type) ? +i.type.match(MODEL_RX)[1] : 9 };
     ty.units += i.qty; ty.value += v;
     const sk = `${i.type}|${i.size}`;
     const sz = sizeMap[sk] = sizeMap[sk] || { type: i.type, size: i.size, units: 0, value: 0 };
     sz.units += i.qty; sz.value += v;
+    if (MODEL_RX.test(i.type)) {
+      const ik = inchMap[i.size] = inchMap[i.size] || { size: i.size, units: 0, value: 0 };
+      ik.units += i.qty; ik.value += v;
+    }
   }));
+  // الوكلاء: طلبات عملاء الخارج تُنسب للوكيل المختار في الطلب، وإلا لوكيل دولة العميل
+  const agentOf = o => {
+    const d = DB.distributors.find(x => x.id === o.distributorId);
+    if (isAgent(d)) return d;
+    const c = custById(o.customerId);
+    return c?.market === 'intl' ? territoryPartners(c).find(isAgent) : null;
+  };
+  const byAgent = (() => {
+    const m = {};
+    inRange.forEach(o => { const d = agentOf(o); if (!d) return; const k = d.id; m[k] = m[k] || { name: d.name, area: coverageLabel(d), units: 0, value: 0 }; m[k].units += o.items.reduce((s, i) => s + i.qty, 0); m[k].value += orderValue(o); });
+    return Object.values(m).sort((a, b) => b.value - a.value);
+  })();
   // أعلى المناطق الفرعية (قرى وأحياء) داخل المحافظة المختارة
   const govOrders = inRange.filter(o => { const c = custById(o.customerId); return c?.market === 'egypt' && c.govCode; });
   const govTotals = groupSum(govOrders, o => regionByCode(custById(o.customerId).govCode)?.gov || '');
@@ -4672,13 +4824,15 @@ function computeAnalytics(st) {
   const bySubArea = groupSum(govOrders.filter(o => regionByCode(custById(o.customerId).govCode)?.gov === subGov), o => { const c = custById(o.customerId); return custSubName(c) || `${t('بدون منطقة فرعية')} (${c.govCode})`; }).slice(0, 15);
   const byDistributor = (() => {
     const m = {};
-    inRange.forEach(o => { if (!o.distributorId) return; const d = DB.distributors.find(x => x.id === o.distributorId); if (!d) return; const k = d.name; m[k] = m[k] || { units: 0, value: 0, type: d.type }; m[k].units += o.items.reduce((s, i) => s + i.qty, 0); m[k].value += orderValue(o); });
+    inRange.forEach(o => { if (!o.distributorId) return; const d = DB.distributors.find(x => x.id === o.distributorId); if (!d || isAgent(d)) return; const k = d.name; m[k] = m[k] || { units: 0, value: 0, type: d.type }; m[k].units += o.items.reduce((s, i) => s + i.qty, 0); m[k].value += orderValue(o); });
     return Object.entries(m).sort((a, b) => b[1].units - a[1].units);
   })();
   return {
-    byType: Object.entries(typeMap).map(([k, v]) => [tv(k), v.units, v.value]).sort((a, b) => b[2] - a[2]),
+    byType: Object.entries(typeMap).sort((a, b) => a[1].order - b[1].order || b[1].value - a[1].value).map(([k, v]) => [k, v.units, v.value]),
     bySize: Object.values(sizeMap).sort((a, b) => b.units - a.units),
-    subGov, govList: govTotals.map(x => x[0]), bySubArea, byDistributor,
+    byInch: Object.values(inchMap).sort((a, b) => inchOf(a.size) - inchOf(b.size)),
+    byCategory: groupSum(inRange, o => tv(custById(o.customerId)?.category) || t('غير محدد')),
+    subGov, govList: govTotals.map(x => x[0]), bySubArea, byDistributor, byAgent,
     r, sales, prevSales: sum(prev), coll, count: inRange.length, prevCount: prev.length, unitsCount: units(inRange), custs,
     newCust: custs.filter(c => c.createdAt.slice(0, 10) >= r.from).length,
     buyers: new Set(inRange.map(o => o.customerId)).size,
@@ -4716,12 +4870,16 @@ function exportAnalytics(st, a) {
     ]),
     pairs(t('المبيعات الشهرية'), [t('الشهر'), egp, t('الطلبات'), t('الأجهزة')], a.months.map(m => [m.label, Math.round(m.value), m.count, m.units])),
     pairs(t('المناطق'), [t('المنطقة'), egp], a.byGov.map(x => [x[0], Math.round(x[1])])),
-    pairs(t('الأجهزة'), [t('الجهاز'), t('العدد')], a.byDevice),
+    pairs(t('الأجهزة'), [t('الجهاز'), t('العدد')], a.byDevice.map(([k, v]) => [k.replace(/[⁦-⁩]/g, ''), v])),
     pairs(t('المحاصيل'), [t('المحصول'), egp], a.byCrop.map(x => [x[0], Math.round(x[1])])),
     pairs(t('مصدر المعرفة'), [t('المصدر'), egp], a.bySource.map(x => [x[0], Math.round(x[1])])),
     pairs(t('طريقة الدفع'), [t('طريقة الدفع'), egp], a.payMix.map(x => [x[0], Math.round(x[1])])),
     pairs(t('مراحل العملاء'), [t('المرحلة'), t('العملاء')], a.funnel),
-    pairs(t('أنواع الأجهزة'), [t('نوع الجهاز'), t('المقاس'), t('العدد'), egp], a.bySize.map(x => [tv(x.type), tv(x.size), x.units, Math.round(x.value)])),
+    pairs(t('الموديلات'), [t('الموديل'), t('العدد'), egp], a.byType.map(x => [x[0].replace(/[⁦-⁩]/g, ''), x[1], Math.round(x[2])])),
+    pairs(t('المقاسات'), [t('المقاس'), t('العدد'), egp], a.byInch.map(x => [tv(x.size), x.units, Math.round(x.value)])),
+    pairs(t('الأجهزة بالتفصيل'), [t('الجهاز'), t('المقاس'), t('العدد'), egp], a.bySize.map(x => [deviceText(x.type, x.size), tv(x.size), x.units, Math.round(x.value)])),
+    pairs(t('تصنيف العملاء'), [t('التصنيف'), egp], a.byCategory.map(x => [x[0], Math.round(x[1])])),
+    pairs(t('الوكلاء'), [t('الوكيل'), t('الدول'), t('الأجهزة'), egp], a.byAgent.map(x => [x.name, x.area, x.units, Math.round(x.value)])),
     pairs(t('المناطق الفرعية'), [t('المحافظة'), t('المنطقة'), egp], a.bySubArea.map(x => [govLabel(a.subGov), x[0], Math.round(x[1])])),
     pairs(t('الموزعون'), [t('الموزع'), t('التصنيف'), t('الأجهزة'), egp], a.byDistributor.map(([n, v]) => [n, tv(v.type), v.units, Math.round(v.value)])),
   ];
@@ -4770,14 +4928,20 @@ function viewDashboard(root) {
     <div class="card"><h3>${t('طريقة الدفع')}</h3><div class="sub">${t('توزيع قيمة المبيعات')}</div>${stackBar(a.payMix, moneyShort)}</div>
     <div class="card"><h3>${t('تقييم العملاء')}</h3><div class="sub">${t('عدد العملاء في كل درجة')}</div>${stackBar(a.ratingCounts, v => `${v}`)}</div>
   </div>
-  <div class="section-bar">${t('أنواع الأجهزة')}</div>
+  <div class="section-bar">${t('الأجهزة حسب قائمة الأسعار')}</div>
   <div class="cols2">
-    <div class="card"><h3>${t('قيمة المبيعات حسب نوع الجهاز')}</h3><div class="sub">${egp}</div>${hbars(a.byType.map(x => [x[0], x[2], `${moneyShort(x[2])} · ${t('العدد')} ${x[1]}`]), { fmt: moneyShort, h1: t('نوع الجهاز') })}</div>
-    <div class="card"><h3>${t('الأجهزة حسب المقاس')}</h3>${a.bySize.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('نوع الجهاز')}</th><th>${t('المقاس')}</th><th>${t('العدد')}</th><th>${t('القيمة')}</th></tr></thead><tbody>${a.bySize.map(x => `<tr><td>${esc(tv(x.type))}</td><td>${esc(tv(x.size))}</td><td><b>${x.units}</b></td><td>${money(x.value)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${t('لا توجد بيانات في هذه الفترة')}</div>`}</div>
+    <div class="card"><h3>${t('المبيعات حسب الموديل')}</h3><div class="sub">${t('الموديل يحدد درجة الملوحة التي يعالجها الجهاز')} · ${egp}</div>${hbars(a.byType.map(x => [x[0], x[2], `${moneyShort(x[2])} · ${t('العدد')} ${x[1]}`]), { fmt: moneyShort, h1: t('الموديل') })}</div>
+    <div class="card"><h3>${t('المبيعات حسب المقاس')}</h3><div class="sub">${t('كل الموديلات')} · ${egp}</div>${hbars(a.byInch.map(x => [tv(x.size), x.value, `${moneyShort(x.value)} · ${t('العدد')} ${x.units}`]), { fmt: moneyShort, h1: t('المقاس') })}</div>
+  </div>
+  <div class="card"><h3>${t('الأجهزة المباعة بالتفصيل')}</h3><div class="sub">${t('كل مقاس مع موديله، من الأكثر مبيعًا')}</div>${a.bySize.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${t('الجهاز')}</th><th>${t('العدد')}</th><th>${t('القيمة')} (${egp})</th></tr></thead><tbody>${a.bySize.map(x => `<tr><td>${esc(deviceName(x.type, x.size))}</td><td><b>${x.units}</b></td><td>${money(x.value)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${t('لا توجد بيانات في هذه الفترة')}</div>`}</div>
+  <div class="section-bar">${t('العملاء والوكلاء')}</div>
+  <div class="cols2">
+    <div class="card"><h3>${t('المبيعات حسب تصنيف العميل')}</h3><div class="sub">${t('مزارع، مهندس زراعي، وكيل، موزع')} · ${egp}</div>${hbars(a.byCategory, { fmt: moneyShort, h1: t('التصنيف') })}</div>
+    <div class="card"><h3>${t('مبيعات الوكلاء خارج مصر')}</h3><div class="sub">${t('حسب دولة العميل أو الوكيل المختار في الطلب')} · ${egp}</div>${a.byAgent.length ? hbars(a.byAgent.slice(0, 10).map(x => [`${x.name} (${x.area})`, x.value, `${moneyShort(x.value)} · ${t('العدد')} ${x.units}`]), { fmt: moneyShort, h1: t('الوكيل') }) : `<div class="empty">${t('لا توجد مبيعات خارج مصر في هذه الفترة')}</div>`}</div>
   </div>
   <div class="section-bar">${t('المناطق الأعلى مبيعًا داخل المحافظة')}</div>
   <div class="card"><div class="filters"><select class="inp" id="subGov" aria-label="${t('المحافظة')}" ${st.gov ? 'disabled' : ''}>${opts(a.govList.map(g => [g, govLabel(g)]), a.subGov)}</select><span class="muted">${t('القرى والأحياء والمراكز الأعلى مبيعًا')}</span></div>${hbars(a.bySubArea, { fmt: moneyShort, h1: t('المنطقة') })}</div>
-  ${a.byDistributor.length ? `<div class="card"><h3>${t('الموزعون')}</h3><div class="sub">${t('عدد الأجهزة المباعة عن طريق كل موزع')}</div>${hbars(a.byDistributor.slice(0, 10).map(([n, v]) => [n, v.units, `${v.units} · ${tv(v.type)}`]), { h1: t('الموزع'), h2: t('الأجهزة') })}</div>` : ''}
+  ${a.byDistributor.length ? `<div class="card"><h3>${t('الموزعون داخل مصر')}</h3><div class="sub">${t('عدد الأجهزة المباعة عن طريق كل موزع')}</div>${hbars(a.byDistributor.slice(0, 10).map(([n, v]) => [n, v.units, `${v.units} · ${tv(v.type)}`]), { h1: t('الموزع'), h2: t('الأجهزة') })}</div>` : ''}
   <div class="section-bar">${t('مسار العملاء وما بعد البيع')}</div>
   <div class="kpis">
     <div class="kpi"><div class="l">${t('عملاء جدد')}</div><div class="v">${a.newCust}</div><div class="d">${t('اشترى منهم في الفترة: {n}', { n: a.buyers })}</div></div>
@@ -5526,6 +5690,7 @@ const NAV = [
   { path: 'regions', label: 'أكواد المناطق', ic: '📍', view: viewRegions },
   { group: 'المبيعات' },
   { path: 'orders', label: 'الطلبات والأقساط', ic: '🧾', view: viewOrders },
+  { path: 'agents', label: 'الوكلاء', ic: '🌐', view: viewAgents, show: () => can('distributors.view') },
   { path: 'distributors', label: 'الموزعون', ic: '🏪', view: viewDistributors, show: () => can('distributors.view') },
   { group: 'ما بعد البيع', show: () => can('aftersales.view') || can('support.view') },
   { path: 'buyers', label: 'العملاء المشترون', ic: '✅', view: viewBuyers, show: () => can('aftersales.view') },
